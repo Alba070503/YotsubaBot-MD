@@ -27,7 +27,7 @@ En caso de duda, antes de instalar Kumiko-MD, pruebe el bot aquí
 
 ### `⚙️ AJUSTES ⚙️`
 - CAMBIAR NÚMERO DE PROPIETARIO [aqui](https://github.com/Alba070503/Kumiko-MD-V2/blob/main/config.js#L6)
-- CLONAR EL REPOSITORIO [Aqui](https://github.com/AzamiJs/CuriosityBot-MD/fork)
+- CLONAR EL REPOSITORIO [Aqui](https://github.com/Alba070503/Kumiko-MD-V2/fork)
 - Puede cambiar a la última versión de baileys editando el package.json [aqui](https://github.com/Alba070503/Kumiko-MD-V2/blob/main/package.json#L42)
 ***
 
@@ -95,7 +95,7 @@ ESCRIBE LOS SIGUIENTES COMANDOS UNO POR UNO:
 ```
 
 ### EDITOR & PROPIETARIO DEL BOT
-<a href="https://github.com/Alba070503"><img src="https://github.com/Alba070503.png" width="250" height="250" alt="Azami19"/></a>
+<a href="https://github.com/Alba070503"><img src="https://github.com/Alba070503.png" width="250" height="250" alt="Alba070503"/></a>
 
 #### COLABORADORES 
 <a href="https://github.com/Alba070503/Kumiko-MD-V2/graphs/contributors">
