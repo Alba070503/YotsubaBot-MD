@@ -93,10 +93,13 @@ ESCRIBE LOS SIGUIENTES COMANDOS UNO POR UNO:
 > rm -rf sessions
 > npm start
 ```
+## `AGRADECIMIENTOS & CREDITOS` 
+<a href="https://github.com/AzamiJs"><img src="https://github.com/AzamiJs.png" width="250" height="250" alt="Azamk"/></a>
 
-### EDITOR & PROPIETARIO DEL BOT
-<a href="https://github.com/Alba070503"><img src="https://github.com/Alba070503.png" width="250" height="250" alt="Alba070503"/></a>
+  ## `EDITOR & PROPIETARIO DEL BOT` 
+<a href="https://github.com/Alba070503"><img src="https://github.com/Alba070503.png" width="300" height="300" alt="Alba070503"/></a
 
+`Kumiko-MD - By @Alba070503 `
 #### COLABORADORES 
 <a href="https://github.com/Alba070503/Kumiko-MD-V2/graphs/contributors">
 <img src="https://contrib.rocks/image?repo=Alba070503/Kumiko-MD-V2" /> 
@@ -106,12 +109,3 @@ ESCRIBE LOS SIGUIENTES COMANDOS UNO POR UNO:
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
-##### AGRADECIMIENTO ESPECIAL PARA
-<!--[![Nurutomo](https://github.com/Nurutomo.png?size=100)](https://github.com/Nurutomo)
-[![BochilGaming](https://github.com/BochilGaming.png?size=100)](https://github.com/BochilGaming)
-[![adiwajshing/Baileys](https://github.com/adiwajshing.png?size=100)](https://github.com/adiwajshing)-->
-<a href="https://github.com/BochilGaming"><img src="https://github.com/BochilGaming.png?size=100" width="100" height="100"></a> | [![NURUTOMO](https://github.com/Nurutomo.png?size=100)](https://github.com/Nurutomo) 
----|---
-[Bochilgaming](https://github.com/BochilGaming)  | [Nurutomo](https://github.com/Nurutomo)
-games-wabot | wabot-q |
