@@ -97,15 +97,16 @@ ESCRIBE LOS SIGUIENTES COMANDOS UNO POR UNO:
 <a href="https://github.com/AzamiJs"><img src="https://github.com/AzamiJs.png" width="250" height="250" alt="Azamk"/></a>
 
   ## `EDITOR & PROPIETARIO DEL BOT` 
-<a href="https://github.com/Alba070503"><img src="https://github.com/Alba070503.png" width="300" height="300" alt="Alba070503"/></a
+<a href="https://github.com/Alba070503"><img src="https://github.com/Alba070503.png" width="300" height="300" alt="Alba070503"/></a>
 
 `Kumiko-MD - By @Alba070503 `
 #### COLABORADORES 
 <a href="https://github.com/Alba070503/Kumiko-MD-V2/graphs/contributors">
-<img src="https://contrib.rocks/image?repo=Alba070503/Kumiko-MD-V2" /> 
+<img src="https://contrib.rocks/image?repo=Alba070503/Kumiko-MD-V2"
 </a>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+`Kumiko-MD - By @Alba070503 `
