@@ -96,6 +96,13 @@ ESCRIBE LOS SIGUIENTES COMANDOS UNO POR UNO:
 ## `AGRADECIMIENTOS & CREDITOS` 
 <a href="https://github.com/AzamiJs"><img src="https://github.com/AzamiJs.png" width="250" height="250" alt="Azamk"/></a>
 
+<a href="https://www.youtube.com/@Azami_19">
+<img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube">
+</a>
+<a href="https://instagram.com/azami.19">
+<img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white">
+</a>
+
   ## `EDITOR & PROPIETARIO DEL BOT` 
 <a href="https://github.com/Alba070503"><img src="https://github.com/Alba070503.png" width="300" height="300" alt="Alba070503"/></a>
 
