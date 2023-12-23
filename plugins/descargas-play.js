@@ -13,26 +13,18 @@ if (command === 'play') {
 additionalText = '𝘼𝙐𝘿𝙄𝙊 🔊'
 } else if (command === 'play2') {
 additionalText = '𝙑𝙄𝘿𝙀𝙊 🎥'}
-let captionvid = `═══════ ${vs} ════════*
-
-📃𝙏𝙄𝙏𝙐𝙇𝙊 
-»  ${yt_play[0].title}
-﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘
-📅 𝙋𝙐𝘽𝙇𝙄𝘾𝘼𝘿𝙊 
-» ${yt_play[0].ago}
-﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘
-🕗 𝘿𝙐𝙍𝘼𝘾𝙄𝙊𝙉 
-» ${secondString(yt_play[0].duration.seconds)}
-﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘
-📈 𝙑𝙄𝙎𝙏𝘼𝙎
-» ${MilesNumber(yt_play[0].views)}
-﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘
-💻 𝙐𝙍𝙇
-» ${yt_play[0].url}
-﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘
-🚬𝙀𝙉𝙑𝙄𝘼𝘿𝙊 ${additionalText}, 𝘼𝙂𝙐𝘼𝙍𝘿𝙀 𝙐𝙉 𝙈𝙊𝙈𝙀𝙉𝙏𝙊
-
-*══════ ${vs} ════════════*`  
+let captionvid = `*◉——⌈🔊 YOUTUBE PLAY 🔊⌋——◉*\n
+╠✩ 📌 *Titulo:* ${yt_play[0].title}
+╠✩ 📆 *Publicado:* ${yt_play[0].ago}
+╠✩ 🕛 *Duracion:* ${secondString(yt_play[0].duration.seconds)}
+╠✩ 👀 *Vistas:* ${`${MilesNumber(yt_play[0].views)}`}
+╠✩ 👤 *Autor:* ${yt_play[0].author.name}
+╠✩ ⏯️ *Canal:* ${yt_play[0].author.url}
+╠✩ 🆔 *ID:* ${yt_play[0].videoId}
+╠✩ 🪬 *Tipo:* ${yt_play[0].type}
+╠✩ 🔗 *Link:* ${yt_play[0].url}\n
+╠✩ *_Enviando ${additionalText}, aguarde un momento．．．_ 
+════════════════════╝*`  
 await conn.sendMessage(m.chat, {
 text: captionvid,
 contextInfo: {
