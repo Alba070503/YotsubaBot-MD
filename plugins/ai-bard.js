@@ -2,11 +2,10 @@ import fetch from 'node-fetch'
 
 var handler = async (m, { text,  usedPrefix, command }) => {
 
-if (!text) throw `*⚠️ INGRESE UN TEXTO* `
+if (!text) return conn.reply(m.chat, `🎌 *Ingrese una petición*\n\nEjemplo, !bard Conoces A Bill Gates?`, m, fake, )
 
 try {
 
-//await m.reply('*🚀 C A R G A N D O*')
 conn.sendPresenceUpdate('composing', m.chat)
 var apii = await fetch(`https://aemt.me/bard?text=${text}`)
 var res = await apii.json()
@@ -14,7 +13,7 @@ await m.reply(res.result)
 
 } catch (error) {
 console.error(error)
-throw '⚠️ *OCURRIÓ UN ERROR*'
+return conn.reply(m.chat, `*🚩 Ocurrió un fallo*`, m, fake, )
 }
 
 }
