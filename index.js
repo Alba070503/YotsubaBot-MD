@@ -26,9 +26,9 @@ align: 'center',
 colors: ['blueBright']
 })
 console.log(` 
- Curiosity Bot V2
- Author: Azami
- WA    : +994 
+ Kumiko MD V2
+ Author: Alba070503
+ WA    : +59177601773
  Base  : BochilTeam
  `)
 
