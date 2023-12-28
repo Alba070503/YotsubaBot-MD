@@ -62,208 +62,240 @@ let td = `${pickRandom([d1,d2,d3,d4,d5,d6])}`
     itemCount : 2023,
     status: 1,
     surface : 1,
-    message: `${name}` + `\n🚀 Cargando ^ω^`, 
+    message: `${name}` + `\n🗿 Iniciando el menu`, 
     orderTitle: `▮Menu ▸`,
     sellerJid: '0@s.whatsapp.net' 
     }
     }
     }
-    await conn.reply(m.chat, '*Enviando el menu . . .*', fload, { contextInfo:{ forwardingScore: 2022, isForwarded: true, externalAdReply: {title: '👋 Hola!!', body: saludo, sourceUrl: global.ig, thumbnail: await (await fetch(pp)).buffer() }}})
-m.react('🚀')     
-let menu = `╔═══[ ＵＳＵＡＲＩＯＳ ]═══╗
-║╭──────────────
-║├⛄ *Nombre :* ${taguser}
-║├⛄ *Limite :* ${diamond}
-║├⛄ *Nivel :* ${level}
-〬║├⛄ *Rango :* ${role}
-║├⛄ *Exp :* ${exp}
-║╰──────────────
-╚══════════════════⋆
+    await conn.reply(m.chat, '*Enviando el menu . . .*', fload, { contextInfo:{ forwardingScore: 2022, isForwarded: true, externalAdReply: {title: '👋🏻 Hola Usuario!!', body: saludo, sourceUrl: global.ig, thumbnail: await (await fetch(pp)).buffer() }}})
+m.react('🦈'/)     
+let menu = `╭────꧁༒•DATOS•༒꧂────•
+├🥀 *Nombre :* ${taguser}
+├🥀 *Limite :* ${diamond}
+├🥀 *Nivel :* ${level}
+├🥀 *Rango :* ${role}
+├🥀 *Exp :* ${exp}
+╰─────✧❅✦❅✧──────❅⋆
 
-╔═══[ ＩＮＦＯＢＯＴ ]═══╗
-║╭──────────────
-║├⛄ *Creador :* Alba070503 
-║├⛄ *Numero:* wa.me/591776017773
-║├⛄ *Tiempo Activo:* ${uptime}
-║├⛄ *Registrado :* ${rtotalreg} de ${totalreg} usuarios
-║├⛄ *Tiempo activo :*${uptime}
-║╰────────────── 
-╚══════════════════⋆
-╔═══[ *< BOT OFC O SUBBOT/>* ]═══╗
-║├⛄ ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${global.conn.user.jid.split`@`[0]}`) || '*Este es el Bot oficial Kumiko-MD*'}
-╚══════════════════⋆
+╭────꧁༒•INFO BOT•༒꧂─────•
+├🤖 *Creador :* Alba070503 
+├🤖 *Numero:* wa.me/591776017773
+├🤖 *Tiempo Activo:* ${uptime}
+├🤖 *Registrado :* ${rtotalreg} de ${totalreg} usuarios
+├🤖 *Tiempo activo :*${uptime}
+╰──────✧❅✦❅✧──────⋆
+╭────꧁༒•BOT OFC/SUB BOT•༒꧂────•
+├💡 ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${global.conn.user.jid.split`@`[0]}`) || '*Este es el Bot oficial Kumiko-MD*'}
+╰─────────✧❅✦❅✧──────────⋆
 
-╔═════「 ＨＯＹ 」════╗
-║⛄ *Fecha :* ${date}
-〬╚═════ ≪ •❈• ≫ ═════╝
+╭────꧁༒•DATOS DE HOY•༒꧂─────•
+├📆 *Fecha :* ${date}
+╰────────✧❅✦❅✧─────────⋆
 
-╔══「 I N F O R M A C I Ó N 」═╗
-〬║ႌ〬⛄ ${usedPrefix}estado
-║ႌ〬⛄ ${usedPrefix}owner
-〬║ႌ〬⛄ ${usedPrefix}grouplist
-║ႌ〬⛄ ${usedPrefix}donar
-║ႌ〬⛄ ${usedPrefix}grupos
-〬║ႌ〬⛄ ${usedPrefix}infobot
-〬║ႌ〬⛄${usedPrefix}cuentas
-〬║ႌ〬⛄ ${usedPrefix}reporte
-║ႌ〬⛄ ${usedPrefix}join
-║ႌ〬⛄ ${usedPrefix}bot
+╭────꧁༒•INFO•༒꧂─────•
+├🌐 ${usedPrefix}estado
+├🌐 ${usedPrefix}owner
+├🌐 ${usedPrefix}grouplist
+├🌐 ${usedPrefix}donar
+├🌐 ${usedPrefix}grupos
+├🌐 ${usedPrefix}infobot
+├🌐 ${usedPrefix}cuentas
+├🌐 ${usedPrefix}reporte
+├🌐 ${usedPrefix}join
+├🌐 ${usedPrefix}bot
+╰─────✧❅✦❅✧───────⋆ 
+
+╭────꧁༒•MODEJADIBOT•༒꧂─────•
+├🦈 ${usedPrefix}Serbot 
+├🦈 ${usedPrefix}jadibot
+├🦈 ${usedPrefix}bots
+├🦈 ${usedPrefix}deletesesion
+├🦈 ${usedPrefix}stop
+╰───────✧❅✦❅✧────────⋆
+
+╭────꧁༒•DESCARGAS༒꧂─────•
+├📥 _${usedPrefix}instagram_
+├📥 _${usedPrefix}mediafire_
+├📥 _${usedPrefix}gitclone_
+├📥 _${usedPrefix}gdrive_
+├📥 _${usedPrefix}tiktok_
+├📥 _${usedPrefix}tiktokimg_
+├📥 _${usedPrefix}twitter_
+├📥 _${usedPrefix}fb_
+├📥 _${usedPrefix}ytshort_
+├📥 _${usedPrefix}ytmp3_
+├📥 _${usedPrefix}ytmp4_
+├📥 _${usedPrefix}ytmp3doc_
+├📥 _${usedPrefix}ytmp4doc_
+├📥 _${usedPrefix}videodoc_
+├📥 _${usedPrefix}dapk2_
+├📥 _${usedPrefix}stickerpack_
+├📥 _${usedPrefix}play *<texto>*_
+├📥 _${usedPrefix}play2 *<texto>*_
+├📥 _${usedPrefix}play.1 *<texto>*_
+├📥 _${usedPrefix}play.2 *<texto>*_
+├📥 _${usedPrefix}playdoc *<texto>*_
+├📥 _${usedPrefix}playdoc2 *<texto>*_
+├📥 _${usedPrefix}playlist *<texto>*_
+├📥 _${usedPrefix}spotify *<texto>*_
+├📥 _${usedPrefix}ringtone *<texto>*_
+├📥 _${usedPrefix}soundcloud *<texto>*_
+├📥 _${usedPrefix}imagen *<texto>*_
+├📥 _${usedPrefix}pinterest *<texto>*_
+├📥 _${usedPrefix}wallpaper *<texto>*_
+├📥 _${usedPrefix}pptiktok *<nombre de usuario>*_
+├📥 _${usedPrefix}igstalk *<nombre de usuario>*_
+├📥 _${usedPrefix}igstory *<nombre de usuario>*_
+├📥 _${usedPrefix}tiktokstalk *<username>*_
+╰────────✧❅✦❅✧─────────⋆
+
+╭────꧁༒•BUSCADORES•༒꧂─────•
+├🔍 _${usedPrefix}githubsearch *<texto>*_
+├🔍 _${usedPrefix}pelisplus *<texto>*_
+├🔍 _${usedPrefix}modapk *<texto>*_
+├🔍 _${usedPrefix}stickersearch *<texto>*_
+├🔍 _${usedPrefix}stickersearch2 *<texto>*_
+├🔍 _${usedPrefix}animeinfo *<texto>*_
+├🔍 _${usedPrefix}google *<texto>*_
+├🔍 _${usedPrefix}letra *<texto>*_
+├🔍 _${usedPrefix}wikipedia *<texto>*_
+├🔍 _${usedPrefix}ytsearch *<texto>*_
+├🔍 _${usedPrefix}playstore *<texto>*_
+╰─────✧❅✦❅✧────────⋆
+
+╭───꧁༒•CONVERTIDORES•༒꧂────•
+├💾 ${usedPrefix}toimg
+├💾 ${usedPrefix}tomp3
+├💾 ${usedPrefix}toptt
+├💾 ${usedPrefix}tourl
+├💾 ${usedPrefix}tovideo
+├💾 ${usedPrefix}tts
+╰─────✧❅✦❅✧──────⋆
+
+╭────꧁༒•AUDIOS EFECTOS•༒꧂─────•
+├❄️ ${usedPrefix}bass
+├❄️ ${usedPrefix}blown
+├❄️ ${usedPrefix}deep
+├❄️ ${usedPrefix}earrape
+├❄️ ${usedPrefix}fas
+├❄️ ${usedPrefix}fast
+├❄️ ${usedPrefix}nightcore
+├❄️ ${usedPrefix}reverse
+├❄️ ${usedPrefix}robot
+├❄️ ${usedPrefix}slow
+├❄️ ${usedPrefix}smooth
+├❄️ ${usedPrefix}tupai
+├❄️ ${usedPrefix}squirrel
+├❄️ ${usedPrefix}chipmunk
+╰────✧❅✦❅✧──────⋆
+
+╭───꧁༒•HERRAMIENTAS•༒꧂────•
+├📱 ${usedPrefix}acortar
+├📱 ${usedPrefix}qr
+├📱 ${usedPrefix}delete
+├📱 ${usedPrefix}readmore
+├📱 ${usedPrefix}styletext
+├📱 ${usedPrefix}ia
+├📱 ${usedPrefix}bard
+╰──────✧❅✦❅✧───────⋆
+
+╭──꧁༒•MENÚ DE ANIME•༒꧂───•
+├🎊️ ${usedPrefix}menuanimes 
+╰─────✧❅✦❅✧──────⋆
+
+╭────꧁༒•JUEGOS•༒꧂─────•
+├🎮 ${usedPrefix}mates
+├🎮 ${usedPrefix}math
+├🎮 ${usedPrefix}simi
+├🎮 ${usedPrefix}suerte
+├🎮 ${usedPrefix}ppt
+├🎮 ${usedPrefix}tictactoe
+├🎮️ ${usedPrefix}deltictactoe
+├🎮️ ${usedPrefix}topgays
+├🎮️ ${usedPrefix}topotakus
+├🎮 ${usedPrefix}gay
+├🎮 ${usedPrefix}doxear
+├🎮️ ${usedPrefix}pregunta
+├🎮️ ${usedPrefix}apostar
+├🎮️ ${usedPrefix}slot
+├🎮 ${usedPrefix}dado
+╰─────✧❅✦❅✧───────⋆
+
+╭────꧁༒•GRUPOS•༒꧂─────•
+├✨️ ${usedPrefix}grupo
+├✨️ ${usedPrefix}kick
+├✨️ ${usedPrefix}add
+├✨ ${usedPrefix}mute
+├✨️ ${usedPrefix}unmute
+├✨️ ${usedPrefix}banchat
+├✨️ ${usedPrefix}unbanchat
+├✨ ${usedPrefix}admins
+├✨️ ${usedPrefix}infogroup
+├✨️ ${usedPrefix}promote
+├✨️ ${usedPrefix}demote
+├✨️ ${usedPrefix}hidetag
+├✨️ ${usedPrefix}tagall
+├✨️ ${usedPrefix}link
+├✨ ${usedPrefix}banchat
+├✨ ${usedPrefix}unbanchat
 〬╚════ ≪ •❈• ≫ ════╝
 
-╔══「  J A D I B O T 」═╗
-║ႌ〬⛄ ${usedPrefix}Serbot 
-║ႌ〬⛄ ${usedPrefix}jadibot
-║ႌ〬⛄ ${usedPrefix}bots
-║ႌ〬⛄ ${usedPrefix}deletesesion
-║ႌ〬⛄ ${usedPrefix}stop
-〬╚════ ≪ •❈• ≫ ════╝
+╭──꧁༒•ENABLE/DISABLE•༒꧂──•
+├⚙️ ${usedPrefix}enable welcome
+├⚙️ ${usedPrefix}disable welcome
+├️⚙️ ${usedPrefix}enable public
+├⚙️ ${usedPrefix}disable public
+├⚙️ ${usedPrefix}enble antilink
+├⚙️ ${usedPrefix}disable antilink
+├⚙️ ${usedPrefix}enable antilink2
+├⚙️ ${usedPrefix}disable antilink2
+├⚙️ ${usedPrefix}enable restrict
+├⚙️ ${usedPrefix}disable restrict
+├⚙️ ${usedPrefix}enable autoread
+├⚙️ ${usedPrefix}disable autoread
+├⚙️ ${usedPrefix}enable detect
+├⚙️ ${usedPrefix}disable detect
+├⚙️ ${usedPrefix}enable pconly
+├⚙️ ${usedPrefix}disable pconly
+├⚙️ ${usedPrefix}enable gconly
+├⚙️ ${usedPrefix}disable gconly
+╰───────✧❅✦❅✧────────⋆
 
-╔══「 D E S C A R G A S 」═╗
-║ႌ〬⛄ ${usedPrefix}play
-║ႌ〬⛄ ${usedPrefix}play2
-║ႌ〬⛄ ${usedPrefix}yta
-║ႌ〬⛄ ${usedPrefix}ytv
-║ႌ〬⛄ ${usedPrefix}facebook
-║ႌ〬⛄ ${usedPrefix}tiktok
-║ႌ〬⛄ ${usedPrefix}instagram
-║ႌ〬⛄ ${usedPrefix}gitclone
-║ႌ〬⛄ ${usedPrefix}pinterest
-║ႌ〬⛄ ${usedPrefix}imagen
-║ႌ〬⛄ ${usedPrefix}mediafire
-〬╚════ ≪ •❈• ≫ ════╝
+╭────꧁༒•RPG•༒꧂─────•
+├🎰 ${usedPrefix}minar
+├🎰 ${usedPrefix}minar3
+├🎰 ${usedPrefix}minardiamantes
+├🎰 ${usedPrefix}daily
+├🎰 ${usedPrefix}work
+├🎰 ${usedPrefix}afk
+├🎰 ${usedPrefix}rob
+├🎰 ${usedPrefix}limit
+├🎰 ${usedPrefix}reg
+├🎰 ${usedPrefix}unreg
+├🎰 ${usedPrefix}myns
+├🎰 ${usedPrefix}perfil
+├🎰 ${usedPrefix}levelup
+╰─────✧❅✦❅✧────────⋆
 
-╔══「 B U S C A D O R E S 」═╗
-║ႌ〬⛄ ${usedPrefix}google
-║ႌ〬⛄ ${usedPrefix}yts
-〬╚════ ≪ •❈• ≫ ════╝
-
-╔══「 C O N V E R T I D O R E S 」═╗
-║ႌ〬⛄ ${usedPrefix}toimg
-║ႌ〬⛄ ${usedPrefix}tomp3
-║ႌ〬⛄ ${usedPrefix}toptt
-║ႌ〬⛄ ${usedPrefix}tourl
-║ႌ〬⛄ ${usedPrefix}tovideo
-║ႌ〬⛄ ${usedPrefix}tts
-〬╚════ ≪ •❈• ≫ ════╝
-
-╔══「 A U D I O S   E F E C T O S 」═╗
-║ႌ〬❄️ ${usedPrefix}bass
-║ႌ〬❄️ ${usedPrefix}blown
-║ႌ〬❄️ ${usedPrefix}deep
-║ႌ〬❄️ ${usedPrefix}earrape
-║ႌ〬❄️ ${usedPrefix}fas
-║ႌ〬❄️ ${usedPrefix}fast
-║ႌ〬❄️ ${usedPrefix}nightcore
-║ႌ〬❄️ ${usedPrefix}reverse
-║ႌ〬❄️ ${usedPrefix}robot
-║ႌ〬❄️ ${usedPrefix}slow
-║ႌ〬❄️ ${usedPrefix}smooth
-║ႌ〬❄️ ${usedPrefix}tupai
-║ႌ〬❄️ ${usedPrefix}squirrel
-║ႌ〬❄️ ${usedPrefix}chipmunk
-〬╚════ ≪ •❈• ≫ ════╝
-
-╔══「 H E R R A M I E N T A S 」═╗
-║ႌ〬❄️ ${usedPrefix}acortar
-║ႌ〬❄️ ${usedPrefix}qr
-║ႌ〬❄️ ${usedPrefix}delete
-║ႌ〬❄️ ${usedPrefix}readmore
-║ႌ〬❄️ ${usedPrefix}styletext
-║ႌ〬❄️ ${usedPrefix}ia
-╚════ ≪ •❈• ≫ ════╝
-
-╔══「 J U E G O S 」═╗
-║ႌ〬❄️ ${usedPrefix}mates
-║ႌ〬❄️ ${usedPrefix}math
-║ႌ〬❄️ ${usedPrefix}simi
-║ႌ〬❄️ ${usedPrefix}suerte
-║ႌ〬❄️ ${usedPrefix}ppt
-║ႌ〬❄️ ${usedPrefix}tictactoe
-║ႌ〬❄️ ${usedPrefix}deltictactoe
-║ႌ〬❄️ ${usedPrefix}topgays
-║ႌ〬❄️ ${usedPrefix}topotakus
-║ႌ〬❄️ ${usedPrefix}gay
-║ႌ〬❄️ ${usedPrefix}doxear
-║ႌ〬❄️ ${usedPrefix}pregunta
-║ႌ〬❄️ ${usedPrefix}apostar
-║ႌ〬❄️ ${usedPrefix}slot
-║ႌ〬❄️ ${usedPrefix}dado
-〬╚════ ≪ •❈• ≫ ════╝
-
-╔══「 G R U P O S 」═╗
-║ႌ〬❄️ ${usedPrefix}grupo
-║ႌ〬❄️ ${usedPrefix}kick
-║ႌ〬❄️ ${usedPrefix}add
-║ႌ〬❄️ ${usedPrefix}mute
-║ႌ〬❄️ ${usedPrefix}unmute
-║ႌ〬❄️ ${usedPrefix}banchat
-║ႌ〬❄️ ${usedPrefix}unbanchat
-║ႌ〬❄️ ${usedPrefix}admins
-║ႌ〬❄️ ${usedPrefix}infogroup
-║ႌ〬❄️ ${usedPrefix}promote
-║ႌ〬❄️ ${usedPrefix}demote
-║ႌ〬❄️ ${usedPrefix}hidetag
-║ႌ〬❄️ ${usedPrefix}tagall
-║ႌ〬❄️ ${usedPrefix}link
-║ႌ〬❄️ ${usedPrefix}banchat
-║ႌ〬❄️ ${usedPrefix}unbanchat
-〬╚════ ≪ •❈• ≫ ════╝
-
-╔══「 E N A B L E / D I S A B L E 」═╗
-║ႌ〬 ${usedPrefix}enable welcome
-║ႌ〬❄️ ${usedPrefix}disable welcome
-║ႌ〬❄️ ${usedPrefix}enable public
-║ႌ〬❄️ ${usedPrefix}disable public
-║ႌ〬❄️ ${usedPrefix}enble antilink
-║ႌ〬❄️ ${usedPrefix}disable antilink
-║ႌ〬❄️ ${usedPrefix}enable antilink2
-║ႌ〬❄️ ${usedPrefix}disable antilink2
-║ႌ〬❄️ ${usedPrefix}enable restrict
-║ႌ〬❄️ ${usedPrefix}disable restrict
-║ႌ〬❄️ ${usedPrefix}enable autoread
-║ႌ〬❄️ ${usedPrefix}disable autoread
-║ႌ〬❄️ ${usedPrefix}enable detect
-║ႌ〬❄️ ${usedPrefix}disable detect
-║ႌ〬❄️ ${usedPrefix}enable pconly
-║ႌ〬❄️ ${usedPrefix}disable pconly
-║ႌ〬❄️ ${usedPrefix}enable gconly
-║ႌ〬❄️ ${usedPrefix}disable gconly
-〬╚════ ≪ •❈• ≫ ════╝
-
-╔══「 R P G 」═╗
-║ႌ〬🎁 ${usedPrefix}minar
-║ႌ〬🎁 ${usedPrefix}minar3
-║ႌ〬🎁 ${usedPrefix}minardiamantes
-║ႌ〬🎁 ${usedPrefix}daily
-║ႌ〬🎁 ${usedPrefix}work
-║ႌ🎁 ${usedPrefix}afk
-║ႌ〬🎁 ${usedPrefix}rob
-║ႌ〬🎁 ${usedPrefix}limit
-║ႌ〬🎁 ${usedPrefix}reg
-║ႌ〬🎁 ${usedPrefix}unreg
-║ႌ〬🎁 ${usedPrefix}myns
-║ႌ〬🎁 ${usedPrefix}perfil
-║ႌ〬🎁 ${usedPrefix}levelup
-〬╚════ ≪ •❈• ≫ ════╝
-
-╔══「 STICKER 」═╗
-║ႌ〬❄️ ${usedPrefix}s
-║ႌ〬❄️ ${usedPrefix}wm
-〬╚════ ≪ •❈• ≫ ════╝
-
-╔══「 DUEÑOS🧑🏻‍💻/ONWERS🧑🏻‍💻 」═╗
-║ႌ〬❄️ ${usedPrefix}update
-║ႌ〬❄️ ${usedPrefix}restart
-║ႌ〬❄️ ${usedPrefix}autoadmin
-║ႌ〬❄️ ${usedPrefix}leave
-║ႌ〬❄️ ${usedPrefix}salir
-║ႌ〬❄️ ${usedPrefix}cleartpm
-║ႌ〬❄️ ${usedPrefix}bc
-║ႌ〬❄️ ${usedPrefix}bcgc
-║ႌ〬❄️ ${usedPrefix}bcc
-║ႌ〬❄️ ${usedPrefix}banuser
-║ႌ〬❄️ ${usedPrefix}unbanuser
-〬╚════ ≪ •❈• ≫ ════╝`
+╭────꧁༒•STICKERS•༒꧂─────•
+├🃏 ${usedPrefix}s
+├🃏 ${usedPrefix}wm
+╰─────✧❅✦❅✧──────⋆
+╭────꧁༒•ONWERS•༒꧂─────•
+├🧑🏻‍💻 ${usedPrefix}update
+├🧑🏻‍💻 ${usedPrefix}restart
+├🧑🏻‍💻 ${usedPrefix}autoadmin
+├🧑🏻‍💻 ${usedPrefix}leave
+├🧑🏻‍💻 ${usedPrefix}salir
+├🧑🏻‍💻 ${usedPrefix}cleartpm
+├🧑🏻‍💻 ${usedPrefix}bc
+├🧑🏻‍💻 ${usedPrefix}bcgc
+├🧑🏻‍💻 ${usedPrefix}bcc
+├🧑🏻‍💻 ${usedPrefix}banuser
+├🧑🏻‍💻 ${usedPrefix}unbanuser
+├🧑🏻‍💻 ${usedPrefix}comunicar
+╰─────✧❅✦❅✧──────⋆`
 function _0x2daf() {
     const _0x4c1076 = ['namedoc', 'social', '1017dFLzIP', '11680bWFOeX', 'sendMessage', '1FnTozH', '6qNtNxK', '445374chjKag', '2096504ySppGm', '627669MaFyqj', 'readFileSync', 'En breve se enviará el menú...', '374160lMCurS', '356228pujvOS', './storage/logos/MenuJS.jpg', '1019845zOpQQK', 'pdf', 'chat'];
     _0x2daf = function() {
@@ -307,7 +339,7 @@ let buttonMessage = {
         'url': nn,
     },
     'mimetype': td,
-    'fileName': '☰ D A S B O A R D ☰',
+    'fileName': '☰ MENU PRINCIPAL ☰',
     'fileLength': '99999999999999',
     'pageCount': '999',
     'contextInfo': {
@@ -342,7 +374,7 @@ function ucapan() {
     const time = moment.tz('America/Los_Angeled').format('HH')
     let res = "Buenas noches 🌙"
     if (time >= 4) {
-        res = "Buen día 🌄"
+        res = "Buenos días 🌄"
     }
     if (time > 10) {
         res = "Buenas tardes ☀️"
