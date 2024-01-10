@@ -34,7 +34,7 @@ let links = linkSity.getRandom()
     },
     message: {
     orderMessage: {
-    itemCount : 2023,
+    itemCount : 2024,
     status: 1,
     surface : 1,
     message: `${name}!`, 
@@ -62,36 +62,36 @@ let td = `${pickRandom([d1,d2,d3,d4,d5,d6])}`
     itemCount : 2023,
     status: 1,
     surface : 1,
-    message: `${name}` + `\n🗿 Iniciando el menu`, 
+    message: `${name}` + `\n🗿 Cargando `, 
     orderTitle: `▮Menu ▸`,
     sellerJid: '0@s.whatsapp.net' 
     }
     }
     }
-    await conn.reply(m.chat, '*Enviando el menu . . .*', fload, { contextInfo:{ forwardingScore: 2022, isForwarded: true, externalAdReply: {title: '👋🏻 Hola Usuario!!', body: saludo, sourceUrl: global.ig, thumbnail: await (await fetch(pp)).buffer() }}})
-m.react('🦈'/)     
-let menu = `╭────꧁༒•DATOS•༒꧂────•
+    await conn.reply(m.chat, '*Enviando el menu . . .*', fload, { contextInfo:{ forwardingScore: 2022, isForwarded: true, externalAdReply: {title: '👋 Hola!!', body: saludo, sourceUrl: global.ig, thumbnail: await (await fetch(pp)).buffer() }}})
+m.react('🦈')     
+let menu = `╭────꧁༒DATOS༒꧂────•
 ├🥀 *Nombre :* ${taguser}
 ├🥀 *Limite :* ${diamond}
 ├🥀 *Nivel :* ${level}
 ├🥀 *Rango :* ${role}
 ├🥀 *Exp :* ${exp}
-╰─────✧❅✦❅✧──────❅⋆
+╰───────────
 
-╭────꧁༒•INFO BOT•༒꧂─────•
+╭────꧁༒INFO BOT༒꧂─────•
 ├🤖 *Creador :* Alba070503 
 ├🤖 *Numero:* wa.me/591776017773
 ├🤖 *Tiempo Activo:* ${uptime}
 ├🤖 *Registrado :* ${rtotalreg} de ${totalreg} usuarios
 ├🤖 *Tiempo activo :*${uptime}
-╰──────✧❅✦❅✧──────⋆
-╭────꧁༒•BOT OFC/SUB BOT•༒꧂────•
+╰────────────⋆
+╭─꧁༒•BOT OFC/SUB BOT༒꧂──•
 ├💡 ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${global.conn.user.jid.split`@`[0]}`) || '*Este es el Bot oficial Kumiko-MD*'}
-╰─────────✧❅✦❅✧──────────⋆
+╰──────────────────⋆
 
-╭────꧁༒•DATOS DE HOY•༒꧂─────•
+╭────꧁༒DATOS DE HOY༒꧂─────•
 ├📆 *Fecha :* ${date}
-╰────────✧❅✦❅✧─────────⋆
+╰─────────────────⋆
 
 ╭────꧁༒•INFO•༒꧂─────•
 ├🌐 ${usedPrefix}estado
@@ -223,23 +223,36 @@ let menu = `╭────꧁༒•DATOS•༒꧂────•
 ╰─────✧❅✦❅✧───────⋆
 
 ╭────꧁༒•GRUPOS•༒꧂─────•
-├✨️ ${usedPrefix}grupo
-├✨️ ${usedPrefix}kick
-├✨️ ${usedPrefix}add
-├✨ ${usedPrefix}mute
-├✨️ ${usedPrefix}unmute
-├✨️ ${usedPrefix}banchat
-├✨️ ${usedPrefix}unbanchat
-├✨ ${usedPrefix}admins
-├✨️ ${usedPrefix}infogroup
-├✨️ ${usedPrefix}promote
-├✨️ ${usedPrefix}demote
-├✨️ ${usedPrefix}hidetag
-├✨️ ${usedPrefix}tagall
-├✨️ ${usedPrefix}link
-├✨ ${usedPrefix}banchat
-├✨ ${usedPrefix}unbanchat
-〬╚════ ≪ •❈• ≫ ════╝
+├💎 _${usedPrefix}add *<numero>*_
+├💎 _${usedPrefix}kick *<@tag>*_
+├ 💎 _${usedPrefix}kick2 *<@tag>*_
+├💎 _${usedPrefix}listanum *<texto>*_
+├💎 _${usedPrefix}kicknum *<texto>*_
+├💎 _${usedPrefix}grupo *<abrir / cerrar>*_
+├💎 _${usedPrefix}grouptime *<opcion> <tiempo>*_
+├💎 _${usedPrefix}promote *<@tag>*_
+├💎 _${usedPrefix}demote *<@tag>*_
+├💎 _admins *<texto>*_ (𝑢𝑠𝑜 𝑠𝑖𝑛 𝑝𝑟𝑒𝑓𝑖𝑗𝑜)
+├💎 _${usedPrefix}demote *<@tag>*_
+├💎 _${usedPrefix}infogroup_
+├💎 _${usedPrefix}resetlink_
+├💎 _${usedPrefix}link_
+├💎 _${usedPrefix}setname *<texto>*_
+├💎 _${usedPrefix}setdesc *<texto>*_
+├💎 _${usedPrefix}invocar *<texto>*_
+├💎 _${usedPrefix}setwelcome *<texto>*_ 
+├💎 _${usedPrefix}setbye *<texto>*_
+├💎 _${usedPrefix}hidetag *<texto>*_
+├💎 _${usedPrefix}hidetag *<audio>*_
+├💎 _${usedPrefix}hidetag *<video>*_
+├💎 _${usedPrefix}hidetag *<imagen>*_
+├💎 _${usedPrefix}warn *<@tag>*_
+├💎 _${usedPrefix}unwarn *<@tag>*_
+├💎 _${usedPrefix}listwarn_
+├💎 _${usedPrefix}fantasmas_
+├💎 _${usedPrefix}destraba_
+├💎 _${usedPrefix}setpp *<imagen>*_
+╰───────────────⋆
 
 ╭──꧁༒•ENABLE/DISABLE•༒꧂──•
 ├⚙️ ${usedPrefix}enable welcome
@@ -260,7 +273,7 @@ let menu = `╭────꧁༒•DATOS•༒꧂────•
 ├⚙️ ${usedPrefix}disable pconly
 ├⚙️ ${usedPrefix}enable gconly
 ├⚙️ ${usedPrefix}disable gconly
-╰───────✧❅✦❅✧────────⋆
+╰───────────────⋆
 
 ╭────꧁༒•RPG•༒꧂─────•
 ├🎰 ${usedPrefix}minar
@@ -276,12 +289,12 @@ let menu = `╭────꧁༒•DATOS•༒꧂────•
 ├🎰 ${usedPrefix}myns
 ├🎰 ${usedPrefix}perfil
 ├🎰 ${usedPrefix}levelup
-╰─────✧❅✦❅✧────────⋆
+╰─────────────⋆
 
 ╭────꧁༒•STICKERS•༒꧂─────•
 ├🃏 ${usedPrefix}s
 ├🃏 ${usedPrefix}wm
-╰─────✧❅✦❅✧──────⋆
+╰─────✧──────⋆
 ╭────꧁༒•ONWERS•༒꧂─────•
 ├🧑🏻‍💻 ${usedPrefix}update
 ├🧑🏻‍💻 ${usedPrefix}restart
@@ -295,7 +308,7 @@ let menu = `╭────꧁༒•DATOS•༒꧂────•
 ├🧑🏻‍💻 ${usedPrefix}banuser
 ├🧑🏻‍💻 ${usedPrefix}unbanuser
 ├🧑🏻‍💻 ${usedPrefix}comunicar
-╰─────✧❅✦❅✧──────⋆`
+╰───────────⋆`
 function _0x2daf() {
     const _0x4c1076 = ['namedoc', 'social', '1017dFLzIP', '11680bWFOeX', 'sendMessage', '1FnTozH', '6qNtNxK', '445374chjKag', '2096504ySppGm', '627669MaFyqj', 'readFileSync', 'En breve se enviará el menú...', '374160lMCurS', '356228pujvOS', './storage/logos/MenuJS.jpg', '1019845zOpQQK', 'pdf', 'chat'];
     _0x2daf = function() {
@@ -336,7 +349,7 @@ return _0x1a2b8a;
 }
 let buttonMessage = {
     'document': {
-        'url': nn,
+        'url': md,
     },
     'mimetype': td,
     'fileName': '☰ MENU PRINCIPAL ☰',
@@ -347,10 +360,10 @@ let buttonMessage = {
     'showAdAttribution': !![],
             'mediaType': 0x1,
             'previewType': "PHOTO",
-            'title': 'Hola Bienvenido A menu Kumiko-MD',
+            'title': 'Hola Bienvenido al menu principal de Kumiko-MD!',
             'thumbnail': imagen1,
             'renderLargerThumbnail': !![],
-            'sourceUrl': nn
+            'sourceUrl': md
         }
     },
   'caption': menu['trim']()
@@ -374,7 +387,7 @@ function ucapan() {
     const time = moment.tz('America/Los_Angeled').format('HH')
     let res = "Buenas noches 🌙"
     if (time >= 4) {
-        res = "Buenos días 🌄"
+        res = "Buen día 🌄"
     }
     if (time > 10) {
         res = "Buenas tardes ☀️"
