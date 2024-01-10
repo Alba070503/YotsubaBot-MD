@@ -7,10 +7,6 @@ import { unwatchFile, watchFile } from 'fs'
 import chalk from 'chalk'
 import fs from 'fs'
 import moment from 'moment-timezone'
-
-/**
- * @type {import('@whiskeysockets/baileys')}
- */
  
 const { proto } = (await import('@whiskeysockets/baileys')).default
 const isNumber = x => typeof x === 'number' && !isNaN(x)
@@ -93,7 +89,7 @@ regTime: -1,
 afk: -1,
 afkReason: '',
 banned: false,
- warn: 0,
+warn: 0,
 level: 0,
 role: 'Novato',
 autolevelup: true,
@@ -116,8 +112,6 @@ if (!('sWelcome' in chat))
 chat.sWelcome = ''
 if (!('sBye' in chat))
 chat.sBye = ''
-if (!('audios' in chat)) 
-chat.audios = true
 if (!('sPromote' in chat))
 chat.sPromote = ''
 if (!('sDemote' in chat))
@@ -139,6 +133,8 @@ if (!('nsfw' in chat))
 chat.nsfw = true
 if (!('antiSticker' in chat))
 chat.antiSticker = false 
+if (!('antibule' in chat))
+chat.antibule = false 
 if (!isNumber(chat.expired))
 chat.expired = 0
 } else
@@ -154,16 +150,16 @@ sPromote: '',
 sDemote: '',
 delete: true,
 antiTraba: true,
-antiToxic: false,
-antiLink: true,
+antiToxic: true,
+antiLink: false,
 viewonce: true,
 useDocument: false,
 onlyLatinos: false,
 modoadmin: false,
-nsfw: false,
+nsfw: true,
 antiSticker: false,
-expired: 0,
-audios: true,
+antibule: false,
+expired: 0
 }
 
 let settings = global.db.data.settings[this.user.jid]
@@ -175,7 +171,7 @@ if (!('autoread2' in settings)) settings.autoread2 = false
 if (!('restrict' in settings)) settings.restrict = false
 if (!('antiCall' in settings)) settings.antiCall = false
 if (!('antiPrivate' in settings)) settings.antiPrivate = false
-if (!('modejadibot' in settings)) settings.modejadibot = true  
+if (!('modejadibot' in settings)) settings.modejadibot = true
 if (!('muto' in user)) user.muto = false
 if (!('status' in settings)) settings.status = 0
 } else global.db.data.settings[this.user.jid] = {
@@ -360,11 +356,11 @@ m.reply('Chirrido -_-')
 else
 m.exp += xp
 if (!isPrems && plugin.limit && plugin.diamond && global.db.data.users[m.sender].diamond < plugin.diamond * 1) {
-this.reply(m.chat, `*❌ NO LE QUEDA DIAMANTES*`, m)
+this.reply(m.chat, `Tus diamantes de hoy se han agotado ⚠️\n\nPor favor compre diamantes escribiendo ${usedPrefix}buy o ${usedPrefix}buyall`, m)
 continue
 }
 if (plugin.level > _user.level) {
-this.reply(m.chat, `*🚫 REQUIRE ESTE NIVEL ${plugin.level}*`, m)
+this.reply(m.chat, `Requiere el nivel *${plugin.level}*`, m)
 continue
 }
 let extra = {match, usedPrefix, noPrefix, _args, args, command, text, conn: this, participants, groupMetadata, user, bot, isROwner, isOwner, isRAdmin, isAdmin, isBotAdmin, isPrems, chatUpdate, __dirname: ___dirname, __filename }
@@ -401,7 +397,7 @@ console.error(e)
 }
 }
 if (m.diamond)
-m.reply(`*⚠️ UTILIZÓ ${+m.diamond} DIAMANTE*`)
+m.reply(`「 💎 」Se a utilizado un *${+m.diamond}* diamante`)
 }
 break
 }
@@ -489,7 +485,7 @@ pp = await this.profilePictureUrl(user, 'image')
 } catch (e) {
 } finally {
 let apii = await this.getFile(pp)
-text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@date', global.fecha).replace('@time', global.tiempo).replace('@readMore', global.readMore).replace('@subject', await this.getName(id)).replace('@desc', groupMetadata.desc?.toString() || '*🚫 ESTE GRUPO NO TIENE DESCRIPCIÓN 🚫️*') :
+text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@date', global.fecha).replace('@time', global.tiempo).replace('@readMore', global.readMore).replace('@subject', await this.getName(id)).replace('@desc', groupMetadata.desc?.toString() || '*⚠️ ESTE GRUPO NO TIENE DESCRIPCIÓN ⚠️*') :
 (chat.sBye || this.bye || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0]).replace('@date', global.fecha).replace('@time', global.tiempo)
 let links = linkSity.getRandom()
 
@@ -536,8 +532,8 @@ for (let cs of callUpdate) {
 if (cs.isGroup == false) {
 if (cs.status == "offer") {
 let callmsg = await this.reply(nk.from, `Hola *@${cs.from.split('@')[0]}*, Las ${cs.isVideo ? 'videollamadas' : 'llamadas'} están prohibidas, seras bloqueado`, false, { mentions: [cs.from] })
-let vcard = `BEGIN:VCARD\nVERSION:3.0\nN:;Alba070503👑;;;\nFN:Alba070503\nORG:Alba070503 👑\nTITLE:\nitem1.TEL;waid=18134039996:+598 9999\nitem1.X-ABLabel:Alba070503👑\nX-WA-BIZ-DESCRIPTION:Solo cosas del bot.\nX-WA-BIZ-NAME:Alba070503👑\nEND:VCARD`
-await this.sendMessage(cs.from, { contacts: { displayName: 'Azami 👑', contacts: [{ vcard }] }}, {quoted: callmsg})
+let vcard = `BEGIN:VCARD\nVERSION:3.0\nN:;Alba070503 👑;;;\nFN:Alba070503\nORG:Alba070503 👑\nTITLE:\nitem1.TEL;waid=18134039996:+598 9999\nitem1.X-ABLabel:Alba070503 👑\nX-WA-BIZ-DESCRIPTION:Solo cosas del bot.\nX-WA-BIZ-NAME:Alba070503 👑\nEND:VCARD`
+await this.sendMessage(cs.from, { contacts: { displayName: 'Alba070503 👑', contacts: [{ vcard }] }}, {quoted: callmsg})
 await this.updateBlockStatus(cs.from, 'block')
 }}}
 }
@@ -555,7 +551,7 @@ let chat = global.db.data.chats[msg.chat] || {}
 if (chat.delete)
 return
 await this.reply(msg.chat, `🔎 BORRO UN MENSAJE
-🐀 *NOMBRE:* @${participant.split`@`[0]} 
+🧃 *NOMBRE:* @${participant.split`@`[0]} 
 `.trim(), msg, {
 mentions: [participant]
 })
@@ -564,21 +560,23 @@ this.copyNForward(msg.chat, msg).catch(e => console.log(e, msg))
 console.error(e)
 }}
 
+let fotos = sityImg.getRandom()
+
 global.dfail = (type, m, conn) => {
 
 let msg = {
-rowner: '⚠️️ *ESTE COMANDO SOLO MI DESAROLLADOR LO PUEDE USAR*',
-owner: '⚠️ *ESTE COMANDO SOLO MI PROPIETARIO LO PUEDE USAR*',
-mods: '⚠️ *ESTA FUNCIÓN SOLO ES PARA MIS MODERADORES*',
-premium: '⚠️ *ESTA FUNCIÓN SOLO ES PARA USUARIOS PREMIUM*',
-group: '⚠️ *LA FUNCIÓN SOLO PUEDE SER EJECUTADA EN GRUPOS*',
-private: '⚠️ *ESTA FUNCION SOLO PUEDE SER USADA EN EL CHAT PRIVADO*',
-admin: '⚠️️ *ESTE COMANDO SOLO PUEDE SER USADO POR ADMINS*',
-botAdmin: '⚠️️ *PARA USAR ESTA FUNCIÓN DEBO SER ADMIN*',
-unreg: '⚠️ *REGÍSTRESE PARA USAR ESTA FUNCIÓN ESCRIBIENDO:*\n\n• */reg nombre.edad*\n\n*_❕ Ejemplo_* : */reg Kumiko.18*',
-restrict: '⚠️ *ESTA CARACTERÍSTICA ESTA DESACTIVADA*'
+rowner: '*¡Este comando es exclusivo para mi desarrollador!*',
+owner: '*¡Esta función solo puede ser usada por mis propietarios!*',
+mods: '*¡Solo mis moderadores pueden hacer uso de este comando!*',
+premium: '*¡Solo usuarios premium pueden usar esta función!*',
+group: '*¡Este comando solo se puede usar en grupos!*',
+private: '*¡Esta función solo se puede utilizar en chat privado!*',
+admin: '*¡Este comando solo puede ser utilizado por admins!*',
+botAdmin: '*¡Para realizar la función debo ser admin!*',
+unreg: '*¡Para continuar con esta función debera registrarse!*\n\n!reg nombre.edad\n\n*Uso correcto* : !reg Kumiko.20',
+restrict: '*¡Esta característica esta desactivada!*'
 }[type]
-if (msg) return conn.reply(m.chat, msg, m, { contextInfo:{ externalAdReply: {title: '👋 Hola!!', body: saludo, sourceUrl: global.channel, thumbnail: imagen1 }}})
+if (msg) return conn.reply(m.chat, msg, m, { contextInfo:{ externalAdReply: {title: '🎄'  + saludo + ' ' + nombre, body: dev, sourceUrl: global.channel, thumbnailUrl: fotos }}})
 
 }
 const file = global.__filename(import.meta.url, true);
