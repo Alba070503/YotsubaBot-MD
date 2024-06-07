@@ -6,8 +6,8 @@ global.owner = [['59177601773', 'Alba070503', true], ['59169082575', 'Kumiko-MD�
 
 //BETA: Si quiere evitar escribir el número que será bot en la consola, agregué desde aquí entonces:
 //Sólo aplica para opción 2 (ser bot con código de texto de 8 digitos)
-global.botNumberCode = '' //Ejemplo: +59309090909
-global.confirmCode = ''
+global.botNumberCode = '+552321236827' //Ejemplo: +59309090909
+global.confirmCode = '552321236827'
 
 global.animxscans = ['400359205']
 global.suittag = ['994400359205']
