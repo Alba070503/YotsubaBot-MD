@@ -1,4 +1,4 @@
-console.log('🚀 Iniciando...')
+console.log('⛩️ Iniciando El Bot..')
 import { join, dirname } from 'path'
 import { createRequire } from 'module'
 import { fileURLToPath } from 'url'
@@ -8,35 +8,30 @@ import cfonts from 'cfonts'
 import { createInterface } from 'readline'
 import yargs from 'yargs'
 
-// https://stackoverflow.com/a/50052194
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const require = createRequire(__dirname) // Bring in the ability to create the 'require' method
-const { name, author } = require(join(__dirname, './package.json')) // https://www.stefanjudis.com/snippets/how-to-import-json-files-in-es-modules-node-js/
+const require = createRequire(__dirname) 
+const { name, author } = require(join(__dirname, './package.json')) 
 const { say } = cfonts
 const rl = createInterface(process.stdin, process.stdout)
 
-say('Kumiko\nBot\nMD', {
+say('Rei Ayanami\nBot-MD', {
 font: 'block',
 align: 'center',
-colors: ['magenta', 'cyan']
+colors: ['white']
 })
-say(`${name} By @Alba070503`, {
+say(`Multi Device`, {
+font: 'chrome',
+align: 'center',
+colors: ['red']
+})
+say(`Developed By • @Alba070503`, {
 font: 'console',
 align: 'center',
-colors: ['blueBright']
+colors: ['yellow']
 })
-console.log(` 
- Kumiko MD V2
- Author: Alba070503
- WA    : +59177601773
- Base  : BochilTeam
- `)
 
 var isRunning = false
-/**
- * Start a js file
- * @param {String} file `path/to/file`
- */
+
 function start(file) {
 if (isRunning) return
 isRunning = true
@@ -44,7 +39,7 @@ let args = [join(__dirname, file), ...process.argv.slice(2)]
 say([process.argv[0], ...args].join(' '), {
 font: 'console',
 align: 'center',
-gradient: ['blue', 'magenta']
+colors: ['green']
 })
 setupMaster({
 exec: args[0],
@@ -65,7 +60,8 @@ break
 })
 p.on('exit', (_, code) => {
 isRunning = false
-console.error('⚠️ Ocurrió un error inesperado:', code)
+console.error('Ocurrió un error:', code)
+process.exit();
 if (code === 0) return
 watchFile(args[0], () => {
 unwatchFile(args[0])
