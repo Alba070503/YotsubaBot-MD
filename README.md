@@ -1,5 +1,5 @@
-## Kumiko-MD By Alba070503 ✨ (Gran actualización)
-## Estamo de vuelta baby 🥵
+## 🍁Rei Ayanami Bot-MD🍁 By Alba070503 ✨ (Gran actualización)
+## 
 
 <p align="center">
 <img src="https://github.com/Alba070503/Kumiko-MD-V2/blob/main/storage/logos/Menu1.jpg" alt="Kumiko-MD" width="900"/>
@@ -129,4 +129,4 @@ ESCRIBE LOS SIGUIENTES COMANDOS UNO POR UNO:
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-`Kumiko-MD - By @Alba070503 `
+`🍁Rei Ayanami Bot-MD🍁- By @Alba070503 `
