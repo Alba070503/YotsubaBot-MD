@@ -2,7 +2,7 @@
 ## 
 
 <p align="center">
-<img src="https://github.com/Alba070503/Kumiko-MD-V2/blob/main/storage/logos/Menu1.jpg" alt="Kumiko-MD" width="900"/>
+<img src="https://github.com/Alba070503/Rei-AyanamiBot-MD/blob/main/Menu2.jpg" alt="Kumiko-MD" width="900"/>
 </p>
 
 <a href="https://github.com/Alba070503/Kumiko-MD-V2"><img title="Stars" src="https://img.shields.io/github/stars/Alba070503/Kumiko-MD-V2?color=ff4500&style=flat-square" /></a>
