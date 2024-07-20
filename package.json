@@ -1,33 +1,37 @@
 {
-"name": "Rei Ayanami Bot - MD",
-"version": "3.0.", 
-"description": "El Mejor Bot De WhatsApp",
-"main": "index.js",
-"type": "module",
+  "name": "rei-ayanami-bot-md",
+  "version": "3.0.0",
+  "description": "El Mejor Bot De WhatsApp",
+  "main": "index.js",
+  "type": "module",
 
-"directories": {
-"lib": "lib",
-"src": "src",
-"plugins": "plugins" },
+  "directories": {
+    "lib": "lib",
+    "src": "src",
+    "plugins": "plugins"
+  },
 
-"scripts": {
-"start": "node index.js",
-"qr": "node index.js qr",
-"code": "node index.js code",
-"test": "node test.js",
-"test2": "nodemon index.js" },
+  "scripts": {
+    "start": "node index.js",
+    "qr": "node index.js qr",
+    "code": "node index.js code",
+    "test": "node test.js",
+    "test2": "nodemon index.js"
+  },
 
-"homepage": "https://github.com/Alba070503/Rei-AyanamiBot-MD",
-"author": {
-"name": "Powered @Alba070503" },
+  "homepage": "https://github.com/Alba070503/Rei-AyanamiBot-MD",
+  "author": {
+    "name": "Powered by @Alba070503"
+  },
 
-"repository": {
-"type": "git",
-"url": "git+https://github.com/Alba070503/Rei-AyanamiBot-MD.git" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alba070503/Rei-AyanamiBot-MD.git"
+  },
 
-"bugs": {
-"url": "https://github.com/Alba070503/Rei-AyanamiBot-MD/issues"
-}, 
+  "bugs": {
+    "url": "https://github.com/Alba070503/Rei-AyanamiBot-MD/issues"
+  },
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",
