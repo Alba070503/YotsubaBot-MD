@@ -40,7 +40,7 @@ contextInfo: {
 externalAdReply: {
 title: '⊱『✅𝆺𝅥 𝗥𝗘𝗚𝗜𝗦𝗧𝗥𝗔𝗗𝗢(𝗔) 𝆹𝅥✅』⊰',
 body: wm, 
-thumbnaiUrl: icons, 
+thumbnaiUrl: 'https://telegra.ph/file/bfe4ded5360b6402ca6a2.jpg',
 sourceUrl: canales,
 mediaType: 1,
 showAdAttribution: true,
