@@ -27,7 +27,7 @@ import { mongoDB, mongoDBV2 } from './lib/mongoDB.js'
 import store from './lib/store.js'
 import readline from 'readline'
 import NodeCache from 'node-cache'
-import boxen from 'boxen'
+//import boxen from 'boxen'
 const { DisconnectReason, useMultiFileAuthState, MessageRetryMap, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, jidNormalizedUser, PHONENUMBER_MCC } = await import('@whiskeysockets/baileys')
 const { CONNECTING } = ws
 const { chain } = lodash
@@ -81,11 +81,11 @@ global.db.chain = chain(global.db.data);
 loadDatabase();
 
 // Inicialización de conexiones globales
-/*if (global.conns instanceof Array) {
+if (global.conns instanceof Array) {
 console.log('Conexiones ya inicializadas...');
 } else {
 global.conns = [];
-}*/
+}
 
 /* ------------------------------------------------*/
 
@@ -113,8 +113,8 @@ loadChatgptDB();
 
 /* ------------------------------------------------*/
 
-global.authFile = `ReiSession`
-global.authFileJB = `ReiJadiBot`
+global.authFile = `sessions`
+global.authFileJB = `jadibts`
 
 const {state, saveState, saveCreds} = await useMultiFileAuthState(global.authFile)
 const msgRetryCounterMap = (MessageRetryMap) => { }
@@ -246,7 +246,7 @@ if (opcion == '1' || methodCodeQR) {
 console.log(chalk.bold.yellow(`\n✅ ESCANEA EL CÓDIGO QR EXPIRA EN 45 SEGUNDOS`))}
 }
 if (connection == 'open') {
-await conn.groupAcceptInvite('Em1J2VaglHc1fe26YtBDCS')
+await conn.groupAcceptInvite('IB6iOCODYKZ996aw7T1my3')
 console.log(chalk.bold.green('\n❒⸺⸺⸺⸺【• CONECTADO •】⸺⸺⸺⸺❒\n│\n│ 🟢  Se ha conectado con WhatsApp exitosamente.\n│\n❒⸺⸺⸺⸺【• CONECTADO •】⸺⸺⸺⸺❒'))}
 let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
 if (connection === 'close') {
@@ -279,8 +279,8 @@ process.on('uncaughtException', console.error)
 /* Código reconexión de sub-bots fases beta */
 /* Echo por: https://github.com/elrebelde21 */
 
-/*async function connectSubBots() {
-const subBotDirectory = './LuffyJadiBot';
+async function connectSubBots() {
+const subBotDirectory = './jadibts';
 if (!existsSync(subBotDirectory)) {
 console.log('No se encontraron ningun sub-bots.');
 return;
@@ -305,7 +305,7 @@ console.log(chalk.bold.greenBright(`✅ TODOS LOS SUB-BOTS SE HAN INICIADO CORRE
 (async () => {
 global.conns = [];
 
-const mainBotAuthFile = 'LuffySession';
+const mainBotAuthFile = 'sessions';
 try {
 const mainBot = await connectionUpdate(mainBotAuthFile);
 global.conns.push(mainBot);
@@ -315,7 +315,7 @@ await connectSubBots();
 } catch (error) {
 console.error(chalk.bold.cyanBright(`❌ OCURRIÓ UN ERROR AL INICIAR EL BOT PRINCIPAL: `, error))
 }
-})();*/
+})();
 
 /* ------------------------------------------------*/
 
@@ -479,11 +479,11 @@ unlinkSync(`./${authFileJB}/${directorio}/${fileInDir}`)
 }})
 }})
 if (SBprekey.length === 0) {
-console.log(chalk.bold.green(`\n╭» 🟡 LuffyJadiBot 🟡\n│→ NADA POR ELIMINAR \n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`))
+console.log(chalk.bold.green(`\n╭» 🟡 JadiBot 🟡\n│→ NADA POR ELIMINAR \n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`))
 } else {
-console.log(chalk.bold.cyanBright(`\n╭» ⚪ LuffyJadiBot ⚪\n│→ ARCHIVOS NO ESENCIALES ELIMINADOS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`))
+console.log(chalk.bold.cyanBright(`\n╭» ⚪ JadiBot ⚪\n│→ ARCHIVOS NO ESENCIALES ELIMINADOS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`))
 }} catch (err) {
-console.log(chalk.bold.red(`\n╭» 🔴 LuffyJadiBot 🔴\n│→ OCURRIÓ UN ERROR\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️\n` + err))
+console.log(chalk.bold.red(`\n╭» 🔴 JadiBot 🔴\n│→ OCURRIÓ UN ERROR\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️\n` + err))
 }}
 
 function purgeOldFiles() {
