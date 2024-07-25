@@ -10,7 +10,7 @@ import moment from 'moment-timezone';
 global.botnumber = ""
 global.confirmCode = ""
 
-//Números de los propietarios 
+//Números de los propietarios xd
 global.owner = [
 ['59175655965', '👑 Cʀᴇᴀᴅᴏʀ 🪐', 1],
 ['59169082575', 'Segundo Numero 👑', 1],
@@ -36,7 +36,7 @@ global.titulowm2 = `@Alba070503`
 global.igfg = '@Alba070503';
 global.botname = 'Rei Ayanami Bot-MD🍁'
 global.team = '👑 Developed By • ✨ @Alba070503';
-global.vs = '4.0.4';
+global.vs = '4.4.0';
 
 //• ↳ ◜𝑴𝑺𝑮 𝑫𝑬 𝑬𝑺𝑷𝑬𝑹𝑨◞ • 🈸
 global.wait = '*⏰️ 𝗘𝘀𝗽𝗲𝗿𝗲 𝗨𝗻 𝗠𝗼𝗺𝗲𝗻𝘁𝗼 ...*';
