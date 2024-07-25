@@ -89,7 +89,7 @@ global.fkontak = { key: { participants:"0@s.whatsapp.net", "remoteJid": "status@
 
 global.estilo = { key: {  fromMe: false, participant: `0@s.whatsapp.net`, ...(false ? { remoteJid: "5219992095479-1625305606@g.us" } : {}) }, message: { orderMessage: { itemCount : -999999, status: 1, surface : 1, message: `${packname}`, orderTitle: 'Bang', thumbnail: icons, sellerJid: '0@s.whatsapp.net'}}}
 
-let icono = ['https://qu.ax/ljre.jpg', 'https://qu.ax/vQmu.jpg'].getRandom()
+let icono = ['https://telegra.ph/file/f25b7964dd5d32fbeda22.jpg', 'https://telegra.ph/file/bfe4ded5360b6402ca6a2.jpg'].getRandom()
 
 global.rcanal = {
 contextInfo: {
