@@ -1,91 +1,73 @@
-import fetch from 'node-fetch'
-import { facebook } from '@xct007/frieren-scraper'
+import fetch from 'node-fetch';
+import axios from 'axios';
+import fs from 'fs';
+let enviando = false;
 
-var handler = async (m, { conn, args, command, usedPrefix, text }) => {
+const handler = async (m, {conn, args, command, usedPrefix}) => {
 
-let vid
-const isCommand7 = /^(facebook|fb|facebookdl|fbdl)$/i.test(command)
+  if (!args[0]) {
+    throw `_*< DESCARGAS - FACEBOOK />*_\n\n*[ ℹ️ ] Ingrese un enlace de Facebook.*\n\n*[ 💡 ] Ejemplo:* _${usedPrefix + command} https://fb.watch/fOTpgn6UFQ/_`;
+  }
 
-async function reportError(e) {
-await conn.reply(m.chat, `⁖🧡꙰ 𝙾𝙲𝚄𝚁𝚁𝙸𝙾 𝚄𝙽 𝙴𝚁𝚁𝙾𝚁`, m, rcanal, )
-console.log(`⁖💚꙰ 𝙴𝚁𝚁𝙾𝚁 𝙴𝙽: ${usedPrefix + command} ⚠️\n`)
-console.log(e)
-}
+  /*const linkface = await isValidFacebookLink(args[0]);
+  if (!linkface) {
+    throw `_*${tradutor.texto2[0]}*_\n\n*${tradutor.texto2[1]}*\n\n*${tradutor.texto2[2]}* _${usedPrefix + command} https://fb.watch/fOTpgn6UFQ/_`;
+  }*/
 
-switch (true) {   
-case isCommand7:
-if (!text) return conn.reply(m.chat, `⁖🩵꙰  *Ingrese un enlace de facebook*\n\nEjemplo, !fb https://fb.watch/kAOXy3wf2L/?mibextid=Nif5oz`, m, rcanal, )
-if (!args[0].match(/www.facebook.com|fb.watch|web.facebook.com|business.facebook.com|video.fb.com/g)) return conn.reply(m.chat, '⁖💜꙰ *ᥒ᥆ ᥱs ᥙᥒ ᥱᥒᥣᥲᥴᥱ ᥎ᥲ́ᥣіძ᥆*', m, rcanal, )
-// await conn.reply(m.chat, '⁖💚꙰  𝗗𝗲𝘀𝗰𝗮𝗿𝗴𝗮𝗻𝗱𝗼 𝗘𝗹 𝗩𝗶𝗱𝗲𝗼 𝗗𝗲 𝗙𝗮𝗰𝗲𝗯𝗼𝗼𝗸, 𝗘𝘀𝗽𝗲𝗿𝗲 𝗨𝗻 𝗠𝗼𝗺𝗲𝗻𝘁𝗼....', m, rcanal, )
-conn.reply(m.chat, '⁖💚꙰  𝗗𝗲𝘀𝗰𝗮𝗿𝗴𝗮𝗻𝗱𝗼 𝗘𝗹 𝗩𝗶𝗱𝗲𝗼 𝗗𝗲 𝗙𝗮𝗰𝗲𝗯𝗼𝗼𝗸, 𝗘𝘀𝗽𝗲𝗿𝗲 𝗨𝗻 𝗠𝗼𝗺𝗲𝗻𝘁𝗼....', m, {
-contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
-title: packname,
-body: wm,
-previewType: 0, thumbnail: icons,
-sourceUrl: channel }}})
-m.react(rwait)
-let messageType = checkMessageType(args[0])
-let message = ''
-switch (messageType) {
-case 'groups':
-message = `𝗩𝗶𝗱𝗲𝗼 𝗱𝗲 𝗴𝗿𝘂𝗽𝗼 𝗱𝗲 𝗙𝗮𝗰𝗲𝗯𝗼𝗼𝗸 ⁖❤️꙰\n${global.wm}`
-break
-case 'reel':
-message = `𝗩𝗶𝗱𝗲𝗼 𝗱𝗲 𝗿𝗲𝗲𝗹𝘀 𝗱𝗲 𝗙𝗮𝗰𝗲𝗯𝗼𝗼𝗸 ⁖❤️꙰\n${global.wm}`
-break
-case 'stories':
-message = `𝗩𝗶𝗱𝗲𝗼 𝗱𝗲 𝗵𝗶𝘀𝘁𝗼𝗿𝗶𝗮𝘀 𝗱𝗲 𝗙𝗮𝗰𝗲𝗯𝗼𝗼𝗸 ⁖❤️꙰\n${global.wm}`
-break
-case 'posts':
-message = `𝗩𝗶𝗱𝗲𝗼 𝗱𝗲 𝗽𝗹𝘂𝗯𝗹𝗶𝗰𝗮𝗰𝗶𝗼𝗻𝗲𝘀 𝗱𝗲 𝗙𝗮𝗰𝗲𝗯𝗼𝗼𝗸 ⁖❤️꙰\n${global.wm}`
-break
-default:
-message = `𝗩𝗶𝗱𝗲𝗼 𝗱𝗲 𝗙𝗮𝗰𝗲𝗯𝗼𝗼𝗸 ⁖❤️꙰\n${global.wm}`
-break
-}
-try {
-let res = await fetch(`https://api.lolhuman.xyz/api/facebook?apikey=BrunoSobrino&url=${args[0]}`)
-let _json = await res.json()
-vid = _json.result[0]
-if (vid == '' || !vid || vid == null) vid = _json.result[1]
-await conn.sendFile(m.chat, vid, 'error.mp4', `${message}`, m, null, rcanal)
-} catch (error1) {
-try {
-const d2ata = await facebook.v1(args[0])
-let r2es = ''
-if (d2ata.urls && d2ata.urls.length > 0) {
-r2es = `${d2ata.urls[0]?.hd || d2ata.urls[1]?.sd || ''}`
-}
-await conn.sendFile(m.chat, r2es, 'error.mp4', `${message}`, m, null, rcanal)
-} catch (error2) {
-try {
-var get = await fetch(`https://api.botcahx.live/api/dowloader/fbdown?url=${args[0]}&apikey=QaepQXxR`)
-var js = await get.json()
-await conn.sendFile(m.chat, js.result.HD, 'error.mp4', `${message}`, m, null, rcanal)
-} catch (e) {
-reportError(e)}
-}}}
+  if (!enviando) enviando = true;
+  try {
+    await m.reply(`_*< DESCARGAS - FACEBOOK />*_\n\n*[ ℹ️ ] Se está enviando el video. espere...*`);
+    
+    const response = await fetch(`${global.MyApiRestBaseUrl}/api/facebook?url=${args[0]}&apikey=${global.MyApiRestApikey}`);
+    const data = await response.json();
 
-}
-handler.help = ['fb']
-handler.tags = ['descargas']
-handler.command = /^(facebook|fb|facebookdl|fbdl)$/i
+    if (data?.status === true) {
+      const videoBuffer = await getBuffer(data.resultado.data);
+      await conn.sendMessage(m.chat, {
+        video: videoBuffer, 
+        filename: 'video.mp4', 
+        caption: `_*< DESCARGAS - FACEBOOK />*_`
+      }, {quoted: m});
+      enviando = false;
+    } else {
+      console.error('Failed to fetch video data from API:', data);
+      enviando = false;
+    }
+  } catch (error) {
+    console.error('Error occurred:', error);
+    enviando = false;
+    throw `_*< DESCARGAS - FACEBOOK />*_\n\n*[ ℹ️ ] Ocurrió un error. Por favor, inténtalo de nuevo más tarde.*`;
+  }
+};
 
-handler.register = true
-handler.limit = 1
+handler.command = /^(facebook|fb|facebookdl|fbdl|facebook2|fb2|facebookdl2|fbdl2|facebook3|fb3|facebookdl3|fbdl3|facebook4|fb4|facebookdl4|fbdl4|facebook5|fb5|facebookdl5|fbdl5)$/i;
+export default handler;
 
-export default handler
+/*async function isValidFacebookLink(link) {
+  const validPatterns = [
+    /facebook\.com\/[^/]+\/videos\//i, 
+    /fb\.watch\//i, 
+    /fb\.com\/watch\//i, 
+    /fb\.me\//i, 
+    /fb\.com\/video\.php\?v=/i, 
+    /facebook\.com\/share\/v\//i, 
+    /facebook\.com\/share\/r\//i, 
+    /fb\.com\/share\/v\//i, 
+    /fb\.com\/share\/r\//i, 
+    /facebook\.com\/[^/]+\/posts\/[^/]+\//i, 
+    /facebook\.com\/reel\/[^/]+\//i,
+    /facebook\.com\/watch\/[^/]+\//i  
+  ];
+  return validPatterns.some(pattern => pattern.test(link));
+}*/
 
-function checkMessageType(url) {
-if (url.includes('www.facebook.com')) {
-if (url.includes('/groups/')) {
-return 'groups'
-} else if (url.includes('/reel/')) {
-return 'reel'
-} else if (url.includes('/stories/')) {
-return 'stories'
-} else if (url.includes('/posts/')) {
-return 'posts'
-}}
-return 'default'
-}
+const getBuffer = async (url, options = {}) => {
+  const res = await axios({
+    method: 'get', 
+    url, 
+    headers: {'DNT': 1, 'Upgrade-Insecure-Request': 1},
+    ...options, 
+    responseType: 'arraybuffer'
+  });
+  return res.data;
+};
