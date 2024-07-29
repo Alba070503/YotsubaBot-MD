@@ -24,7 +24,7 @@ if (!Array.isArray(global.conns)) global.conns = [];
 
 const mssg = {
   nobbot: "𝙽𝚘 𝚙𝚞𝚎𝚍𝚎𝚜 𝚞𝚜𝚊𝚛 𝚎𝚕 𝚋𝚘𝚝 𝚛𝚎𝚖.",
-  recon: "𝚁𝙴𝙲𝙾𝙽𝙴𝙲𝚃𝙰𝙽𝙳𝙾 𝚁𝙴𝙼 𝙱𝙾𝚃",
+  recon: "𝚁𝙴𝙲𝙾𝙽𝙴𝙲𝚃𝙰𝙽𝙳𝙾 Al 𝙱𝙾𝚃",
   sesClose: "𝙻𝙰 𝚂𝙴𝚂𝚂𝙸𝙾𝙽 𝙵𝚄𝙴 𝙲𝙴𝚁𝚁𝙰𝙳𝙰",
   botqr: `𝚄𝚂𝙰 𝙴𝚂𝚃𝙴 𝙲𝙾𝙳𝙸𝙶𝙾 𝙿𝙰𝚁𝙰 𝚂𝙴𝚁 𝚂𝚄𝙱 𝙱𝙾𝚃.\n
 > *\`𝙶𝚄𝙸𝙰:\`* \n
@@ -38,10 +38,7 @@ const mssg = {
   connMsg: "𝙴𝙻 𝙱𝙾𝚃 𝚂𝙴 𝙰𝙷 𝙲𝙾𝙽𝙴𝙲𝚃𝙰𝙳𝙾 𝙴𝚇𝙸𝚃𝙾𝚂𝙰𝙼𝙴𝙽𝚃𝙴.",
 };
 
-let handler = async (
-  m,
-  { conn: _conn, args, usedPrefix, command, isOwner },
-) => {
+let handler = async (m, { conn: _conn, args, usedPrefix, command, isOwner }) => {
   let parent = _conn;
 
   async function bbts() {
@@ -56,13 +53,13 @@ let handler = async (
         JSON.stringify(
           JSON.parse(Buffer.from(args[0], "base64").toString("utf-8")),
           null,
-          "\t",
-        ),
+          "\t"
+        )
       );
     }
 
     const { state, saveState, saveCreds } = await useMultiFileAuthState(
-      `./bots/${authFolderB}`,
+      `./bots/${authFolderB}`
     );
     const msgRetryCounterCache = new NodeCache();
     const { version } = await fetchLatestBaileysVersion();
@@ -88,7 +85,7 @@ let handler = async (
         creds: state.creds,
         keys: makeCacheableSignalKeyStore(
           state.keys,
-          pino({ level: "fatal" }).child({ level: "fatal" }),
+          pino({ level: "fatal" }).child({ level: "fatal" })
         ),
       },
       markOnlineOnConnect: true,
@@ -127,7 +124,7 @@ let handler = async (
           [],
           codeBot,
           null,
-          m,
+          m
         );
         rl.close();
       }, 3000);
@@ -159,13 +156,13 @@ let handler = async (
           parent.sendMessage(
             conn.user.jid,
             { text: `⚠️ Reconectando` },
-            { quoted: m },
+            { quoted: m }
           );
         } else {
           parent.sendMessage(
             m.chat,
-            { text: `⛔ Se ha cerrado sección` },
-            { quoted: m },
+            { text: `⛔ Se ha cerrado sesión` },
+            { quoted: m }
           );
         }
       }
@@ -177,15 +174,15 @@ let handler = async (
         global.conns.push(conn);
         await parent.sendMessage(
           m.chat,
-          { text: args[0] ? `ᡣ𐭩 Conectado con exito` : `ᡣ𐭩 *Conectado con éxito!*\n\nEn unos segundos te mandaremos el *Id* que debes usar para volver a conectarte\n\n*NOTA:* Sal del grupo de *SupportFicctBot-MD*\nguarde este enlace para que pueda unirse después\n sigueme en mi canal de WhatsApp https://whatsapp.com/channel/0029VaAN15BJP21BYCJ3tH04 ` },
-          { quoted: m },
+          { text: args[0] ? `ᡣ𐭩 Conectado con éxito` : `ᡣ𐭩 *Conectado con éxito!*\n\nEn unos segundos te mandaremos el *Id* que debes usar para volver a conectarte\n\n*NOTA:* Sal del grupo de *SupportFicctBot-MD*\nguarde este enlace para que pueda unirse después\n sigueme en mi canal de WhatsApp https://whatsapp.com/channel/0029VaAN15BJP21BYCJ3tH04 ` },
+          { quoted: m }
         );
-        await sleep(500000);
+        await sleep(5000);
         if (args[0]) return;
         await parent.sendMessage(
           conn.user.jid,
           { text: `ᡣ𐭩 La siguiente vez que se conecte envía el siguiente mensaje para iniciar sesión sin escanear otro código` },
-          { quoted: m },
+          { quoted: m }
         );
         parent.sendMessage(
           conn.user.jid,
@@ -196,10 +193,10 @@ let handler = async (
               " " +
               Buffer.from(
                 fs.readFileSync("./bots/" + authFolderB + "/creds.json"),
-                "utf-8",
+                "utf-8"
               ).toString("base64"),
           },
-          { quoted: m },
+          { quoted: m }
         );
       }
     }
@@ -218,7 +215,7 @@ let handler = async (
     }, 60000);
 
     let handler = await import("../handler.js");
-    let creloadHandler = async function (restatConn) {
+    let creloadHandler = async function (restartConn) {
       try {
         const Handler = await import(
           `../handler.js?update=${Date.now()}`
@@ -227,7 +224,7 @@ let handler = async (
       } catch (e) {
         console.error(e);
       }
-      if (restatConn) {
+      if (restartConn) {
         try {
           conn.ws.close();
         } catch {}
