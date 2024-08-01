@@ -15,7 +15,7 @@ let handler = async (m, { conn, usedPrefix, text, args, command }) => {
   let name = await conn.getName(who);
 
   await sendContactArray(conn, m.chat, [
-    [nomorown, '🍁 Propietario', 'Alba070503', dev, 'Alba070503@hotmail.com', '🇧🇴 Bolivia', `${global.yt}`, bio],
+    [nomorown, '🍁 Powered @Alba070503', 'Alba070503', dev, 'Alba070503@hotmail.com', '🇧🇴 Bolivia', `${global.yt}`, bio],
     [`${conn.user.jid.split('@')[0]}`, 'Es Una Bot 🤍', packname, '📵 No Hacer Spam', 'alba070503@hotmail.com', '🇲🇽 Mexico', 'https://github.com/Rey-AyanamiBot-MD', biobot]
   ], m);
 };
