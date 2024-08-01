@@ -1,77 +1,51 @@
-let handler = async (m, { conn, command }) => {
-if (command === 'infinity') {
-let txt = `🥲 No estamos en Infinity-Host 🥲`
-/*let txt = `*INFINITY HOST* 🚩
-*¿Quieres un hosting para poner tu Bot y no sabes cual usar?*
-Pues te presento a *Infinity Host*, un hosting que te ofrece una gran variedad de servicios para poner tus proyectos y que estos estén 24/7 Activos.
+let handler = async (m, { conn, command, usedPrefix }) => {
+let txt = `*¿Tu Nokia es muy lento y necesitas que tu bot esté activo 24/7?* 📱⏳
 
-🔵 \`\`\`Información del Host\`\`\`
+¡Tenemos la solución perfecta para ti! 🎉 Mantén tu bot funcionando sin interrupciones con nuestros servidores, Ofrecemos servidores gratuitos y de pago a precios súper accesibles, al alcance de todos. 💸 
 
-🏳 *PRECIOS*
-- *1GB, 100CPU* = 1dolar
-- *2GB, 120CPU* = 2dolar
-- *3GB, 140CPU* = 3dolar
-- *4GB, 175CPU* = 4dolar
-- *5GB, 200CPU* = 5dolar
-
-💥 *Página:* https://www.infinity-wa.xyz
-
-✨️ *Dashboard:* https://dashboard.infinitywa.xyz
-
-💫 *Panel:* https://store.panel-infinitywa.store
-
-🚩 *Discord:* https://discord.com/invite/vgfpe4Nwd8
-
-😺 *Grupo:* https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV
-
-*¿Qué esperas para Adquirir sus servicios? Únete a esta familia :)*`*/
-await conn.sendMessage(m.chat, { text: txt,
-contextInfo:{
-forwardingScore: 1,
-isForwarded: false, 
-"externalAdReply": {
-"showAdAttribution": true,
-"containsAutoReply": true,
-"title": `♾️ INFINITY - HOST ♾️`,
-"body": `✅ HOSTIN DE CALIDAD ✅`,
-"previewType": "PHOTO",
-"thumbnailUrl": 'https://qu.ax/EQTd.jpg', 
-"sourceUrl": 'https://dashboard.infinitywa.xyz'}}},
-{ quoted: fkontak})
-}
-if (command === 'flarex') {
-let txt = `*FLAREX CLOUD* 🚩
-*¿Quieres un Host de calidad y con bajos precios?*
-Pues te presento a *FlarexCloud*, un hosting de calidad con servidores dedicados y precios por debajo de 1USD, estos servidores están destinados a ofrecerte un Uptime 24/7 para que puedas alojar tus proyectos y qué estos funcionen de manera eficaz.
+🖥️ *Totalmente compatible con GataBot:* Disfruta al máximo de su potencial en nuestros servidores de alto rendimiento, asegurando una experiencia fluida y de alta calidad. El staff de GataBot y Infinity-Host se encarga de que disfrutes de todas sus funciones al máximo. 😺✨
 
 🟢 \`\`\`Información del Host\`\`\`
 
-💫 *Página:* https://www.flarex.cloud
+💻 *Página:*
+https://www.infinity-wa.com/
 
-💙 *Game Panel:* https://gamepanel.flarex.cloud
+*🟢 Dashboard:*
+https://dash.infinitywa-host.com
 
-☁️ *Discord:* https://discord.flarex.cloud
+⚙️ *Panel*
+https://panel.infinitywa-host.com
 
-🤍 *Grupo:* https://whatsapp.flarex.cloud
+💥 *Grupo Support whatsapp:*
+https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV
 
-> *Únete a está comunidad y disfruta de un servicio de calidad :D*`
-await conn.sendMessage(m.chat, { text: txt,
+*🟣 Discord:*
+https://discord.com/invite/vgfpe4Nwd8
+
+🧡 *Canal de WhatsApp:*
+${canal1}
+
+🗣📲 *Contacto:*
+• https://www.facebook.com/elrebelde21
+• wa.me/573147616444
+
+No esperes más y lleva tu bot al siguiente nivel con nuestro servicio de alojamiento. ¡Es fácil, rápido y económico! 💪🚀` 
+
+
+if (command == 'infinity' || command == 'infinityWa' || command == 'infohost' || command == 'hosting') {
+ await conn.sendMessage(m.chat, { text: txt,
 contextInfo:{
-forwardingScore: 1,
+forwardingScore: 9999999,
 isForwarded: false, 
 "externalAdReply": {
 "showAdAttribution": true,
 "containsAutoReply": true,
-"title": `🟣 FLAREX CLOUD 🟣`,
-"body": `✅ HOSTIN DE CALIDAD ✅`,
+title: `🤖 𝐈𝐍𝐅𝐈𝐍𝐈𝐓𝐘𝐖𝐀-𝐇𝐎𝐒𝐓 🤖`,
+body: `✅ Hosting de Calidad`,
 "previewType": "PHOTO",
-"thumbnailUrl": 'https://telegra.ph/file/8f789f212b6cd978cd45d.jpg', 
-"sourceUrl": 'https://www.flarex.cloud'}}},
+thumbnailUrl: 'https://qu.ax/EQTd.jpg', 
+sourceUrl: accountsgb}}},
 { quoted: fkontak})
-}
-}
-handler.tags =['main'] 
-handler.help = ['flarex'] 
-handler.command = ['infinty', 'flarex']
-handler.register = true
+}}
+handler.command = /^(|infohost|hosting|infinitywa|infinity)$/i
 export default handler
