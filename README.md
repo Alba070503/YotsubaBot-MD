@@ -1,4 +1,4 @@
-## 🍁Rei Ayanami Bot-MD🍁 By Alba070503 ✨ (Gran actualización)
+## 🍁Rei Ayanami Bot-MD🍁 By Alba070503 ✨ 
 ## 
 
 <p align="center">
@@ -86,17 +86,21 @@ para usuarios del heroku
 | **IMAGEMAGICK** | [click](https://github.com/DuckyTeam/heroku-buildpack-imagemagick) |
 
 ***
-### 💙 FlarexCloud
-> Empiece a usar FlarexCloud para activar **Rei Ayanami Bot-MD**
+### 🟢 INFINITY-HOST
+> Activar **ShizukaBot-MD** 24/7 activo en Infinity-Host
 
-<a href="https://www.flarex.cloud"><img src="https://cdn.flarex.cloud/deploy.png" height="70px"></a>
-### Información sobre FlarexCloud
+<a href="https://dashboard.infinitywa.xyz"><img src="https://qu.ax/XLCK.jpg" height="125px"></a>
+### Información del Host
 
-- **Página:** [`Aquí`](https://www.flarex.cloud)
-- **Dashboard / Área de Pagos:** [`Aquí`](https://billing.flarex.cloud)
-- **Game Panel:** [`Aquí`](https://gamepanel.flarex.cloud)
-- **Discord:** [`Aquí`](https://discord.flarex.cloud)
-- **Contacto:** [`hi@flarex.cloud`](mailto:hi@flarex.cloud) / [`support@flarex.cloud`](mailto:support@flarex.cloud) / [`partnerships@flarex.cloud`](mailto:partnerships@flarex.cloud)
+- **Página:** [`Click aqui`](https://dashboard.infinitywa.xyz)
+- **Dashboard:** [`Aquí`](https://dashboard.infinitywa.xyz)
+- **Panel:** [`Aquí`](https://live.panel-infinitywa.store)
+- **Grupo de WhatsApp:** [`Aquí`](https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV)
+- **Canal de WhatsApp:** [`Aquí`](https://whatsapp.com/channel/0029Va4QjH7DeON0ePwzjS1A)
+- **Support:** [`Bot exclusivo`](https://wa.me/message/FETBF7YBO37CG1)
+
+- [x] **Configuración** <details><summary>**Ajustes del Servidor - ShizukaBot-MD**</summary><img src="https://qu.ax/cpgf.jpg"></details>
+------------------------
 ----
 
 ### `OBTENER OTRO CODIGO QR`
