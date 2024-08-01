@@ -1,12 +1,11 @@
 import PhoneNumber from 'awesome-phonenumber';
 
 let handler = async (m, { conn, usedPrefix, text, args, command }) => {
-  // Define el número del propietario y otra información que necesitas
-  const nomorown = '573012482597'; // Número del propietario
-  const dev = 'Desarrollador'; // Título del desarrollador
-  const packname = 'Nombre del Paquete'; // Nombre del paquete
+  const nomorown = '59169082575'; 
+  const dev = 'Desarrollador'; 
+  const packname = 'Numero Official'; 
 
-  // Obtén el JID de quien mencionó o del propio usuario
+ 
   let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
   let pp = await conn.profilePictureUrl(who).catch(_ => 'https://telegra.ph/file/24fa902ead26340f3df2c.png');
   let biografia = await conn.fetchStatus(nomorown + '@s.whatsapp.net').catch(_ => ({ status: 'Sin Biografía' }));
