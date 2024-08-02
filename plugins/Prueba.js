@@ -16,7 +16,7 @@ const sendPDF = async (conn, m, url, fileName) => {
 
 let handler = async (m, { conn }) => {
   const pdfUrl = 'https://qu.ax/lNsC.pdf';
-  const fileName = 'Recomendaciones 2-2024 By SupporFicct.pdf';
+  const fileName = 'Recomendaciones 2-2024 By SupportFicct.pdf';
 
   await sendPDF(conn, m, pdfUrl, fileName);
 };
