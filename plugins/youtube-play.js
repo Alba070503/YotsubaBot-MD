@@ -30,7 +30,7 @@ const texto1 = `乂  Y O U T U B E   M U S I C\n
 await conn.sendButton(m.chat, texto1, wm, res.videos[0].thumbnail, [
 	['Audio 📀', `${usedPrefix}mp3 ${text}`],
 	['Video 🎥', `${usedPrefix}mp4 ${text}`]
-  ], null, [['Canal', `${md}`]], m)
+  ], null, [['Canal', `https://whatsapp.com/channel/0029VaAN15BJP21BYCJ3tH04`]], m)
 	  }
   
             if (command == "mp3") {
