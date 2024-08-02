@@ -23,6 +23,6 @@ let handler = async (m, { conn }) => {
 
 handler.help = ['sendpdf'];
 handler.tags = ['utility'];
-handler.command = ['sendpdf'];
+handler.command = ['maestro'];
 
 export default handler;
