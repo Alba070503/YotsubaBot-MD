@@ -29,7 +29,9 @@ const texto1 = `乂  Y O U T U B E   M U S I C\n
 		
 await conn.sendButton(m.chat, texto1, wm, res.videos[0].thumbnail, [
 	['Audio 📀', `${usedPrefix}mp3 ${text}`],
-	['Video 🎥', `${usedPrefix}mp4 ${text}`]
+	['Video 🎥', `${usedPrefix}mp4 ${text}`],
+	['AudioDoc 📀', `${usedPrefix}mp3doc ${text}`],
+	['VideoDoc 🎥', `${usedPrefix}mp4doc ${text}`]
   ], null, [['Canal', `https://whatsapp.com/channel/0029VaAN15BJP21BYCJ3tH04`]], m)
 	  }
   
@@ -83,7 +85,7 @@ thumbnail: await (await fetch(vid.thumbnail)).buffer()}}}, { quoted: m })
     }
         
         if (command == "mp4") {
-            if (!text) return conn.reply(m.chat, `*🚩 Ingresa el titulo de un video o musica de YouTube.*`, m, fake,)
+            if (!text) return conn.reply(m.chat, `*🚩 Ingresa el titulo de un video o musica de YouTube.*`, m, rcanal,)
     await m.react('🕓')
     let res = await yts(text)
     let vid = res.videos[0]
@@ -126,7 +128,7 @@ if (size.split('MB')[0] >= limit) return conn.reply(m.chat,`El archivo pesa mas 
     }}}
     
     if (command == "mp3doc") {
-            if (!inputs) return conn.reply(m.chat, `*🚩 Ingresa el titulo de un video o musica de YouTube.*`,  m, fake,)
+            if (!inputs) return conn.reply(m.chat, `*🚩 Ingresa el titulo de un video o musica de YouTube.*`,  m, rcanal,)
     await m.react('🕓')
     let res = await yts(text)
     let vid = res.videos[0]
@@ -166,7 +168,7 @@ thumbnail: await (await fetch(vid.thumbnail)).buffer()}}}, { quoted: m })
        try {
        let yt = await fg.ytmp3(vid.url, q)
        let { title, dl_url, size } = yt
-       let limit = 100
+       let limit = 1000
        
 if (size.split('MB')[0] >= limit) return conn.reply(m.chat,`El archivo pesa mas de ${limit} MB, se canceló la Descarga.`,  m, fake,).then(_ => m.react('✖️'))
        
@@ -252,5 +254,5 @@ handler.help = ["play"].map(v => v + " <formato> <búsqueda>")
 handler.tags = ["downloader"]
 handler.command = ['play', 'play2', 'mp3', 'mp4', 'mp3doc', 'mp4doc']
 handler.register = true 
-handler.star = 2
+handler.star = 1
 export default handler
