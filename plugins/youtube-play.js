@@ -37,12 +37,12 @@ let handler = async (m, { conn, args, usedPrefix, text, command }) => {
             let q = command.includes('mp4') ? '360p' : '128kbps'
             let dl_url, size, title
             
-            if (command === 'mp3') {
+            if (command === 'mp3' || command === 'mp3doc') {
                 let yt = await fg.yta(vid.url, q)
                 dl_url = yt.dl_url
                 size = yt.size.split('MB')[0]
                 title = yt.title
-            } else if (command === 'mp4') {
+            } else if (command === 'mp4' || command === 'mp4doc') {
                 let yt = await fg.ytv(vid.url, q)
                 dl_url = yt.dl_url
                 size = yt.size.split('MB')[0]
@@ -76,6 +76,45 @@ let handler = async (m, { conn, args, usedPrefix, text, command }) => {
             } else if (command === 'mp4') {
                 await conn.sendMessage(m.chat, { 
                     video: { url: dl_url }, 
+                    caption: `${title}\n⇆ㅤㅤ◁ㅤㅤ❚❚ㅤㅤ▷ㅤㅤ↻\n00:15 ━━━━●────── ${vid.timestamp}`, 
+                    mimetype: 'video/mp4', 
+                    fileName: `${title}.mp4`, 
+                    quoted: m, 
+                    contextInfo: {
+                        'forwardingScore': 200,
+                        'isForwarded': true,
+                        externalAdReply:{
+                            showAdAttribution: false,
+                            title: `${title}`,
+                            body: `${vid.author.name}`,
+                            mediaType: 2, 
+                            sourceUrl: `${vid.url}`,
+                            thumbnail: await (await fetch(vid.thumbnail)).buffer()
+                        }
+                    }
+                }, { quoted: m })
+            } else if (command === 'mp3doc') {
+                await conn.sendMessage(m.chat, { 
+                    document: { url: dl_url }, 
+                    mimetype: "audio/mpeg", 
+                    fileName: `${title}.mp3`, 
+                    quoted: m, 
+                    contextInfo: {
+                        'forwardingScore': 200,
+                        'isForwarded': true,
+                        externalAdReply:{
+                            showAdAttribution: false,
+                            title: `${title}`,
+                            body: `${vid.author.name}`,
+                            mediaType: 2, 
+                            sourceUrl: `${vid.url}`,
+                            thumbnail: await (await fetch(vid.thumbnail)).buffer()
+                        }
+                    }
+                }, { quoted: m })
+            } else if (command === 'mp4doc') {
+                await conn.sendMessage(m.chat, { 
+                    document: { url: dl_url }, 
                     caption: `${title}\n⇆ㅤㅤ◁ㅤㅤ❚❚ㅤㅤ▷ㅤㅤ↻\n00:15 ━━━━●────── ${vid.timestamp}`, 
                     mimetype: 'video/mp4', 
                     fileName: `${title}.mp4`, 
