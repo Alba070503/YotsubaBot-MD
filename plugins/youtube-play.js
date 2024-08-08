@@ -17,37 +17,23 @@ let handler = async (m, { conn, args, usedPrefix, text, command }) => {
         let q = command.includes('mp4') ? '360p' : '128kbps'
         let dl_url, size, title
         
-        if (command === 'mp3' || command === 'mp3doc') {
-            try {
-                let yt = await fg.yta(vid.url, q)
-                dl_url = yt.dl_url
-                size = yt.size.split('MB')[0]
-                title = yt.title
-            } catch (err) {
-                let yt = await fg.ytmp3(vid.url, q)
-                dl_url = yt.dl_url
-                size = yt.size.split('MB')[0]
-                title = yt.title
-            }
-        } else if (command === 'mp4' || command === 'mp4doc') {
-            try {
-                let yt = await fg.ytv(vid.url, q)
-                dl_url = yt.dl_url
-                size = yt.size.split('MB')[0]
-                title = yt.title
-            } catch (err) {
-                let yt = await fg.ytmp4(vid.url, q)
-                dl_url = yt.dl_url
-                size = yt.size.split('MB')[0]
-                title = yt.title
-            }
+        if (command === 'mp3') {
+            let yt = await fg.yta(vid.url, q)
+            dl_url = yt.dl_url
+            size = yt.size.split('MB')[0]
+            title = yt.title
+        } else if (command === 'mp4') {
+            let yt = await fg.ytv(vid.url, q)
+            dl_url = yt.dl_url
+            size = yt.size.split('MB')[0]
+            title = yt.title
         }
 
         if (size >= limit) {
             return conn.reply(m.chat, `El archivo pesa más de ${limit} MB, se canceló la descarga.`, m).then(_ => m.react('✖️'))
         }
 
-        if (command === 'mp3' || command === 'mp3doc') {
+        if (command === 'mp3') {
             await conn.sendMessage(m.chat, { 
                 audio: { url: dl_url }, 
                 mimetype: "audio/mpeg", 
@@ -66,9 +52,10 @@ let handler = async (m, { conn, args, usedPrefix, text, command }) => {
                     }
                 }
             }, { quoted: m })
-        } else if (command === 'mp4' || command === 'mp4doc') {
+        } else if (command === 'mp4') {
             await conn.sendMessage(m.chat, { 
-                document: { url: dl_url }, 
+                video: { url: dl_url }, 
+                caption: `${title}\n⇆ㅤㅤ◁ㅤㅤ❚❚ㅤㅤ▷ㅤㅤ↻\n00:15 ━━━━●────── ${vid.timestamp}`, 
                 mimetype: 'video/mp4', 
                 fileName: `${title}.mp4`, 
                 quoted: m, 
