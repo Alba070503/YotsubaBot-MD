@@ -1,5 +1,4 @@
 import fg from 'api-dylux'
-import { youtubedl, youtubedlv2 } from '@bochilteam/scraper'
 import yts from 'yt-search'
 import fetch from 'node-fetch' 
 
@@ -13,7 +12,21 @@ let handler = async (m, { conn, args, usedPrefix, text, command }) => {
         
         if (!vid) return conn.reply(m.chat, `*☓ No se encontraron resultados para tu búsqueda.*`, m)
 
-        const limit = 100
+        const infoTexto = `乂  Y O U T U B E   M U S I C\n
+        ✩ *Título ∙* ${vid.title}\n
+        ✩ *Duración ∙* ${vid.timestamp}\n
+        ✩ *Visitas ∙* ${vid.views}\n
+        ✩ *Autor ∙* ${vid.author.name}\n
+        ✩ *Publicado ∙* ${vid.ago}\n
+        ✩ *Url ∙* ${'https://youtu.be/' + vid.videoId}\n`.trim()
+
+        await conn.sendButton(m.chat, infoTexto, wm, vid.thumbnail, [
+            ['Audio 📀', `${usedPrefix}mp3 ${text}`],
+            ['Video 🎥', `${usedPrefix}mp4 ${text}`],
+            ['AudioDoc 📀', `${usedPrefix}mp3doc ${text}`],
+            ['VideoDoc 🎥', `${usedPrefix}mp4doc ${text}`]
+        ], null, [['Canal', `https://whatsapp.com/channel/0029VaAN15BJP21BYCJ3tH04`]], m)
+
         let q = command.includes('mp4') ? '360p' : '128kbps'
         let dl_url, size, title
         
@@ -29,6 +42,7 @@ let handler = async (m, { conn, args, usedPrefix, text, command }) => {
             title = yt.title
         }
 
+        const limit = 100
         if (size >= limit) {
             return conn.reply(m.chat, `El archivo pesa más de ${limit} MB, se canceló la descarga.`, m).then(_ => m.react('✖️'))
         }
