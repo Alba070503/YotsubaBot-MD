@@ -17,11 +17,12 @@ let handler = async (m, { conn, args, usedPrefix, text, command }) => {
             vid = (await yts({ videoId })).videos[0];
         } else {
             let res = await yts(text);
-            vid = res.videos[0];
+            if (res.videos.length > 0) {
+                vid = res.videos[0];
+            } else {
+                throw new Error("No se encontraron videos para la búsqueda dada.");
+            }
         }
-
-        // Si no se encuentra el video
-        if (!vid) return conn.reply(m.chat, `*☓ No se encontraron resultados para tu búsqueda.*`, m);
 
         // Información del video
         const infoTexto = `乂  Y O U T U B E   M U S I C\n
