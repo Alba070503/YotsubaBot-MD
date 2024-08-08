@@ -107,25 +107,22 @@ async function ytMp4(url) {
                 if (item.container == 'mp4' && item.hasVideo == true && item.hasAudio == true) {
                     let { qualityLabel, contentLength } = item;
                     let bytes = await bytesToSize(contentLength);
-                    result[i] = { video: item.url, quality: qualityLabel, size: bytes }
+                    result.push({ video: item.url, quality: qualityLabel, size: bytes });
                 }
             }
-            let resultFix = result.filter(x => x.video != undefined && x.size != undefined && x.quality != undefined);
+            let resultFix = result.filter(x => x.video && x.size && x.quality);
             let tiny = await axios.get(`https://tinyurl.com/api-create.php?url=${resultFix[0].video}`);
             let tinyUrl = tiny.data;
             let title = getUrl.videoDetails.title;
             let thumb = getUrl.player_response.microformat.playerMicroformatRenderer.thumbnail.thumbnails[0].url;
-            resolve({ title, result: tinyUrl, thumb })
-        }).catch(reject)
+            resolve({ title, result: tinyUrl, thumb });
+        }).catch(reject);
     });
 }
 
 function bytesToSize(bytes) {
-    return new Promise((resolve) => {
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-        if (bytes === 0) return 'n/a';
-        const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
-        if (i === 0) resolve(`${bytes} ${sizes[i]}`);
-        resolve(`${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}`)
-    });
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) return 'n/a';
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+    return `${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}`;
 }
