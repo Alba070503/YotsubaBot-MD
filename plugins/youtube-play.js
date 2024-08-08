@@ -14,8 +14,19 @@ let handler = async (m, { conn, args, usedPrefix, text, command }) => {
         await m.react('🕓'); // Reacción inicial para indicar que el bot está procesando
 
         if (url.startsWith('https://youtu.be/') || url.startsWith('https://www.youtube.com/')) {
-            vid = { url: url }; // Si es un enlace de YouTube, se usa directamente
+            // Obtener información del video directamente desde YouTube
+            const videoInfo = await ytdl.getInfo(url);
+            vid = {
+                title: videoInfo.videoDetails.title,
+                url: videoInfo.videoDetails.video_url,
+                timestamp: new Date(videoInfo.videoDetails.lengthSeconds * 1000).toISOString().substr(11, 8),
+                views: videoInfo.videoDetails.viewCount,
+                author: videoInfo.videoDetails.author.name,
+                ago: videoInfo.videoDetails.uploadDate,
+                thumbnail: videoInfo.videoDetails.thumbnails[0].url,
+            };
         } else {
+            // Búsqueda de video usando palabras clave
             let res = await yts(text);
             if (res.videos.length > 0) {
                 vid = res.videos[0];
@@ -28,7 +39,7 @@ let handler = async (m, { conn, args, usedPrefix, text, command }) => {
         ✩ *Título ∙* ${vid.title || 'Desconocido'}\n
         ✩ *Duración ∙* ${vid.timestamp || 'Desconocida'}\n
         ✩ *Visitas ∙* ${vid.views || 'Desconocidas'}\n
-        ✩ *Autor ∙* ${vid.author?.name || 'Desconocido'}\n
+        ✩ *Autor ∙* ${vid.author || 'Desconocido'}\n
         ✩ *Publicado ∙* ${vid.ago || 'Desconocido'}\n
         ✩ *Url ∙* ${vid.url || 'Desconocido'}\n`.trim();
 
