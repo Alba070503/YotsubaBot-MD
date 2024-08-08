@@ -1,28 +1,40 @@
-import fetch from 'node-fetch'
+import fetch from "node-fetch";
+import db from "../lib/database.js";
 
-let handler = async (m, { conn, text, usedPrefix, command }) => {
-	if (!text) throw `Mau Cari Apa?`
-    let res = await fetch(`https://api.lolhuman.xyz/api/spotifysearch?apikey=${global.lolkey}&query=${encodeURIComponent(text)}`)
-    if (!res.ok) throw await `Terjadi kesalahan.`
-    let json = await res.json()
-    if (json.status != '200') throw `Terjadi Kesalahan, Coba Lagi Nanti.`
-	let get_result = json.result
-	let ini_txt = `Found : *${text}*`
-	for (var x of get_result) {
-		ini_txt += `\n\n*Title : ${x.title}*\n`
-		ini_txt += `Artists : ${x.artists}\n`
-		ini_txt += `Duration : ${x.duration}\n`
-		ini_txt += `Link : ${x.link}\n`
-		ini_txt += `${x.preview_url ? `Preview : ${x.preview_url}\n` : ''}`
-		ini_txt += `───────────────────`
+let handler = async (m, { conn, args, usedPrefix, command }) => {
+	conn.pixiv = conn.pixiv ? conn.pixiv : {};
+	if (m.sender in conn.pixiv)
+		return m.reply("Tunggu Sebentar Sebelum Menggunakannya Kembali...");
+	if (!args[0]) return m.reply(`Mau Cari Apa?`);
+	try {
+		const result = await fetch(
+			API("rose", "/searching/pixiv", {
+				query: args[0],
+				mode: "search",
+				r18: 1,
+				random: 1,
+			}, "apikey")
+		);
+		const json = await result.json();
+		if (json.status == false) return m.reply(`${json.message} `);
+		await conn.sendButton(
+			m.chat,
+			`Title: _${json.title}_\nAuthor : ${json.author}`,
+			wm,
+			json.url,
+			[["\nAhh Jadi Sange Gweh", `huuu`]],
+			m
+		);
+	} catch {
+		m.reply("Waduh server nya error :(");
+	} finally {
+		delete conn.pixiv[m.sender];
 	}
-	m.reply(ini_txt)
-}
+};
+handler.command = ["pixiv"];
+handler.help = ["pixiv"];
+handler.tags = ["search"];
 
-handler.help = ['spotifysearch']
-handler.tags = ['search']
-handler.command = /^(buscarspotify|lyrics|lyric|letra)$/i
+handler.premium = true
 
-handler.limit = true
-
-export default handler
+export default handler;
