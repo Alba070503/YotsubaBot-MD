@@ -1,6 +1,6 @@
 import fg from 'api-dylux'
 import yts from 'yt-search'
-import fetch from 'node-fetch' 
+import fetch from 'node-fetch'
 
 let handler = async (m, { conn, args, usedPrefix, text, command }) => {
     if (!text) return conn.reply(m.chat, `*🚩 Ingresa el título o enlace de un video de YouTube.*`, m)
@@ -12,8 +12,8 @@ let handler = async (m, { conn, args, usedPrefix, text, command }) => {
         if (command === "play" || command === "play2") {
             await m.react('🕓')
 
-            if (url.startsWith('http')) {
-                vid = (await yts({ videoId: url.split('v=')[1] })).videos[0]
+            if (url.startsWith('https://youtu.be/') || url.startsWith('https://www.youtube.com/')) {
+                vid = (await yts({ videoId: url.split('v=')[1] || url.split('youtu.be/')[1] })).videos[0]
             } else {
                 let res = await yts(text)
                 vid = res.videos[0]
@@ -38,8 +38,8 @@ let handler = async (m, { conn, args, usedPrefix, text, command }) => {
         } else {
             await m.react('🕓')
 
-            if (url.startsWith('http')) {
-                vid = (await yts({ videoId: url.split('v=')[1] })).videos[0]
+            if (url.startsWith('https://youtu.be/') || url.startsWith('https://www.youtube.com/')) {
+                vid = (await yts({ videoId: url.split('v=')[1] || url.split('youtu.be/')[1] })).videos[0]
             } else {
                 let res = await yts(text)
                 vid = res.videos[0]
