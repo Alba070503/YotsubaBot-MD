@@ -3,13 +3,21 @@ import yts from 'yt-search'
 import fetch from 'node-fetch' 
 
 let handler = async (m, { conn, args, usedPrefix, text, command }) => {
-    if (!text) return conn.reply(m.chat, `*🚩 Ingresa el título de un video o música de YouTube.*`, m)
+    if (!text) return conn.reply(m.chat, `*🚩 Ingresa el título o enlace de un video de YouTube.*`, m)
+
+    let url = args[0]
+    let vid = null
 
     try {
         if (command === "play" || command === "play2") {
             await m.react('🕓')
-            let res = await yts(text)
-            let vid = res.videos[0]
+
+            if (url.startsWith('http')) {
+                vid = (await yts({ videoId: url.split('v=')[1] })).videos[0]
+            } else {
+                let res = await yts(text)
+                vid = res.videos[0]
+            }
 
             if (!vid) return conn.reply(m.chat, `*☓ No se encontraron resultados para tu búsqueda.*`, m)
 
@@ -22,15 +30,20 @@ let handler = async (m, { conn, args, usedPrefix, text, command }) => {
             ✩ *Url ∙* ${'https://youtu.be/' + vid.videoId}\n`.trim()
 
             await conn.sendButton(m.chat, infoTexto, wm, vid.thumbnail, [
-                ['Audio 📀', `${usedPrefix}mp3 ${text}`],
-                ['Video 🎥', `${usedPrefix}mp4 ${text}`],
-                ['AudioDoc 📀', `${usedPrefix}mp3doc ${text}`],
-                ['VideoDoc 🎥', `${usedPrefix}mp4doc ${text}`]
+                ['Audio 📀', `${usedPrefix}mp3 ${url || text}`],
+                ['Video 🎥', `${usedPrefix}mp4 ${url || text}`],
+                ['AudioDoc 📀', `${usedPrefix}mp3doc ${url || text}`],
+                ['VideoDoc 🎥', `${usedPrefix}mp4doc ${url || text}`]
             ], null, [['Canal', `https://whatsapp.com/channel/0029VaAN15BJP21BYCJ3tH04`]], m)
         } else {
             await m.react('🕓')
-            let res = await yts(text)
-            let vid = res.videos[0]
+
+            if (url.startsWith('http')) {
+                vid = (await yts({ videoId: url.split('v=')[1] })).videos[0]
+            } else {
+                let res = await yts(text)
+                vid = res.videos[0]
+            }
 
             if (!vid) return conn.reply(m.chat, `*☓ No se encontraron resultados para tu búsqueda.*`, m)
 
