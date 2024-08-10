@@ -650,7 +650,7 @@ mentionedJid:[user],
 "externalAdReply": {
 "showAdAttribution": true,
 "renderLargerThumbnail": true,
-"thumbnail": apii.data, 
+"thumbnail": 'https://telegra.ph/file/c9031cb590eb25e0d81a6.jpg'), 
 "title": [wm, packname, botname].getRandom(),
 "containsAutoReply": true,
 "mediaType": 1, 
