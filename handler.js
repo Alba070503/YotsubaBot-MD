@@ -650,12 +650,12 @@ mentionedJid:[user],
 "externalAdReply": {
 "showAdAttribution": true,
 "renderLargerThumbnail": true,
-"thumbnail": 'https://telegra.ph/file/c9031cb590eb25e0d81a6.jpg'), 
+"thumbnail": apii.data,
 "title": [wm, packname, botname].getRandom(),
 "containsAutoReply": true,
 "mediaType": 1, 
 sourceUrl: redes }}}, { quoted: fkontak2 })
-apii.data = ''
+apii.data = 'https://telegra.ph/file/c9031cb590eb25e0d81a6.jpg'
 //this.sendFile(id, apii.data, 'pp.jpg', text, null, false, { mentions: [user] }, { quoted: fkontak2 })
 }}}
 
