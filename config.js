@@ -12,31 +12,29 @@ global.confirmCode = ""
 
 //Números de los propietarios xd
 global.owner = [
-['59175655965', '👑 Cʀᴇᴀᴅᴏʀ 🪐', 1],
-['59169082575', 'Segundo Numero 👑', 1],
-['527421112587'],
-['51906662557'],
-['573218138672']]
+['5730444781177', '👑 Cʀᴇᴀᴅᴏʀ 🪐', 1],
+['573044491169', 'Segundo Numero 👑', 1],
+
 
 //• ↳𝑨𝑮𝑹𝑬𝑮𝑨𝑻𝑬 𝑺𝑰 𝑬𝑹𝑬𝑺 𝑶𝑾𝑵𝑬𝑹
 global.contactos = [
-["59175655964", '@Alba070503 Develop 👑', 1],
-["59169082575", 'Segundo Número 💖', 1]]
+["573044781177", '@akane 👑', 1],
+["573044491169", 'Segundo Número 💖', 1]]
 
-global.suittag = ['573012482597']
+global.suittag = ['573044491169']
 global.prems = []
 global.mods = []
 
 
 //• ↳ ◜𝑴𝑨𝑹𝑪𝑨𝑺 𝑫𝑬 𝑨𝑮𝑼𝑨◞ • 🍁
 global.packname = 'Rei Ayanami Bot-MD🍁';
-global.author = '@Alba070503 🍁';
+global.author = '@akaneVN 🍁';
 global.wm = 'Rei Ayanami Bot-MD🍁';
 global.titulowm = 'Rei Ayanami Bot-MD🍁';
-global.titulowm2 = `@Alba070503`
-global.igfg = '@Alba070503';
+global.titulowm2 = `@AkaneVN`
+global.igfg = '@AkaneVn';
 global.botname = 'Rei Ayanami Bot-MD🍁'
-global.team = '👑 Developed By • ✨ @Alba070503';
+global.team = '👑 Developed By • ✨ @AkaneVN';
 global.vs = '4.4.0';
 
 //• ↳ ◜𝑴𝑺𝑮 𝑫𝑬 𝑬𝑺𝑷𝑬𝑹𝑨◞ • 🈸
