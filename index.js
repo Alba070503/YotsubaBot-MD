@@ -1,46 +1,47 @@
-console.log('🍁 Iniciando Rei Ayanami-Bot-MD 🍁')
 import { join, dirname } from 'path'
 import { createRequire } from 'module'
 import { fileURLToPath } from 'url'
-import { setupMaster, fork } from 'cluster'
-import { watchFile, unwatchFile } from 'fs'
+import boxen from 'boxen'
+import { setupMaster, fork } from 'cluster';
+import { watchFile, unwatchFile } from 'fs';
 import cfonts from 'cfonts'
 import { createInterface } from 'readline'
 import yargs from 'yargs'
-
+import chalk from 'chalk'
+console.log('\n✰ Iniciando YotsubaBot-MD 🌸')
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const require = createRequire(__dirname) 
-const { name, author } = require(join(__dirname, './package.json')) 
+const require = createRequire(__dirname)
+const { name, description, collaborators, author, version } = require(join(__dirname, './package.json'))
 const { say } = cfonts
 const rl = createInterface(process.stdin, process.stdout)
+const subtitleStyle = chalk.white.bold
+const responseStyle = chalk.dim.bold
 
-say('Rey Ayanami\nBot-MD', {
-font: 'block',
-align: 'center',
-colors: ['white']
+let activeCollaborators = ''
+for (const key in collaborators) {
+if (collaborators.hasOwnProperty(key)) {
+activeCollaborators += collaborators[key] + ', '
+}}
+activeCollaborators = activeCollaborators.slice(0, -2);
+cfonts.say('Yotsuba\nBot', {
+align: 'center',           
+gradient: ['red', 'blue'] 
 })
-say(`Multi Device`, {
-font: 'chrome',
-align: 'center',
-colors: ['red']
-})
-say(`Powered @Alba070503`, {
+cfonts.say(description, {
 font: 'console',
 align: 'center',
-colors: ['yellow']
+gradient: ['blue', 'magenta']
 })
-
+const message = `${subtitleStyle('Desarrollado por »')} ${responseStyle(author.name)}
+${subtitleStyle('Código basado por »')} ${responseStyle('BrunoSobrino')}
+${subtitleStyle('Colaboradores activos »')} ${responseStyle(activeCollaborators)}
+${subtitleStyle('Versión »')} ${responseStyle(version)}`
+console.log(boxen(message, { padding: 1, margin: 1, borderStyle: 'double', borderColor: 'blue', float: 'center', }))
 var isRunning = false
-
 function start(file) {
 if (isRunning) return
 isRunning = true
 let args = [join(__dirname, file), ...process.argv.slice(2)]
-say([process.argv[0], ...args].join(' '), {
-font: 'console',
-align: 'center',
-colors: ['green']
-})
 setupMaster({
 exec: args[0],
 args: args.slice(1),
@@ -60,8 +61,8 @@ break
 })
 p.on('exit', (_, code) => {
 isRunning = false
-console.error('Ocurrió un error:', code)
-process.exit();
+console.error('🚩 Error:\n', code)
+process.exit()
 if (code === 0) return
 watchFile(args[0], () => {
 unwatchFile(args[0])
@@ -74,5 +75,10 @@ if (!rl.listenerCount()) rl.on('line', line => {
 p.emit('message', line.trim())
 })
 }
-
-start('rei.js')
+process.on('warning', (warning) => {
+if (warning.name === 'MaxListenersExceededWarning') {
+console.warn('🚩 Se excedió el límite de Listeners en:')
+console.warn(warning.stack)
+}
+})
+start('yotsuba.js')
