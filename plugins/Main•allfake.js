@@ -103,8 +103,7 @@ global.fkontak = { key: {participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJ
 global.fake = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363198641161536@newsletter', newsletterName: namechannel, serverMessageId: -1 }
 }}, { quoted: m }
 
-global.rpl = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: "120363198641161536@newsletter", serverMessageId: 100, newsletterName: namechannel, }, externalAdReply: { mediaUrl: redes, mediaType: 'VIDEO', description: namebot, title: packname, body: namebot, thumbnailUrl: icono, sourceUrl: redes }}}
-
+global.rpl = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: "120363263466636910@newsletter", serverMessageId: 100, newsletterName: namechannel, }, externalAdReply: { mediaUrl: redes, mediaType: 'VIDEO', description: namebot, title: packname, body: namebot, thumbnailUrl: icono, sourceUrl: redes }}}
 global.rply = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: "120363198641161536@newsletter", serverMessageId: 100, newsletterName: namechannel, }, externalAdReply: { showAdAttribution: true, mediaUrl: yt, mediaType: 'VIDEO', description: 'Suscribete: ' + yt, title: 'Alba070503- YouTube', body: 'ayudame a crecer mi canal de yt humilde', thumbnailUrl: icono, sourceUrl: yt}}}
 
 
