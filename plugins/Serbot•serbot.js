@@ -34,7 +34,7 @@ const { version } = await fetchLatestBaileysVersion()
 const connectionOptions = {
 logger: pino({ level: 'silent' }),
 printQRInTerminal: true,
-browser: ['Yaemori Sub-Bot', 'Edge', '2.0.0'],
+browser: ['Yotsuba Sub-Bot', 'Edge', '2.0.0'],
 auth: {
 creds: state.creds,
 keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" })),
@@ -83,7 +83,7 @@ loadDatabase()
 if (connection == "open") {
 conn.isInit = true
 global.conns.push(conn)
-await parentw.reply(m.chat, args[0] ? '🐢 Conectado con éxito al WhatsApp.' : '🚩 Vinculaste un Sub-Bot con éxito.', m, rcanal)
+await parentw.reply(m.chat, args[0] ? '🍁 Conectado con éxito al WhatsApp.' : '🚩 Vinculaste un Sub-Bot con éxito.', m, rcanal)
 await sleep(5000)
 if (args[0]) {
 return
