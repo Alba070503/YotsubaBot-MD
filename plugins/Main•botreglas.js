@@ -13,7 +13,7 @@ let yotsuba = `🚩 *Respeta las reglas de Yotsuba Nakano*\n
 ⚠️ 𝗔𝘃𝗶𝘀𝗼: *Puedes apoyarnos dejando una estrellita 🌟 al repositorio oficial de Yotsuba.*
 
 ${global.md}`.trim()
-await conn.reply(m.chat, yaemori, m, fake)
+await conn.reply(m.chat, yotsuba, m, fake)
 
 }
 handler.help = ['botreglas']
