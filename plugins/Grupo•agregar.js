@@ -12,7 +12,7 @@ if (text.includes('+')) await m.reply(`🍟 Ingrese el número todo junto sin el
 let group = m.chat
 let link = 'https://chat.whatsapp.com/' + await conn.groupInviteCode(group)
 
-await conn.reply(text+'@s.whatsapp.net', `*🍟 Hola! soy Ai Yaemori, Una persona te a invitado a su grupo.*\n\n*Link*\n${link}`, m, {mentions: [m.sender]})
+await conn.reply(text+'@s.whatsapp.net', `*🍟 Hola! soy Yotsuba Nakano, Una persona te a invitado a su grupo.*\n\n*Link*\n${link}`, m, {mentions: [m.sender]})
 await m.reply(`🍟 *Enviando la invitación al privado de ${nom}*\n\n*📅 ${fecha}*\n⏰ *${tiempo}*`) 
 
 }
