@@ -1,13 +1,13 @@
 var handler  = async (m, { conn }) => {
 
-let texto = `🚩 *Instalación de Ai Yaemori*
+let texto = `🚩 *Instalación de Yotsuba Bot
 
 ⬡ Dudas: ${creador}
 ⬡ Tutoríal: https://youtu.be/0JtOm_ie4CQ?si=kbL823AQmUhC3PmC
 
 *Comandos de instalación via cloudshell 🌱*
 
-git clone https://github.com/Dev-Diego/YaemoriBot-MD
+git clone https://github.com/Alba070503/YotsubaBot-MD
 
 cd YaemoriBot-MD && yarn install && npm install 
 
@@ -22,7 +22,7 @@ conn.reply(m.chat, texto, m, rcanal )
 handler.before = async m => {
 
 if (/^comandos$/i.test(m.text) ) {
-conn.reply(m.chat, 'git clone https://github.com/Dev-Diego/YaemoriBot-MD && cd YaemoriBot-MD', m, rcanal)
+conn.reply(m.chat, 'git clone https://github.com/Dev-Diego/YotsubaBot-MD && cd YotsubaBot-MD', m, rcanal)
 await delay(1000 * 1)
 conn.reply(m.chat, 'yarn install && npm install', m, rcanal)
 await delay(1000 * 1)
@@ -41,7 +41,7 @@ conn.sendMessage(m.chat, {image: {url: 'https://telegra.ph/file/26d87a519e24fe3f
 }
 handler.help = ['instalaryaemori']
 handler.tags = ['main']
-handler.command = ['instalarbot', 'instalarai', 'botinstalar', 'aiinstalar', 'instalaryaemori', 'yaemoriinstalar']
+handler.command = ['instalarbot', 'instalaryb', 'botinstalar', 'aiinstalar', 'instalaryotsuba', 'yotsubaiinstalar']
 export default handler
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
