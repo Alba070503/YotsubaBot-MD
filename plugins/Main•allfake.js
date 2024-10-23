@@ -35,7 +35,7 @@ handler.all = async function (m) {
   global.creador = 'Wa.me/5493876432076'
   global.ofcbot = `${conn.user.jid.split('@')[0]}`
   global.asistencia = 'https://wa.me/message/O4QPPHZOFDOJI1'
-  global.namechannel = '© All Right Reserved • YaemoriBot'
+  global.namechannel = '© All Right Reserved • YotsubaBot-MD'
 
   // Reacciones de comandos
   global.rwait = '🕒'
@@ -58,9 +58,9 @@ handler.all = async function (m) {
   // Enlaces
   var canal = 'https://whatsapp.com/channel/0029VaQD7LAJP216tu9liI2A'  
   var canal2 = 'https://whatsapp.com/channel/0029Vam7yUg77qVaz3sIAp0z'
-  var git = 'https://github.com/Dev-Diego' 
-  var youtube = 'https://www.youtube.com/@OfcDiego' 
-  var github = 'https://github.com/Dev-Diego/YaemoriBot-MD'  
+  var git = 'https://github.com/Alba070503' 
+  var youtube = 'https://www.youtube.com/@alba0705o3' 
+  var github = 'https://github.com/Alba070503/YotsubaBot-MD'  
   var panel = 'https://panel.skyultraplus.com'
   var dash = 'https://dash.skyultraplus.com'
   var tienda = 'https://dash.skyultraplus.com/store'
