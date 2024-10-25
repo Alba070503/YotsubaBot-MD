@@ -63,7 +63,7 @@ await conn.sendMessage(m.chat, {document: {url: dl_url}, mimetype: 'audio/mpeg',
 
 try {
 
-let lolhuman = await fetch(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${lolkeysapi}&url=${yt_play[0].url}`)
+let lolhuman = await fetch(`https://deliriussapi-oficial.vercel.app/download/ytmp3?url=${yt_play[0].url}`)
 let lolh = await lolhuman.json()
 let n = lolh.result.title || 'error'
 await conn.sendMessage(m.chat, {document: {url: lolh.result.link}, fileName: `${n}.mp3`, mimetype: 'audio/mpeg'}, {quoted: fkontak})
@@ -101,7 +101,7 @@ await await conn.sendMessage(m.chat, {document: {url: dl_url}, mimetype: 'video/
 
 try {
 
-const lolhuman = await fetch(`https://api.lolhuman.xyz/api/ytvideo2?apikey=${lolkeysapi}&url=${yt_play[0].url}`)
+const lolhuman = await fetch(`https://deliriussapi-oficial.vercel.app/download/ytmp4?url=${yt_play[0].url}`)
 const lolh = await lolhuman.json()
 const n = lolh.result.title || 'error'
 const n2 = lolh.result.link
