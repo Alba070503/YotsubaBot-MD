@@ -1,4 +1,4 @@
-import Starlights from '@StarlightsTeam/Scraper'
+import fg from 'api-dylux'
 import yts from 'yt-search'
 import fetch from 'node-fetch' 
 
