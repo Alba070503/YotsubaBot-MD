@@ -18,8 +18,8 @@ const guardarDatos = (data) => {
 const verificarBot = () => {
   try {
     const packageData = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
-    if (packageData.name !== 'YaemoriBot-MD') return false;
-    if (packageData.repository.url !== 'git+https://github.com/Dev-Diego/YaemoriBot-MD.git') return false;
+    if (packageData.name !== 'YotsubaBot-MD') return false;
+    if (packageData.repository.url !== 'git+https://github.com/Alba070503/YotsubaBot-MD.git') return false;
     return true;
   } catch (error) {
     console.error('✧ Error al leer package.json:', error);
