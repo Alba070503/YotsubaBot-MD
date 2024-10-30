@@ -46,6 +46,7 @@
 "gradient-string": "^2.0.2",
 "axios": "^1.1.2",
 "acrcloud": "^1.4.0",
+"google-libphonenumber": "3.2.38",
 "form-data": "^4.0.0",
 "cfonts": "^3.3.0",
 "boxen": "^7.1.1",
