@@ -19,26 +19,31 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 ✩ *Publicado ∙* ${videoData.ago}\n
 ✩ *Url ∙* ${urls}\n`.trim();
 
-    // Enviar mensaje con botones solo si no se trata de una respuesta a botón
-    if (!m.buttonClicked) {
-        await conn.sendButton(m.chat, infoTexto + f, 'Marca del bot', videoData.thumbnail, [
-            ['Audio 📀', `${usedPrefix}play ${urls}`],
-            ['Video 🎥', `${usedPrefix}playvid ${urls}`]
-        ], m);
-        return;
-    }
+    // Enviar mensaje con botones
+    await conn.sendButton(m.chat, infoTexto + f, 'Marca del bot', videoData.thumbnail, [
+        ['Audio 📀', `${usedPrefix}playaudio ${urls}`],
+        ['Video 🎥', `${usedPrefix}playvideo ${urls}`]
+    ], m);
+};
 
-    // Descargar y enviar el archivo cuando se presiona el botón de Audio o Video
-    let res = await dl_vid(urls);
-    let type = isVideo ? 'video' : 'audio';
+// Función de manejo para audio y video
+handler.handleMedia = async (m, { conn, text, command }) => {
+    let url = text;
+    let isVideo = command === 'playvideo';
+
+    // Descargar el archivo
+    let res = await dl_vid(url);
     let fileUrl = isVideo ? res.data.mp4 : res.data.mp3;
 
-    // Reenvío de la información junto con el archivo seleccionado
+    // Información del mensaje
+    let fileType = isVideo ? 'video' : 'audio';
+    let mimeType = isVideo ? "video/mp4" : "audio/mpeg";
+
+    // Enviar el archivo seleccionado
     await conn.sendMessage(m.chat, { 
-        [type]: { url: fileUrl }, 
-        caption: infoTexto,
-        gifPlayback: false, 
-        mimetype: isVideo ? "video/mp4" : "audio/mpeg" 
+        [fileType]: { url: fileUrl }, 
+        mimetype: mimeType, 
+        caption: `Aquí tienes el ${isVideo ? 'video' : 'audio'} solicitado!`
     }, { quoted: m });
 };
 
@@ -47,6 +52,11 @@ handler.command = ['play', 'playvid'];
 handler.help = ['play', 'playvid'];
 handler.tags = ['dl'];
 export default handler;
+
+// Comandos adicionales para enviar audio y video al presionar el botón
+handler.command = ['playaudio', 'playvideo'];
+handler.help.push('playaudio', 'playvideo');
+handler.tags.push('dl');
 
 // Función para descargar el video/audio
 async function dl_vid(url) {
