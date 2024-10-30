@@ -1,154 +1,61 @@
-import fg from 'api-dylux'
-import yts from 'yt-search'
-import fetch from 'node-fetch' 
+import yts from 'yt-search' 
+const handler = async (m, { conn, text, usedPrefix, command }) => {
+    if (!text) throw `Ejemplo: ${usedPrefix + command} diles`,m ,rcanal;
 
-let handler = async (m, { conn, args, usedPrefix, text, command }) => {
-    if (!text) return conn.reply(m.chat, `*🚩 Ingresa un título o enlace de un video o música de YouTube.*`, m)
+    const randomReduction = Math.floor(Math.random() * 5) + 1;
+    let search = await yts(text);
+    let f = `\n\n${String.fromCharCode(68,101,118,101,108,111,112,101,100,32,98,121,32,73,39,109,32,70,122,32,126)}`;
+    let isVideo = /vid$/.test(command);
+    let urls = search.all[0].url;
+    let body = `\`YouTube Play\`
 
-    try {
-        let vid;
+    *Título:* ${search.all[0].title}
+    *Vistas:* ${search.all[0].views}
+    *Duración:* ${search.all[0].timestamp}
+    *Subido:* ${search.all[0].ago}
+    *Url:* ${urls}
 
-        // Verificar si el texto ingresado es un enlace de YouTube
-        if (text.match(/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi)) {
-            await m.react('🕓')
-            let res = await yts({ videoId: text.split('v=')[1] || text.split('/')[3] }) // Obtén el video directamente
-            vid = res
-        } else {
-            await m.react('🕓')
-            let res = await yts(text)
-            vid = res.videos[0] // Obtén el primer video de la búsqueda
-        }
+🕒 *Su ${isVideo ? 'Video' : 'Audio'} se está enviando, espere un momento...*`;
+    
+    conn.sendMessage(m.chat, { 
+        image: { url: search.all[0].thumbnail }, 
+        caption: body + f
+    }, { quoted: m,rcanal });
+    m.react('react1')
 
-        if (!vid) return conn.reply(m.chat, `*☓ No se encontraron resultados para tu búsqueda.*`, m)
-
-        if (command === "play" || command === "play2") {
-            const infoTexto = `乂  Y O U T U B E   M U S I C\n
-            ✩ *Título ∙* ${vid.title}\n
-            ✩ *Duración ∙* ${vid.timestamp}\n
-            ✩ *Visitas ∙* ${vid.views}\n
-            ✩ *Autor ∙* ${vid.author.name}\n
-            ✩ *Publicado ∙* ${vid.ago}\n
-            ✩ *Url ∙* ${'https://youtu.be/' + vid.videoId}\n`.trim()
-
-            await conn.sendButton(m.chat, infoTexto, wm, vid.thumbnail, [
-                ['Audio 📀', `${usedPrefix}mp3 ${vid.url}`],
-                ['Video 🎥', `${usedPrefix}mp4 ${vid.url}`],
-                ['AudioDoc 📀', `${usedPrefix}mp3doc ${vid.url}`],
-                ['VideoDoc 🎥', `${usedPrefix}mp4doc ${vid.url}`]
-            ], null, [['Canal', `https://whatsapp.com/channel/0029VaAN15BJP21BYCJ3tH04`]], m)
-        } else {
-            let q = command.includes('mp4') ? '360p' : '128kbps'
-            let dl_url, size, title
-            
-            if (command === 'mp3' || command === 'mp3doc') {
-                let yt = await fg.yta(vid.url, q)
-                dl_url = yt.dl_url
-                size = yt.size.split('MB')[0]
-                title = yt.title
-            } else if (command === 'mp4' || command === 'mp4doc') {
-                let yt = await fg.ytv(vid.url, q)
-                dl_url = yt.dl_url
-                size = yt.size.split('MB')[0]
-                title = yt.title
-            }
-
-            const limit = 100
-            if (size >= limit) {
-                return conn.reply(m.chat, `El archivo pesa más de ${limit} MB, se canceló la descarga.`, m).then(_ => m.react('✖️'))
-            }
-
-            if (command === 'mp3') {
-                await conn.sendMessage(m.chat, { 
-                    audio: { url: dl_url }, 
-                    mimetype: "audio/mpeg", 
-                    fileName: `${title}.mp3`, 
-                    quoted: m, 
-                    contextInfo: {
-                        'forwardingScore': 200,
-                        'isForwarded': true,
-                        externalAdReply:{
-                            showAdAttribution: false,
-                            title: `${title}`,
-                            body: `${vid.author.name}`,
-                            mediaType: 2, 
-                            sourceUrl: `${vid.url}`,
-                            thumbnail: await (await fetch(vid.thumbnail)).buffer()
-                        }
-                    }
-                }, { quoted: m })
-            } else if (command === 'mp4') {
-                await conn.sendMessage(m.chat, { 
-                    video: { url: dl_url }, 
-                    caption: `${title}\n⇆ㅤㅤ◁ㅤㅤ❚❚ㅤㅤ▷ㅤㅤ↻\n00:15 ━━━━●────── ${vid.timestamp}`, 
-                    mimetype: 'video/mp4', 
-                    fileName: `${title}.mp4`, 
-                    quoted: m, 
-                    contextInfo: {
-                        'forwardingScore': 200,
-                        'isForwarded': true,
-                        externalAdReply:{
-                            showAdAttribution: false,
-                            title: `${title}`,
-                            body: `${vid.author.name}`,
-                            mediaType: 2, 
-                            sourceUrl: `${vid.url}`,
-                            thumbnail: await (await fetch(vid.thumbnail)).buffer()
-                        }
-                    }
-                }, { quoted: m })
-            } else if (command === 'mp3doc') {
-                await conn.sendMessage(m.chat, { 
-                    document: { url: dl_url }, 
-                    mimetype: "audio/mpeg", 
-                    fileName: `${title}.mp3`, 
-                    quoted: m, 
-                    contextInfo: {
-                        'forwardingScore': 200,
-                        'isForwarded': true,
-                        externalAdReply:{
-                            showAdAttribution: false,
-                            title: `${title}`,
-                            body: `${vid.author.name}`,
-                            mediaType: 2, 
-                            sourceUrl: `${vid.url}`,
-                            thumbnail: await (await fetch(vid.thumbnail)).buffer()
-                        }
-                    }
-                }, { quoted: m })
-            } else if (command === 'mp4doc') {
-                await conn.sendMessage(m.chat, { 
-                    document: { url: dl_url }, 
-                    caption: `${title}\n⇆ㅤㅤ◁ㅤㅤ❚❚ㅤㅤ▷ㅤㅤ↻\n00:15 ━━━━●────── ${vid.timestamp}`, 
-                    mimetype: 'video/mp4', 
-                    fileName: `${title}.mp4`, 
-                    quoted: m, 
-                    contextInfo: {
-                        'forwardingScore': 200,
-                        'isForwarded': true,
-                        externalAdReply:{
-                            showAdAttribution: false,
-                            title: `${title}`,
-                            body: `${vid.author.name}`,
-                            mediaType: 2, 
-                            sourceUrl: `${vid.url}`,
-                            thumbnail: await (await fetch(vid.thumbnail)).buffer()
-                        }
-                    }
-                }, { quoted: m })
-            }
-
-            await m.react('✅')
-        }
-    } catch (error) {
-        console.error(error)
-        await conn.reply(m.chat, `*☓ Ocurrió un error inesperado.*`, m).then(_ => m.react('✖️'))
-    }
+    let res = await dl_vid(urls)
+    let type = isVideo ? 'video' : 'audio';
+    let video = res.data.mp4;
+    let audio = res.data.mp3;
+    conn.sendMessage(m.chat, { 
+        [type]: { url: isVideo ? video : audio }, 
+        gifPlayback: false, 
+        mimetype: isVideo ? "video/mp4" : "audio/mpeg" 
+    }, { quoted: m });
 }
 
-handler.help = ["play"].map(v => v + " <formato> <búsqueda o enlace>")
-handler.tags = ["downloader"]
-handler.command = ['play', 'play2', 'mp3', 'mp4', 'mp3doc', 'mp4doc']
-handler.register = true 
-handler.star = 1
+handler.command = ['play', 'playvid'];
+handler.help = ['play', 'playvid'];
+handler.tags = ['dl'];
+export default handler;
 
-export default handler
+async function dl_vid(url) {
+    const response = await fetch('https://shinoa.us.kg/api/download/ytdl', {
+        method: 'POST',
+        headers: {
+            'accept': '*/*',
+            'api_key': 'free',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            text: url,
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+        }
