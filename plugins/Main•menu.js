@@ -114,7 +114,7 @@ txt+= "✬✭✰✬"
     let vid = "https://qu.ax/yddg.jpg";
     let img = "https://qu.ax/fprhC.jpg";
     let img2 = "https://qu.ax/uuYfC.jpg";
-    let txt = `👤 User: ${m.pushName || 'Anónimo'}\n🌍 Pais: ${global.userNationality}\n🐢 Bot: ${packname}\n🌻 Comando: ${usedPrefix + command}`.trim()
+    let txt = `👤 User: ${m.pushName || 'Anónimo'}\n🌍 Pais: ${global.userNationality}\n🐢 Bot: ${packname}\n🌻 Comando: #menu`.trim()
     await conn.sendMessage(global.channelid, { text: txt, contextInfo: {
     externalAdReply: {
     title: "🔔 Notificación General 🔔 ",
