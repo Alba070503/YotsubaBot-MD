@@ -30,16 +30,15 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
     await m.react('✅');
 }
 
-// Subfunciones para el envío de audio y video
+// Subcomandos para manejar el botón de Audio y Video
 handler.command = ['play'];
 handler.help = ['play'];
 handler.tags = ['dl'];
 
 export default handler;
 
-// Subfunción de descarga y envío de audio
-handler.handleAudio = async (conn, m, url) => {
-    let res = await dl_vid(url);
+handler.playAudio = async (conn, m, videoData, infoTexto) => {
+    let res = await dl_vid(videoData.url);
     await conn.sendMessage(m.chat, {
         audio: { url: res.data.mp3 },
         mimetype: "audio/mpeg",
@@ -48,9 +47,8 @@ handler.handleAudio = async (conn, m, url) => {
     }, { quoted: m });
 };
 
-// Subfunción de descarga y envío de video
-handler.handleVideo = async (conn, m, url) => {
-    let res = await dl_vid(url);
+handler.playVideo = async (conn, m, videoData, infoTexto) => {
+    let res = await dl_vid(videoData.url);
     await conn.sendMessage(m.chat, {
         video: { url: res.data.mp4 },
         mimetype: "video/mp4",
@@ -59,7 +57,7 @@ handler.handleVideo = async (conn, m, url) => {
     }, { quoted: m });
 };
 
-// Función de descarga de video
+// Función para descargar el video
 async function dl_vid(url) {
     const response = await fetch('https://shinoa.us.kg/api/download/ytdl', {
         method: 'POST',
