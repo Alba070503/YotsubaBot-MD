@@ -1,44 +1,65 @@
-import yts from 'yt-search'
+import yts from 'yt-search';
 
 const handler = async (m, { conn, text, usedPrefix, command }) => {
-    if (!text) throw `Ejemplo: ${usedPrefix + command} nombre del video`
+    if (!text) throw `Ejemplo: ${usedPrefix + command} nombre del video`;
 
-    const randomReduction = Math.floor(Math.random() * 5) + 1;
     let search = await yts(text);
-    let f = `\n\n${String.fromCharCode(68,101,118,101,108,111,112,101,100,32,98,121,32,73,39,109,32,70,122,32,126)}`;
-    let isVideo = /vid$/.test(command);
-    let urls = search.all[0].url;
-    
-    let infoTexto = `乂  Y O U T U B E   ${isVideo ? 'V I D E O' : 'A U D I O'}\n
-✩ *Título ∙* ${search.all[0].title}\n
-✩ *Duración ∙* ${search.all[0].timestamp}\n
-✩ *Visitas ∙* ${search.all[0].views}\n
-✩ *Autor ∙* ${search.all[0].author.name}\n
-✩ *Publicado ∙* ${search.all[0].ago}\n
+    let videoData = search.all[0];
+    let f = `\n\n${String.fromCharCode(68, 101, 118, 101, 108, 111, 112, 101, 100, 32, 98, 121, 32, 73, 39, 109, 32, 70, 122, 32, 126)}`;
+    let urls = videoData.url;
+
+    // Texto con la información del video o audio
+    let infoTexto = `乂  Y O U T U B E   ${command === 'playvid' ? 'V I D E O' : 'A U D I O'}\n
+✩ *Título ∙* ${videoData.title}\n
+✩ *Duración ∙* ${videoData.timestamp}\n
+✩ *Vistas ∙* ${videoData.views}\n
+✩ *Publicado ∙* ${videoData.ago}\n
 ✩ *Url ∙* ${urls}\n`.trim();
 
-    await conn.sendButton(m.chat, infoTexto + f, 'Marca del bot', search.all[0].thumbnail, [
-        ['Audio 📀', `${usedPrefix}play ${urls}`],
-        ['Video 🎥', `${usedPrefix}playvid ${urls}`]
-    ], m)
+    // Enviar el mensaje inicial con opciones de botones
+    await conn.sendMessage(m.chat, { 
+        image: { url: videoData.thumbnail }, 
+        caption: infoTexto + f,
+        buttons: [
+            { buttonId: `${usedPrefix}playAudio ${urls}`, buttonText: { displayText: 'Audio 📀' }, type: 1 },
+            { buttonId: `${usedPrefix}playVideo ${urls}`, buttonText: { displayText: 'Video 🎥' }, type: 1 }
+        ],
+        headerType: 4
+    }, { quoted: m });
 
-    let res = await dl_vid(urls)
-    let type = isVideo ? 'video' : 'audio';
-    let video = res.data.mp4;
-    let audio = res.data.mp3;
-
-    conn.sendMessage(m.chat, { 
-        [type]: { url: isVideo ? video : audio }, 
-        gifPlayback: false, 
-        mimetype: isVideo ? "video/mp4" : "audio/mpeg" 
-    }, { quoted: m })
+    await m.react('✅');
 }
 
-handler.command = ['play', 'playvid']
-handler.help = ['play', 'playvid']
-handler.tags = ['dl']
-export default handler
+// Subfunciones para el envío de audio y video
+handler.command = ['play'];
+handler.help = ['play'];
+handler.tags = ['dl'];
 
+export default handler;
+
+// Subfunción de descarga y envío de audio
+handler.handleAudio = async (conn, m, url) => {
+    let res = await dl_vid(url);
+    await conn.sendMessage(m.chat, {
+        audio: { url: res.data.mp3 },
+        mimetype: "audio/mpeg",
+        fileName: `${videoData.title}.mp3`,
+        caption: infoTexto,
+    }, { quoted: m });
+};
+
+// Subfunción de descarga y envío de video
+handler.handleVideo = async (conn, m, url) => {
+    let res = await dl_vid(url);
+    await conn.sendMessage(m.chat, {
+        video: { url: res.data.mp4 },
+        mimetype: "video/mp4",
+        fileName: `${videoData.title}.mp4`,
+        caption: infoTexto,
+    }, { quoted: m });
+};
+
+// Función de descarga de video
 async function dl_vid(url) {
     const response = await fetch('https://shinoa.us.kg/api/download/ytdl', {
         method: 'POST',
@@ -54,6 +75,5 @@ async function dl_vid(url) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
 }
