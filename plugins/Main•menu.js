@@ -114,6 +114,17 @@ txt+= "✬✭✰✬"
     let vid = "https://qu.ax/yddg.jpg";
     let img = "https://qu.ax/fprhC.jpg";
     let img2 = "https://qu.ax/uuYfC.jpg";
+    let txt = `👤 User: ${m.pushName || 'Anónimo'}\n🌍 Pais: ${global.userNationality}\n🐢 Bot: ${packname}\n🌻 Comando: ${usedPrefix + command}`.trim()
+    await conn.sendMessage(global.channelid, { text: txt, contextInfo: {
+    externalAdReply: {
+    title: "🔔 Notificación General 🔔 ",
+    body: '🐢 Un usuario ha usado el comando #menu',
+    thumbnailUrl: fotoperfil,
+    sourceUrl: redes,
+    mediaType: 1,
+    showAdAttribution: false,
+    renderLargerThumbnail: false
+    }}}, { quoted: null })
 
     await conn.sendListB(m.chat, menu, txt, ` 𓏲᭨ ̤̤֟✧⏤͟͞ू⃪٭ۣۜ ፝͜⁞M͢ᴇɴᴜs۫۫۫۫۫۫۫۫ ᭄፝🍀𑜟꙲𒁑⁩`, [vid, img, img2].getRandom(), listSections, esti);
 };
