@@ -28,9 +28,9 @@ export async function before(m) {
     await conn.sendPresenceUpdate('composing', m.chat);
   } else {
    const comando = m.text.trim().split(' ')[0];
-   m.reply(`︎🍁 El comando "${comando}" no es válido.\nUsa "#menu" para ver los comandos disponibles.`);
+ await m.reply(`︎🍁 El comando "${comando}" no es válido.\nUsa "#menu" para ver los comandos disponibles.`);
 
-let txt = `👤 User: ${m.pushName || 'Anónimo'}\n🌍 Pais: ${global.userNationality}\n🐢 Bot: ${packname}\n🌻 Comando: ${comando}`.trim()
+/*let txt = `👤 User: ${m.pushName || 'Anónimo'}\n🌍 Pais: ${global.userNationality}\n🐢 Bot: ${packname}\n🌻 Comando: ${comando}`.trim()
 
     await conn.sendMessage(global.channelid, { text: txt, contextInfo: {
     externalAdReply: {
@@ -41,6 +41,6 @@ let txt = `👤 User: ${m.pushName || 'Anónimo'}\n🌍 Pais: ${global.userNatio
     mediaType: 1,
     showAdAttribution: false,
     renderLargerThumbnail: false
-    }}}, { quoted: null })
+    }}}, { quoted: null })*/
   }
 }
