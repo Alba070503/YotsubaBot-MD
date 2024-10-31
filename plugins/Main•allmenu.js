@@ -170,17 +170,6 @@ await m.react('⭐️')
 await conn.sendMessage(m.chat, { video: { url: vid }, caption: text.trim(), contextInfo: { mentionedJid: [m.sender], isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363198641161536@newsletter', newsletterName: '© Alba070503 - Channel 🍁', serverMessageId: -1, }, forwardingScore: 999, externalAdReply: { title: 'YotsubaBot-MD', body: dev, thumbnailUrl: icono, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false,
 }, }, gifPlayback: true, gifAttribution: 0 }, { quoted: fkontak })
 
-    await conn.sendMessage(global.channelid, { text: text.trim(), contextInfo: {
-    externalAdReply: {
-    title: "🔔 Notificación General 🔔 ",
-    body: '🐢 Un usuario ha usado el comando ' + usedPrefix + command,
-    thumbnailUrl: fotoperfil,
-    sourceUrl: redes,
-    mediaType: 1,
-    showAdAttribution: false,
-    renderLargerThumbnail: false
-    }}}, { quoted: null })
-
   } catch (e) {
     await m.react(error)
     conn.reply(m.chat, '「✘」 *Ocurrió un error al enviar el menú*', m, fake, )
