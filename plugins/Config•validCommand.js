@@ -28,6 +28,19 @@ export async function before(m) {
     await conn.sendPresenceUpdate('composing', m.chat);
   } else {
    const comando = m.text.trim().split(' ')[0];
-   await m.reply(`︎🍁 El comando "${comando}" no es válido.\nUsa "#menu" para ver los comandos disponibles.`);
+   m.reply(`︎🍁 El comando "${comando}" no es válido.\nUsa "#menu" para ver los comandos disponibles.`);
+
+let txt = `👤 User: ${m.pushName || 'Anónimo'}\n🌍 Pais: ${global.userNationality}\n🐢 Bot: ${packname}\n🌻 Comando: ${comando}`.trim()
+
+    await conn.sendMessage(global.channelid, { text: txt, contextInfo: {
+    externalAdReply: {
+    title: "🔔 Notificación General 🔔 ",
+    body: '🐢 Un usuario ha usado el comando ' + comando,
+    thumbnailUrl: fotoperfil,
+    sourceUrl: redes,
+    mediaType: 1,
+    showAdAttribution: false,
+    renderLargerThumbnail: false
+    }}}, { quoted: null })
   }
 }
