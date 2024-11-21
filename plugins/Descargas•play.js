@@ -1,38 +1,50 @@
-import yts from 'yt-search' 
+import yts from 'yt-search';
+import fetch from 'node-fetch';
+
 const handler = async (m, { conn, text, usedPrefix, command }) => {
-    if (!text) throw `Ejemplo: ${usedPrefix + command} diles`,m ,rcanal;
+    if (!text) throw `Ejemplo: ${usedPrefix + command} diles`;
 
-    const randomReduction = Math.floor(Math.random() * 5) + 1;
-    let search = await yts(text);
-    let f = `\n\n${String.fromCharCode(68,101,118,101,108,111,112,101,100,32,98,121,32,73,39,109,32,70,122,32,126)}`;
-    let isVideo = /vid$/.test(command);
-    let urls = search.all[0].url;
-    let body = `\`YouTube Play\`
+    try {
+        const search = await yts(text);
+        const isVideo = /vid$/.test(command);
+        const urls = search.all[0].url;
 
-    *Título:* ${search.all[0].title}
-    *Vistas:* ${search.all[0].views}
-    *Duración:* ${search.all[0].timestamp}
-    *Subido:* ${search.all[0].ago}
-    *Url:* ${urls}
+        const body = `\`YouTube Play\`
 
-🕒 *Su ${isVideo ? 'Video' : 'Audio'} se está enviando, espere un momento...*`;
-    
-    conn.sendMessage(m.chat, { 
-        image: { url: search.all[0].thumbnail }, 
-        caption: body + f
-    }, { quoted: m,rcanal });
-    m.react('react1')
+*Titulo:* ${search.all[0].title}
+*Vistas:* ${search.all[0].views}
+*Duracion:* ${search.all[0].timestamp}
+*Subido:* ${search.all[0].ago}
+*Url:* ${urls}
 
-    let res = await dl_vid(urls)
-    let type = isVideo ? 'video' : 'audio';
-    let video = res.data.mp4;
-    let audio = res.data.mp3;
-    conn.sendMessage(m.chat, { 
-        [type]: { url: isVideo ? video : audio }, 
-        gifPlayback: false, 
-        mimetype: isVideo ? "video/mp4" : "audio/mpeg" 
-    }, { quoted: m });
-}
+*Su ${isVideo ? 'Video' : 'Audio'} se está enviando, espere un momento...*`;
+
+        // Enviar mensaje de información
+        await conn.sendMessage(m.chat, { 
+            image: { url: search.all[0].thumbnail }, 
+            caption: body 
+        }, { quoted: m });
+
+        // Descargar el video o audio
+        const res = await dl_vid(urls);
+        const videoUrl = res.data.mp4;
+        const audioUrl = res.data.mp3;
+
+        const type = isVideo ? 'video' : 'audio';
+        const mediaUrl = isVideo ? videoUrl : audioUrl;
+
+        // Enviar archivo multimedia correctamente
+        await conn.sendMessage(m.chat, { 
+            [type]: { url: mediaUrl }, 
+            gifPlayback: false, 
+            mimetype: isVideo ? "video/mp4" : "audio/mpeg" 
+        }, { quoted: m });
+
+    } catch (error) {
+        console.error('Error:', error);
+        m.reply('Hubo un problema al procesar tu solicitud. Intenta nuevamente.');
+    }
+};
 
 handler.command = ['play', 'playvid'];
 handler.help = ['play', 'playvid'];
@@ -47,15 +59,19 @@ async function dl_vid(url) {
             'api_key': 'free',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            text: url,
-        })
+        body: JSON.stringify({ text: url })
     });
 
     if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`Error HTTP! Estado: ${response.status}`);
     }
 
     const data = await response.json();
+    
+    // Validar que el video tenga un formato reproducible
+    if (!data || !data.data || (!data.data.mp4 && !data.data.mp3)) {
+        throw new Error('El formato del archivo no es válido o está dañado.');
+    }
+
     return data;
 }
