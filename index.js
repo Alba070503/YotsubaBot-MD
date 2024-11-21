@@ -8,7 +8,7 @@ import cfonts from 'cfonts'
 import { createInterface } from 'readline'
 import yargs from 'yargs'
 import chalk from 'chalk'
-console.log('\n✰ Iniciando YotsubaBot-MD 🌸')
+console.log('\n✰ Iniciando YotsubaBot 🌸')
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const require = createRequire(__dirname)
 const { name, description, collaborators, author, version } = require(join(__dirname, './package.json'))
@@ -23,7 +23,7 @@ if (collaborators.hasOwnProperty(key)) {
 activeCollaborators += collaborators[key] + ', '
 }}
 activeCollaborators = activeCollaborators.slice(0, -2);
-cfonts.say('Yotsuba\nBot', {
+cfonts.say('yotsuba\nbot md', {
 align: 'center',           
 gradient: ['red', 'blue'] 
 })
