@@ -109,7 +109,7 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isR
           global.dfail('group', m, conn)
           throw false
         }
-      } else if (!isAdmin) {
+      } if (!(isAdmin || isOwner)) {
         global.dfail('admin', m, conn)
         throw false
       }
