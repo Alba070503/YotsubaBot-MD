@@ -123,7 +123,7 @@ chat.reaction = false
 if (!('simi' in chat))
 chat.simi = false
 if (!('antiver' in chat))
-chat.antiver = false
+chat.antiver = true
 if (!('delete' in chat))
 chat.delete = false
 if (!isNumber(chat.expired))
@@ -146,7 +146,7 @@ antiBot2: false,
 modoadmin: false,
 antiLink: true,
 simi: false,
-antiver: false,
+antiver: true,
 modohorny: false, 
 reaction: false,
 expired: 0, 
