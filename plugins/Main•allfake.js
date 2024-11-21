@@ -37,8 +37,8 @@ handler.all = async function (m) {
   let pushname = m.pushName || 'Sin nombre'
 
   // Creador y otros
-  global.channelid = '120363310433406751@newsletter'
-  global.creador = 'Wa.me/5493876432076'
+  global.channelid = '120363198641161536@newsletter'
+  global.creador = 'Wa.me/59169082575'
   global.ofcbot = `${conn.user.jid.split('@')[0]}`
   global.asistencia = 'https://wa.me/message/O4QPPHZOFDOJI1'
   global.namechannel = '© All Right Reserved • YotsubaBot-MD'
@@ -126,7 +126,7 @@ handler.all = async function (m) {
     contextInfo: { 
       isForwarded: true, 
       forwardedNewsletterMessageInfo: { 
-        newsletterJid: '120363263466636910@newsletter', 
+        newsletterJid: '120363198641161536@newsletter', 
         newsletterName: namechannel, 
         serverMessageId: -1 
       }
@@ -138,7 +138,7 @@ handler.all = async function (m) {
     contextInfo: { 
       isForwarded: true, 
       forwardedNewsletterMessageInfo: { 
-        newsletterJid: "120363263466636910@newsletter", 
+        newsletterJid: "120363198641161536@newsletter", 
         serverMessageId: 100, 
         newsletterName: namechannel, 
       }, 
@@ -155,16 +155,16 @@ handler.all = async function (m) {
   }
 
   global.icono = [
-    'https://qu.ax/uuYfC.jpg',
-    'https://qu.ax/fprhC.jpg',
-    'https://qu.ax/YHLEj.jpg'
+    'https://qu.ax/wtOta.jpg',
+    'https://qu.ax/NNXXP.jpg',
+    'https://qu.ax/eGhSJ.jpg'
   ].sort(() => Math.random() - 0.5)[0]
 
   global.rcanal = { 
     contextInfo: { 
       isForwarded: true, 
       forwardedNewsletterMessageInfo: { 
-        newsletterJid: "120363263466636910@newsletter", 
+        newsletterJid: "120363198641161536@newsletter", 
         serverMessageId: 100, 
         newsletterName: namechannel, 
       }, 
