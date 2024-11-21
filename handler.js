@@ -15,6 +15,7 @@ resolve()
 
 export async function handler(chatUpdate) {
 this.msgqueque = this.msgqueque || []
+this.uptime = this.uptime || Date.now()
 if (!chatUpdate)
 return
     this.pushMessage(chatUpdate.messages).catch(console.error)
@@ -89,14 +90,24 @@ global.db.data.chats[m.chat] = {}
 if (chat) {
 if (!('isBanned' in chat))
 chat.isBanned = false
+if (!('sAutoresponder' in chat))
+chat.sAutoresponder = ''
 if (!('welcome' in chat))
 chat.welcome = true
+if (!('autolevelup' in chat))
+chat.autolevelup = false
+if (!('autoAceptar' in chat))
+chat.autoAceptar = false
+if (!('autoRechazar' in chat))
+chat.autoRechazar = false
+if (!('autoresponder' in chat))
+chat.autoresponder = false
 if (!('audios' in chat))
 chat.audios = false
 if (!('detect' in chat))
 chat.detect = true
-if (!('onlyLatinos' in chat))
-chat.onlyLatinos = true 
+if (!('antifake' in chat))
+chat.antifake = false
 if (!('antiBot' in chat))
 chat.antiBot = false
 if (!('antiBot2' in chat))
@@ -104,7 +115,7 @@ chat.antiBot2 = false
 if (!('modoadmin' in chat))                     
 chat.modoadmin = false   
 if (!('antiLink' in chat))
-chat.antiLink = false
+chat.antiLink = true
 if (!('modohorny' in chat))
 chat.modohorny = false
 if (!('reaction' in chat))
@@ -120,15 +131,20 @@ chat.expired = 0
 } else
 global.db.data.chats[m.chat] = {
 isBanned: false,
+sAutoresponder: '',
 welcome: true,
+autolevelup: false,
+autoresponder: false,
 delete: false,
-onlyLatinos: false,
+autoAceptar: false,
+autoRechazar: false,
+antifake: false,
 audios: false,
 detect: true,
 antiBot: false,
 antiBot2: false,
 modoadmin: false,
-antiLink: false,
+antiLink: true,
 simi: false,
 antiver: false,
 modohorny: false, 
@@ -154,7 +170,7 @@ autobio: false,
 antiPrivate: false,
 autoread: false,
 autoread2: false,
-antiSpam: true,
+antiSpam: false,
 status: 0
 }
 } catch (e) {
@@ -283,8 +299,8 @@ m.plugin = name
 if (m.chat in global.db.data.chats || m.sender in global.db.data.users) {
 let chat = global.db.data.chats[m.chat]
 let user = global.db.data.users[m.sender]
-if (!['owner-unbanchat.js'].includes(name) && chat && chat.isBanned && !isROwner) return // Except this
-if (name != 'owner-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && name != 'tool-delete.js' && chat?.isBanned && !isROwner) return 
+if (!['Grupo•unbanchat.js'].includes(name) && chat && chat.isBanned && !isROwner) return // Except this
+if (name != 'Grupo•unbanchat.js' && name != 'Owner•exec.js' && name != 'Owner•exec2.js' && name != 'Grupo•delete.js' && chat?.isBanned && !isROwner) return 
 if (m.text && user.banned && !isROwner) {
 if (user.antispam > 2) return
 m.reply(`🚫 Está baneado(a), no puede usar los comandos de este bot!\n\n${user.bannedReason ? `\n💌 *Motivo:* 
@@ -303,11 +319,9 @@ if (m.chat in global.db.data.chats || m.sender in global.db.data.users) {
 let chat = global.db.data.chats[m.chat]
 let user = global.db.data.users[m.sender]
 let setting = global.db.data.settings[this.user.jid]
-if (name != 'group-unbanchat.js' && chat?.isBanned)
+if (name != 'Grupo•unbanchat.js' && chat?.isBanned)
 return 
-if (name != 'owner-unbanuser.js' && user?.banned)
-return
-if (name != 'owner-unbanbot.js' && setting?.banned)
+if (name != 'Owner•unbanuser.js' && user?.banned)
 return
 }
 let hl = _prefix 
@@ -359,7 +373,7 @@ m.reply('chirrido -_-')
 else
 m.exp += xp
 if (!isPrems && plugin.cookies && global.db.data.users[m.sender].cookies < plugin.cookies * 1) {
-conn.reply(m.chat, `Se agotaron tus *🪙 YotsubaCoins*`, m, fake)
+conn.reply(m.chat, `Se agotaron tus *🍁YotsuCoins*`, m)
 continue
 }
 let extra = {
@@ -406,7 +420,7 @@ await plugin.after.call(this, m, extra)
 console.error(e)
 }}
 if (m.cookies)
-conn.reply(m.chat, `Utilizaste *${+m.cookies}* 🪙`, m, fake)
+conn.reply(m.chat, `Utilizaste *${+m.cookies}* 🍁`, m)
 }
 break
 }}
@@ -499,16 +513,16 @@ console.error(e)
 
 global.dfail = (type, m, conn) => {
 const msg = {
-rowner: '「🌸」 *Esta función solo puede ser usada por mi creador*.', 
-owner: '「🌸」 *Esta función solo puede ser usada por mi desarrollador.', 
-mods: '「🤴🏻」 *Esta función solo puede ser usada por mis desarrolladores.*', 
-premium: '「🍧」 *Esta función solo es para usuarios Premium.', 
-group: '「🍂」 *Esta funcion solo puede ser ejecutada en grupos.*', 
-private: '「🍭」 *Esta función solo puede ser usada en chat privado.*', 
-admin: '「🍀」 *Este comando solo puede ser usado por admins.*', 
-botAdmin: '「🧡」 *Para usar esta función debo ser admin.*', 
-unreg: '「🍁」 *¡Hey! no estas registrado, registrese para usar esta función*\n\n*/reg nombre.edad*\n\n*_❕ Ejemplo_* : */reg Alba.20*',
-restrict: '「💫」 *Esta característica esta desactivada.*'
+rowner: '「🍁」 *Esta función solo puede ser usada por mi creador*\n\n> Develop @Alba070503.', 
+owner: '「🍁」 *Esta función solo puede ser usada por mi desarrollador.', 
+mods: '「🍁」 *Esta función solo puede ser usada por mis desarrolladores.*', 
+premium: '「🍁」 *Esta función solo es para usuarios Premium.', 
+group: '「🍁」 *Esta funcion solo puede ser ejecutada en grupos.*', 
+private: '「🍁」 *Esta función solo puede ser usada en chat privado.*', 
+admin: '「🍁」 *Este comando solo puede ser usado por admins.*', 
+botAdmin: '「🍁」 *Para usar esta función debo ser admin.*', 
+unreg: '「🍁」 *¡Hey! no estas registrado, registrese para usar esta función*\n\n*/reg nombre.edad*\n\n*_❕ Ejemplo_* : */reg Yotsuba.21*',
+restrict: '「🍁」 *Esta característica esta desactivada.*'
 }[type];
 if (msg) return conn.reply(m.chat, msg, m, rcanal).then(_ => m.react('✖️'))}
 
@@ -516,5 +530,10 @@ let file = global.__filename(import.meta.url, true)
 watchFile(file, async () => {
 unwatchFile(file)
 console.log(chalk.magenta("Se actualizo 'handler.js'"))
-if (global.reloadHandler) console.log(await global.reloadHandler())
-})
+//if (global.reloadHandler) console.log(await global.reloadHandler())
+
+if (global.conns && global.conns.length > 0 ) {
+const users = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])];
+for (const userr of users) {
+userr.subreloadHandler(false)
+}}});
