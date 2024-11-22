@@ -1,4 +1,4 @@
-import fs from 'fs'
+/*import fs from 'fs'
 import fetch from 'node-fetch'
 import { xpRange } from '../lib/levelling.js'
 const { levelling } = '../lib/levelling.js'
@@ -632,7 +632,7 @@ await m.react('🤖')
 console.log(`❗❗ Comuniquese con el creador${usedPrefix + command} ❗❗`)
 console.log(e)	
 }}
-handler.help = ['menu', 'help', '?']
+handler.help = ['menu5', 'help1', '?']
 handler.tags = ['main']
 handler.command = /^(menu4|allmenu|herramientas|menú4|comandos|allm\?)$/i
 handler.register = true
