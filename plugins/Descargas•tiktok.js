@@ -1,97 +1,81 @@
-import axios from 'axios';
-import cheerio from 'cheerio';
+import Scraper from '@SumiFX/Scraper'
+import axios from 'axios'
+import fetch from 'node-fetch'
 
-const clean = (data) => {
-  let regex = /(<([^>]+)>)/gi;
-  data = data.replace(/(<br?\s?\/>)/gi, " \n");
-  return data.replace(regex, "");
-};
+let handler = async (m, { conn, args, usedPrefix, command }) => {
+    if (!args[0])  m.reply(`🍭 Ingresa un enlace del vídeo de TikTok junto al comando.\n\nEjemplo:\n${usedPrefix + command} https://vm.tiktok.com/ZMMCYHnxf/`)
 
-async function shortener(url) {
-  return url; // Puedes agregar lógica para acortar URLs si lo necesitas
+    try {
+        let { title, published, quality, likes, commentCount, shareCount, views, dl_url } = await Scraper.tiktokdl(args[0])
+            let txt = `╭─⬣「 *TikTok Download* 」⬣\n`
+                txt += `│  ≡◦ *🍭 Título* : ${title}\n`
+                txt += `│  ≡◦ *📅 Publicado* : ${published}\n`
+                txt += `│  ≡◦ *🪴 Calidad* : ${quality}\n`
+                txt += `│  ≡◦ *👍 Likes* : ${likes}\n`
+                txt += `│  ≡◦ *🗣 Comentarios* : ${commentCount}\n`
+                txt += `│  ≡◦ *💫 Share* : ${shareCount}\n`
+                txt += `│  ≡◦ *📹 Visitas* : ${views}\n`
+                txt += `╰─⬣`
+
+        await conn.sendMessage(m.chat, { video: { url: dl_url }, caption: txt }, { quoted: m })
+    } catch {
+    try {
+        const api = await fetch(`https://api-starlights-team.koyeb.app/api/tiktok?url=${args[0]}`)
+        const data = await api.json()
+
+        if (data.status) {
+            const { author, view, comment, play, share, download, duration, title, video } = data.data;
+            let txt = `╭─⬣「 *TikTok Download* 」⬣\n`
+                txt += `│  ≡◦ *🍭 Título* : ${title}\n`
+                txt += `│  ≡◦ *📚 Autor* : ${author.nickname}\n`
+                txt += `│  ≡◦ *🕜 Duración* : ${duration} Segundos\n`
+                txt += `│  ≡◦ *🌵 Descargas* : ${download}\n`
+                txt += `│  ≡◦ *🗣 Comentarios* : ${comment}\n`
+                txt += `│  ≡◦ *💫 Share* : ${share}\n`
+                txt += `│  ≡◦ *🐢 Visitas* : ${play}\n`
+                txt += `╰─⬣`
+
+            await conn.sendMessage(m.chat, { video: { url: video }, caption: txt }, { quoted: m })
+        }
+    } catch {
+    try {
+        const api1 = await fetch(`https://delirius-api-oficial.vercel.app/api/tiktok?url=${args[0]}`)
+        const data1 = await api1.json()
+
+        if (data1.status) {
+            const { author, repro, like, share, comment, download, duration, title, meta, published } = data1.data
+            const publishedDate = formatDate(published)
+            const fileSize = convertBytesToMB(meta.media[0].size_org)
+
+            let txt = `╭─⬣「 *TikTok Download* 」⬣\n`
+                txt += `│  ≡◦ *🍭 Título* : ${title}\n`
+                txt += `│  ≡◦ *🐢 Autor* : ${author.nickname}\n`
+                txt += `│  ≡◦ *🕜 Duración* : ${duration} Segundos\n`
+                txt += `│  ≡◦ *📹 Reproducciones* : ${repro}\n`
+                txt += `│  ≡◦ *👍 Likes* : ${like}\n`;
+                txt += `│  ≡◦ *🗣 Comentarios* : ${comment}\n`
+                txt += `│  ≡◦ *📦 Descargas* : ${download}\n`
+                txt += `│  ≡◦ *💫 Share* : ${share}\n`
+                txt += `│  ≡◦ *📅 Publicado* : ${publishedDate}\n`
+                txt += `│  ≡◦ *🌵 Tamaño* : ${fileSize}\n`
+                txt += `╰─⬣`
+
+            await conn.sendMessage(m.chat, { video: { url: meta.media[0].org }, caption: txt }, { quoted: m })
+        }
+    } catch {
+}}}}
+handler.help = ['tiktok <url tt>']
+handler.tags = ['downloader']
+handler.command = ['tiktok', 'ttdl', 'tiktokdl', 'tiktoknowm']
+handler.register = true
+
+export default handler
+
+function convertBytesToMB(bytes) {
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB'
 }
 
-async function Tiktok(query) {
-  let response = await axios("https://lovetik.com/api/ajax/search", {
-    method: "POST",
-    data: new URLSearchParams(Object.entries({ query })),
-  });
-
-  let result = {};
-  result.creator = "YNTKTS";
-  result.title = clean(response.data.desc);
-  result.author = clean(response.data.author);
-  result.nowm = await shortener(
-    (response.data.links[0].a || "").replace("https", "http")
-  );
-  result.watermark = await shortener(
-    (response.data.links[1].a || "").replace("https", "http")
-  );
-  result.audio = await shortener(
-    (response.data.links[2].a || "").replace("https", "http")
-  );
-  result.thumbnail = await shortener(response.data.cover);
-  return result;
+function formatDate(unixTimestamp) {
+    const date = new Date(unixTimestamp * 1000)
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
 }
-
-async function ttimg(link) {
-  try {
-    let url = `https://dlpanda.com/es?url=${link}&token=G7eRpMaa`;
-    let response = await axios.get(url);
-    const html = response.data;
-    const $ = cheerio.load(html);
-    let imgSrc = [];
-    $('div.col-md-12 > img').each((index, element) => {
-      imgSrc.push($(element).attr('src'));
-    });
-    if (imgSrc.length === 0) {
-      return { data: '*[❗] No se encontraron imágenes en el enlace proporcionado.*' };
-    }
-    return { data: imgSrc };
-  } catch (error) {
-    console.error(error);
-    return { data: '*[❗] No se obtuvo respuesta de la página, intente más tarde.*' };
-  }
-}
-
-// Plugin Handler
-const handler = async (m, { args, conn }) => {
-  if (!args[0]) throw '*[❗] Por favor proporciona un enlace de TikTok.*';
-  const query = args[0];
-
-  try {
-    // Obtener información de TikTok
-    const result = await Tiktok(query);
-
-    let message = `╭─⬣「 *TikTok Downloader* 」⬣\n`;
-    message += `│ ✦ *Título:* ${result.title}\n`;
-    message += `│ ✦ *Autor:* ${result.author}\n`;
-    message += `│ ✦ *Sin Marca de Agua:* ${result.nowm}\n`;
-    message += `│ ✦ *Con Marca de Agua:* ${result.watermark}\n`;
-    message += `│ ✦ *Audio:* ${result.audio}\n`;
-    message += `╰─⬣`;
-
-    // Enviar mensaje con resultados
-    await conn.sendMessage(m.chat, {
-      image: { url: result.thumbnail },
-      caption: message
-    }, { quoted: m });
-
-    // Enviar el video sin marca de agua
-    await conn.sendMessage(m.chat, {
-      video: { url: result.nowm },
-      caption: '*Aquí está tu video sin marca de agua.*'
-    }, { quoted: m });
-
-  } catch (err) {
-    console.error(err);
-    m.reply('*[❗] Hubo un error al procesar tu solicitud.*');
-  }
-};
-
-handler.help = ['tiktok <url>'];
-handler.tags = ['downloader'];
-handler.command = ['tiktok', 'ttdl', 'tiktokdl', 'tiktoknowm'];
-handler.register = true;
-
-export default handler;
