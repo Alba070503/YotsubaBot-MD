@@ -41,6 +41,7 @@
 "@bochilteam/scraper-sosmed": "^1.0.5",
 "@xct007/frieren-scraper": "^0.0.2",
 "@ibaraki-douji/pixivts": "^2.4.1",
+"@SumiFX/Scraper": "github:SumiFX/SumiFX-Scraper",
 "awesome-phonenumber": "^3.4.0",
 "ruhend-scraper": "^7.0.4",
 "gradient-string": "^2.0.2",
