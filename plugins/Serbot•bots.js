@@ -1,27 +1,18 @@
-import ws from 'ws'
+import { jidNormalizedUser } from "@whiskeysockets/baileys";
+import Jadibots from "../lib/jadibots.js";
+let handler = async (m, { usedPrefix }) => {
+    const users = [...Jadibots.conns.entries()].map(([k, v]) => v.user);
+    if (!users.length) throw m.reply("✦ No hay subbots por ahora.")
+    const text = `
+*Lista de Jadibots*
 
-async function handler(m, { conn: stars, usedPrefix }) {
-  let uniqueUsers = new Map()
+${users.map((user, i) => `✧ ${i + 1}. @${user?.jid?.split?.("@")?.[0] ?? jidNormalizedUser(user?.id)?.split?.("@")?.[0] ?? user?.id}${user?.name ? ` (${user.name})` : ''}\n✦   https://wa.me/${parseInt(user?.jid ?? jidNormalizedUser(user?.id))}?text=${usedPrefix}menu`).join('\n')}
+`;
+    await m.reply(text.trim());
+};
 
-  global.conns.forEach((conn) => {
-    if (conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED) {
-      uniqueUsers.set(conn.user.jid, conn)
-    }
-  })
+handler.help = ['listjadibot'];
+handler.tags = ['jadibot'];
+handler.command = /^(list(jadi)?bot|(jadi)?botlist)$/i;
 
-  let users = [...uniqueUsers.values()]
-
-  let message = users.map((v, index) => `╭─⬣「 ${packname} 」⬣\n│⁖ฺ۟̇࣪·֗٬̤⃟🚩 *${index + 1}.-* @${v.user.jid.replace(/[^0-9]/g, '')}\n│❀ *Link:* https://wa.me/${v.user.jid.replace(/[^0-9]/g, '')}\n│❀ *Nombre:* ${v.user.name || '𝚂𝚄𝙱-𝙱𝙾𝚃'}\n╰─⬣`).join('\n\n')
-
-  let replyMessage = message.length === 0 ? '' : message
-  global.totalUsers = users.length
-  let responseMessage = `╭━〔 𝗦𝗨𝗕-𝗕𝗢𝗧𝗦 𝗝𝗔𝗗𝗜𝗕𝗢𝗧 🌸 〕⬣\n┃ *𝚃𝙾𝚃𝙰𝙻 𝙳𝙴 𝚂𝚄𝙱𝙱𝙾𝚃𝚂* : ${totalUsers || '0'}\n╰━━━━━━━━━━━━⬣\n\n${replyMessage.trim()}`.trim()
-
-await stars.sendMessage(m.chat, { text: responseMessage, mentions: stars.parseMention(responseMessage) }, { quoted: fkontak })
-// await conn.reply(m.chat, responseMessage, m, rcanal)
-}
-
-handler.help = ['bots']
-handler.tags = ['serbot']
-handler.command = ['listjadibot', 'bots']
-export default handler
+export default handler;
