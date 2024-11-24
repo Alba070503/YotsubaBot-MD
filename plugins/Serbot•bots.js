@@ -1,4 +1,4 @@
-import { jidNormalizedUser } from "@whiskeysockets/baileys";
+import { jidNormalizedUser } from "@adiwajshing/baileys";
 import Jadibots from "../lib/jadibots.js";
 let handler = async (m, { usedPrefix }) => {
     const users = [...Jadibots.conns.entries()].map(([k, v]) => v.user);
