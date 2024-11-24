@@ -1,6 +1,6 @@
 import { readdirSync, statSync, unlinkSync, existsSync, readFileSync, watch, rmSync, promises as fs} from "fs"
 import path, { join } from 'path'
-import { areJidsSameUser, jidNormalizedUser } from '@whiskeysockets/baileys';
+import { areJidsSameUser, jidNormalizedUser } from '@adiwajshing/baileys';
 
 let handler  = async (m, { conn: parentw, usedPrefix, command}, args) => {
 
