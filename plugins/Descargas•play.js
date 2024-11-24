@@ -6,15 +6,15 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
     let search = await yts(text);
     let isVideo = /vid$/.test(command);
     let urls = search.all[0].url;
-    let body = `\`YouTube Play\`
+    let body = `☘️Play-YotsubaBot-MD™
 
-    *Titulo:* ${search.all[0].title}
-    *Vistas:* ${search.all[0].views}
-    *Duracion:* ${search.all[0].timestamp}
-    *Subido:* ${search.all[0].ago}
-    *Url:* ${urls}
+    *☘️Titulo:* ${search.all[0].title}
+    *☘️Vistas:* ${search.all[0].views}
+    *☘️Duracion:* ${search.all[0].timestamp}
+    *☘️Subido:* ${search.all[0].ago}
+    *☘️Url:* ${urls}
 
-’ *Su ${isVideo ? 'Video' : 'Audio'} se estÃ¡ enviando, espere un momento...*`;
+’ *Su ${isVideo ? 'Video' : 'Audio'} se esta! enviando el archivo soy un poco lenta🌸*`;
     
     conn.sendMessage(m.chat, { 
         image: { url: search.all[0].thumbnail }, 
