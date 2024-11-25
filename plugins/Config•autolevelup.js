@@ -4,7 +4,7 @@ import { levelup } from '../lib/canvas.js'
 let handler = m => m
 handler.before = async function (m, { conn, usedPrefix }) {
 
-// if (!db.data.chats[m.chat].autolevelup) return
+if (!db.data.chats[m.chat].autolevelup) return
 let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
 let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://qu.ax/QGAVS.jpg')
 let mentionedJid = [who]
@@ -13,8 +13,8 @@ let userName = m.pushName || 'Anónimo'
 
 let user = global.db.data.users[m.sender]
 let chat = global.db.data.chats[m.chat]
-//if (!chat.autolevelup)
-//return !0
+if (!chat.autolevelup)
+return !0
 
 let level = user.level
 let before = user.level * 1
