@@ -76,6 +76,15 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isR
           throw false;
         }
       }
+      chat.autolevelup = isEnable;
+      break;
+    case 'autolevelup':
+      if (m.isGroup) {
+        if (!(isAdmin || isOwner)) {
+          global.dfail('admin', m, conn);
+          throw false;
+        }
+      }
       chat.antidelete = isEnable;
       break;
     case 'public':
