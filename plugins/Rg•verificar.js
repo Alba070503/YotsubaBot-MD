@@ -22,6 +22,7 @@ let mentionedJid = [who]
   user.name = name + '✓'.trim()
   user.age = age
   user.regTime = + new Date
+  user.descripcion = bio
   user.registered = true
   global.db.data.users[m.sender].money += 600
   global.db.data.users[m.sender].cookies += 15
@@ -47,6 +48,7 @@ let chtxt = `
 🌸 *Pais* » ${global.pais}
 🗃 *Verificación* » ${user.name}
 🍁 *Edad* » ${user.age}
+🍄 *Bot* » 𝙎𝙝𝙞𝙯𝙪𝙠𝙖𝘽𝙤𝙩-𝙈𝘿 ✨️🍁
 📆 *Fecha* » ${moment.tz('America/Bogota').format('DD/MM/YY')}
 `.trim()
 await conn.sendMessage(global.channelid, { text: chtxt, contextInfo: {
