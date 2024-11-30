@@ -61,7 +61,7 @@ let chtxt = `
 🍁 *Edad* » ${user.age}
 👀 *Descripción* » ${user.descripcion} 
 ⏳ *Modificación de descripción* » ${fechaBio}
-🍄 *Bot* » 𝙎𝙝𝙞𝙯𝙪𝙠𝙖𝘽𝙤𝙩-𝙈𝘿 ✨️🍁
+🍄 *Bot* » 𝙔𝙤𝙩𝙨𝙪𝙗𝙖𝘽𝙤𝙩-𝙈𝘿 ✨️🍁
 📆 *Fecha* » ${moment.tz('America/Bogota').format('DD/MM/YY')}
 `.trim()
 await conn.sendMessage(global.channelid, { text: chtxt, contextInfo: {
