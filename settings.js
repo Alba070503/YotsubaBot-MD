@@ -40,8 +40,8 @@ global.vs = '2.0.7'
 global.languaje = 'Español'
 global.nameqr = 'YotsubaBot-MD✿'
 global.namebot = 'YotsubaBot-MD✿ᩚ'
-global.sessions = 'MiniSession'
-global.jadi = 'MiniJadiBot'
+global.sessions = 'YotsubaSession'
+global.jadi = 'YotsubaJadiBot'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
@@ -76,6 +76,15 @@ global.md = 'https://github.com/Alba070503/YotsubaBot-MD'
 global.yt = 'https://youtube.com/@albao7o503'
 global.tiktok = 'https://tiktok.com/@Alba070503'
 global.correo = 'Alba070503@gmail.com'
+
+//*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+
+global.ch = {
+ch1: '120363198641161536@newsletter',
+ch2: '120363160031023229@newsletter',
+ch3: '120363263466636910@newsletter',
+ch4: '120363370415738881@newsletter',
+}
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
