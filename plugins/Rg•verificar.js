@@ -10,6 +10,17 @@ let mentionedJid = [who]
   let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://qu.ax/QGAVS.jpg')
   let user = global.db.data.users[m.sender]
   let name2 = conn.getName(m.sender)
+ let bio = 0, fechaBio
+// let who2 = m.isGroup ? _.get(m, "mentionedJid[0]", m.quoted?.sender || m.sender) : m.sender
+  let sinDefinir = '😿 Es privada'
+  let biografia = await conn.fetchStatus(m.sender).catch(() => null)
+  if (!biografia || !biografia[0] || biografia[0].status === null) {
+   bio = sinDefinir
+   fechaBio = "Fecha no disponible"
+} else {
+bio = biografia[0].status || sinDefinir
+fechaBio = biografia[0].setAt ? new Date(biografia[0].setAt).toLocaleDateString("es-ES", { day: "2-digit", month: "2-digit", year: "numeric", }) : "Fecha no disponible"
+}
   if (user.registered === true) return m.reply(`🍭 Ya estás registrado.\n\n*¿Quiere volver a registrarse?*\n\nUse este comando para eliminar su registro.\n*${usedPrefix}unreg*`)
   if (!Reg.test(text)) return m.reply(`🌹 Formato incorrecto.\n\nUso del comamdo: *${usedPrefix + command} nombre.edad*\nEjemplo : *${usedPrefix + command} ${name2}.666*`)
   let [_, name, splitter, age] = text.match(Reg)
@@ -48,6 +59,8 @@ let chtxt = `
 🌸 *Pais* » ${global.pais}
 🗃 *Verificación* » ${user.name}
 🍁 *Edad* » ${user.age}
+👀 *Descripción* » ${user.descripcion} 
+⏳ *Modificación de descripción* » ${fechaBio}
 🍄 *Bot* » 𝙎𝙝𝙞𝙯𝙪𝙠𝙖𝘽𝙤𝙩-𝙈𝘿 ✨️🍁
 📆 *Fecha* » ${moment.tz('America/Bogota').format('DD/MM/YY')}
 `.trim()
