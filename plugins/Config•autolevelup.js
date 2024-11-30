@@ -65,7 +65,7 @@ let normalCant2 = [1, 3, 2, 2, 4, 4, 2, 2, 4, 4, 5, 5, 1].getRandom()
 let normalCant3 = [1, 3, 3, 3, 4, 4, 2, 2, 4, 4, 4, 4, 1].getRandom() 
 
 if (level >= 1) {
-let chtxt = `👤 *Usuario:* ${userName}\n🐢 *Nivel anterior:* ${before}\n⭐️ *Nivel actual:* ${level + 1}\n👾 *Rango:* ${user.role}${(level + 1) % 5 === 0 ? `\n\n💰 *Recompensa por alacanzar el nivel ${level + 1}:*
+let chtxt = `👤 *Usuario:* ${userName}\n🐢 *Nivel anterior:* ${before}\n⭐️ *Nivel actual:* ${level + 1}\n👾 *Rango:* ${user.role}\n🍄 *Bot* » 𝙔𝙤𝙩𝙨𝙪𝙗𝙖𝘽𝙤𝙩-𝙈𝘿 ✨️🍁${(level + 1) % 5 === 0 ? `\n\n💰 *Recompensa por alacanzar el nivel ${level + 1}:*
 🎁 *Bono:* \`X${Math.floor(((level + 1) - 5) / 10) + 1}\`
 - *${especialCant * (Math.floor(((level + 1) - 5) / 10) + 1)} 🍪 ${especial}*
 - *${especialCant2 * (Math.floor(((level + 1) - 5) / 10) + 1)} ✨️ ${especial2}*
