@@ -35,6 +35,6 @@ ${users.map((user, i) =>
 // Información del comando
 handler.help = ['jadibot'];
 handler.tags = ['Serbot'];
-handler.command = /^bots|(jadi)?botlist)$/i;
+handler.command = ['listjadibot', 'bots']
 
 export default handler;
