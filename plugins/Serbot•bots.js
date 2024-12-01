@@ -45,8 +45,7 @@ ${activeList}
     await conn.sendMessage(m.chat, { text: finalMessage, mentions: conn.parseMention(finalMessage) }, { quoted: m });
 };
 
-handler.help = ['listjadibot'];
-handler.tags = ['jadibot'];
-handler.command = /^(list(jadi)?bot|(jadi)?botlist|bots)$/i;
-
+handler.help = ['bots'];
+handler.tags = ['serbots'];
+handler.command = ['listjadibot', 'bots']
 export default handler;
