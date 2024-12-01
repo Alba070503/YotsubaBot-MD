@@ -19,15 +19,14 @@ let handler = async (m, { usedPrefix }) => {
 ${users.map((user, i) => 
 `┃ ✧ ${i + 1}. @${user?.jid?.split?.("@")?.[0] || jidNormalizedUser(user?.id)?.split?.("@")?.[0] || user?.id}
 ┃   ◦ *Nombre:* ${user?.name || 'Sin nombre'}
-┃   ◦ *Link:* https://wa.me/${parseInt(user?.jid || jidNormalizedUser(user?.id))}?text=${usedPrefix}menu`
+┃   ◦ *Link:* https://wa.me/${parseInt(user?.jid || jidNormalizedUser(user?.id))}?text=${usedPrefix}estado`
 ).join('\n')}
 ╰━━━━━━━━━━━━━━━━━━⬣
         `.trim();
 
-        // Enviar mensaje con la lista de sub-bots
+       
         await m.reply(text);
     } catch (e) {
-        // Manejo de errores
         console.error(e);
         m.reply("Ocurrió un error al procesar la lista de Sub-Bots.");
     }
