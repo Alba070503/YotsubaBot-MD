@@ -37,7 +37,7 @@ handler.all = async function (m) {
   let pushname = m.pushName || 'Sin nombre'
 
   // Creador y otros
-  global.channelid = '120363198641161536@newsletter'
+  global.channelid = '120363370415738881@newsletter'
   global.creador = 'Wa.me/59169082575'
   global.ofcbot = `${conn.user.jid.split('@')[0]}`
   global.asistencia = 'https://wa.me/message/O4QPPHZOFDOJI1'
