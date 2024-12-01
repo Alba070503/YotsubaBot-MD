@@ -33,8 +33,8 @@ ${users.map((user, i) =>
 };
 
 // Información del comando
-handler.help = ['listjadibot'];
-handler.tags = ['jadibot'];
-handler.command = /^(list(jadi)?bot|(jadi)?botlist)$/i;
+handler.help = ['jadibot'];
+handler.tags = ['Serbot'];
+handler.command = /^bots|(jadi)?botlist)$/i;
 
 export default handler;
