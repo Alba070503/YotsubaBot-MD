@@ -1,473 +1,226 @@
-import fs from 'fs'
-import fetch from 'node-fetch'
-import { xpRange } from '../lib/levelling.js'
-const { levelling } = '../lib/levelling.js'
 import { promises } from 'fs'
 import { join } from 'path'
-let handler = async (m, { conn, usedPrefix, usedPrefix: _p, __dirname, text, command }) => {
-try {        
-let _package = JSON.parse(await promises.readFile(join(__dirname, '../package.json')).catch(_ => ({}))) || {}
-let { exp, cookies, level, role } = global.db.data.users[m.sender]
-let { min, xp, max } = xpRange(level, global.multiplier)
-let name = await conn.getName(m.sender)
-let _uptime = process.uptime() * 1000
-let _muptime
-if (process.send) {
-process.send('uptime')
-_muptime = await new Promise(resolve => {
-process.once('message', resolve)
-setTimeout(resolve, 1000)
-}) * 1000
+import fetch from 'node-fetch'
+import { xpRange } from '../lib/levelling.js'
+
+let tags = {
+  'main': 'MENÚ - INFO',
+  'buscador': 'MENÚ - BUSQUEDAS',
+  'fun': 'MENÚ - JUEGOS',
+  'gacha': 'MENÚ - GACHA',
+  'serbot': 'MENÚ - SUB BOTS',
+  'rpg': 'MENÚ - RPG',
+  'rg': 'MENÚ - REGISTRO',
+  'xp': 'MENÚ - EXP',
+  'sticker': 'MENÚ - STICKERS',
+  'anime': 'MENÚ - ANIMES',
+  'database': 'MENÚ - DATABASE',
+  'fix': 'MENÚ - FIXMSGESPERA',
+  'grupo': 'MENÚ - GRUPOS',
+  'nable': 'MENÚ - ON/OFF', 
+  'descargas': 'MENÚ - DESCARGAS',
+  'tools': 'MENÚ - HERRAMIENTAS',
+  'info': 'MENÚ - INFORMACIÓN',
+  'nsfw': 'MENÚ - NSFW', 
+  'owner': 'MENÚ - OWNER', 
+  'audio': 'MENÚ - AUDIOS', 
+  'ai': 'MENÚ - AI',
+  'transformador': 'MENÚ - CONVERTIDORES',
 }
-let user = global.db.data.users[m.sender]
-let muptime = clockString(_muptime)
-let uptime = clockString(_uptime)
-let totalreg = Object.keys(global.db.data.users).length
-let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
-let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
-let mentionedJid = [who]
-let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://qu.ax/QGAVS.jpg')
-let taguser = '@' + m.sender.split("@s.whatsapp.net")[0]
-const img = ['https://qu.ax/zzWdD.jpg', 'https://qu.ax/LkHoh.jpg', 'https://qu.ax/JceST.jpg']
-let menu = `*˚₊·˚₊· ͟͟͞͞➳❥ ${taguser}*
-*˚₊·˚₊· ͟͟͞͞➳❥* 𝙔𝙖𝙚𝙢𝙤𝙧𝙞𝘽𝙤𝙩-𝙈𝘿 🌻✨
- 
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Info User*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟👤┊Cliente » \`\`\`${nombre}\`\`\`
-│🍂⃟🌍┊Pais » \`\`\`${global.pais}\`\`\`
-│🍂⃟🍪┊Galletas » \`\`\`${cookies}\`\`\`
-│🍂⃟💰┊Experiencia » \`\`\`${exp}\`\`\`
-│🍂⃟⭐️┊Rango » \`\`\`${role}\`\`\`
-│🍂⃟🧋┊Nivel » \`\`\`${level}\`\`\`
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
 
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Info Bot*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟👑┊Author » \`\`\`@DevDiego\`\`\`
-│🍂⃟🍟┊Bot » \`\`\`${(conn.user.jid == global.conn.user.jid ? 'Oficial' : 'SubBot')}\`\`\`
-│🍂⃟☁️┊Librería » \`\`\`Baileys\`\`\`
-│🍂⃟📆┊Fecha » \`\`\`${moment.tz('America/Bogota').format('DD/MM/YY')}\`\`\`
-│🍂⃟🕑┊Activa » \`\`\`${uptime}\`\`\`
-│🍂⃟👥️️┊Usuarios » \`\`\`${totalreg}\`\`\`
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
+const defaultMenu = {
+  before: `© Menu completo de YotsubaBot-MD 🍀
 
+*•/• Info usuario •/•*
 
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Main*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟🍄┊${usedPrefix}afk 
-│🍂⃟🍄┊${usedPrefix}grupos
-│🍂⃟🍄┊${usedPrefix}skyplus
-│🍂⃟🍄┊${usedPrefix}instalaryaemori
-│🍂⃟🍄┊${usedPrefix}menu
-│🍂⃟🍄┊${usedPrefix}menu2
-│🍂⃟🍄┊${usedPrefix}hornymenu
-│🍂⃟🍄┊${usedPrefix}runtime
-│🍂⃟🍄┊${usedPrefix}script
-│🍂⃟🍄┊${usedPrefix}blocklist
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
+🌸 Cliente » \`\`\`%name\`\`\`
+✨️ Exp » \`\`\`%exp\`\`\`
+🍪 YotsubaCoins » \`\`\`%cookies\`\`\`
+🛡 Nivel » \`\`\`%level\`\`\`
+💫 Rango » \`\`\`%role\`\`\`
 
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Busquedas*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟🎋┊${usedPrefix}githubsearch
-│🍂⃟🎋┊${usedPrefix}google 
-│🍂⃟🎋┊${usedPrefix}mercadolibre
-│🍂⃟🎋┊${usedPrefix}npmjs
-│🍂⃟🎋┊${usedPrefix}tiktoksearch <txt>
-│🍂⃟🎋┊${usedPrefix}tweetposts
-│🍂⃟🎋┊${usedPrefix}ytsearch
-│🍂⃟🎋┊${usedPrefix}imagen <query>
-│🍂⃟🎋┊${usedPrefix}pinterest
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
+*•/• Info del bot •/•*
 
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Juegos*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟☁️┊${usedPrefix}abrazar <@usuario>
-│🍂⃟☁️┊${usedPrefix}acertijo
-│🍂⃟☁️┊${usedPrefix}sonrojarse 
-│🍂⃟☁️┊${usedPrefix}gay 
-│🍂⃟☁️┊${usedPrefix}lesbiana 
-│🍂⃟☁️┊${usedPrefix}pajero 
-│🍂⃟☁️┊${usedPrefix}pajera 
-│🍂⃟☁️┊${usedPrefix}puto 
-│🍂⃟☁️┊${usedPrefix}puta 
-│🍂⃟☁️┊${usedPrefix}manco 
-│🍂⃟☁️┊${usedPrefix}manca 
-│🍂⃟☁️┊${usedPrefix}rata 
-│🍂⃟☁️┊${usedPrefix}prostituta 
-│🍂⃟☁️┊${usedPrefix}prostituto 
-│🍂⃟☁️┊${usedPrefix}apostar 
-│🍂⃟☁️┊${usedPrefix}cf
-│🍂⃟☁️┊${usedPrefix}consejo
-│🍂⃟☁️┊${usedPrefix}dance
-│🍂⃟☁️┊${usedPrefix}doxear
-│🍂⃟☁️┊${usedPrefix}formarpareja
-│🍂⃟☁️┊${usedPrefix}violar 
-│🍂⃟☁️┊${usedPrefix}enamorada 
-│🍂⃟☁️┊${usedPrefix}math
-│🍂⃟☁️┊${usedPrefix}meme
-│🍂⃟☁️┊${usedPrefix}acariciar 
-│🍂⃟☁️┊${usedPrefix}personalidad
-│🍂⃟☁️┊${usedPrefix}piropo
-│🍂⃟☁️┊${usedPrefix}pokedex 
-│🍂⃟☁️┊${usedPrefix}pucheros 
-│🍂⃟☁️┊${usedPrefix}ppt
-│🍂⃟☁️┊${usedPrefix}pregunta
-│🍂⃟☁️┊${usedPrefix}dormir 
-│🍂⃟☁️┊${usedPrefix}reto
-│🍂⃟☁️┊${usedPrefix}ruleta 
-│🍂⃟☁️┊${usedPrefix}triste 
-│🍂⃟☁️┊${usedPrefix}ship
-│🍂⃟☁️┊${usedPrefix}love
-│🍂⃟☁️┊${usedPrefix}simi
-│🍂⃟☁️┊${usedPrefix}bot
-│🍂⃟☁️┊${usedPrefix}top
-│🍂⃟☁️┊${usedPrefix}zodiac
-│🍂⃟☁️┊${usedPrefix}slot
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
+🍁 Made by » \`\`\`@Alba070503\`\`\`
+🚩 Bot » \`\`\`%botofc\`\`\`
+📆 Fecha » \`\`\`%fecha\`\`\`
+🕖 Actividad » \`\`\`%muptime\`\`\`
+👤 Usuarios » \`\`\`%totalreg\`\`\`
 
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *JadiBots*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟🌸┊${usedPrefix}serbot
-│🍂⃟🌸┊${usedPrefix}serbot --code
-│🍂⃟🌸┊${usedPrefix}pausarai
-│🍂⃟🌸┊${usedPrefix}sockets
-│🍂⃟🌸┊${usedPrefix}deletebot
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
+\t*L I S T A  -  D E  -  C O M A N D O S* 
+`.trimStart(),
+    header: '*•/• %category •/•*\n',
+  body: '✰ %cmd',
+  footer: '',
+  after: `> ${dev}`,
+}
+let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
+  try {
+    let _package = JSON.parse(await promises.readFile(join(__dirname, '../package.json')).catch(_ => ({}))) || {}
+    let { exp, cookies, level, role } = global.db.data.users[m.sender]
+    let { min, xp, max } = xpRange(level, global.multiplier)
+    let name = await conn.getName(m.sender)
+    let d = new Date(new Date + 3600000)
+    let locale = 'es'
+    let weton = ['Pahing', 'Pon', 'Wage', 'Kliwon', 'Legi'][Math.floor(d / 84600000) % 5]
+    let week = d.toLocaleDateString(locale, { weekday: 'long' })
+    let date = d.toLocaleDateString(locale, {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    })
+    let dateIslamic = Intl.DateTimeFormat(locale + '-TN-u-ca-islamic', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    }).format(d)
+    let time = d.toLocaleTimeString(locale, {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric'
+    })
+    let _uptime = process.uptime() * 1000
+    let _muptime
+    if (process.send) {
+      process.send('uptime')
+      _muptime = await new Promise(resolve => {
+        process.once('message', resolve)
+        setTimeout(resolve, 1000)
+      }) * 1000
+    }
+    let muptime = clockString(_muptime)
+    let uptime = clockString(_uptime)
+    let totalreg = Object.keys(global.db.data.users).length
+    let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
+    let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => {
+      return {
+        help: Array.isArray(plugin.tags) ? plugin.help : [plugin.help],
+        tags: Array.isArray(plugin.tags) ? plugin.tags : [plugin.tags],
+        prefix: 'customPrefix' in plugin,
+        cookies: plugin.cookies,
+        premium: plugin.premium,
+        enabled: !plugin.disabled,
+      }
+    })
+    for (let plugin of help)
+      if (plugin && 'tags' in plugin)
+        for (let tag of plugin.tags)
+          if (!(tag in tags) && tag) tags[tag] = tag
+    conn.menu = conn.menu ? conn.menu : {}
+    let before = conn.menu.before || defaultMenu.before
+    let header = conn.menu.header || defaultMenu.header
+    let body = conn.menu.body || defaultMenu.body
+    let footer = conn.menu.footer || defaultMenu.footer
+    let after = conn.menu.after || (conn.user.jid == conn.user.jid ? '' : `Powered by https://wa.me/${conn.user.jid.split`@`[0]}`) + defaultMenu.after
+    let _text = [
+      before,
+      ...Object.keys(tags).map(tag => {
+        return header.replace(/%category/g, tags[tag]) + '\n' + [
+          ...help.filter(menu => menu.tags && menu.tags.includes(tag) && menu.help).map(menu => {
+            return menu.help.map(help => {
+              return body.replace(/%cmd/g, menu.prefix ? help : '%p' + help)
+                .replace(/%isdiamond/g, menu.diamond ? '(ⓓ)' : '')
+                .replace(/%isPremium/g, menu.premium ? '(Ⓟ)' : '')
+                .trim()
+            }).join('\n')
+          }),
+          footer
+        ].join('\n')
+      }),
+      after
+    ].join('\n')
+    let text = typeof conn.menu == 'string' ? conn.menu : typeof conn.menu == 'object' ? _text : ''
+let replace = {
+'%': '%',
+p: _p, uptime, muptime,
+me: conn.getName(conn.user.jid),
+taguser: '@' + m.sender.split("@s.whatsapp.net")[0],
+npmname: _package.name,
+npmdesc: _package.description,
+version: _package.version,
+exp: exp - min,
+maxexp: xp,
+botofc: (conn.user.jid == global.conn.user.jid ? 'Oficial' : 'SubBot'), 
+fecha: moment.tz('America/Bogota').format('DD/MM/YY'), 
+totalexp: exp,
+xp4levelup: max - exp,
+github: _package.homepage ? _package.homepage.url || _package.homepage : '[unknown github url]',
+greeting, level, cookies, name, weton, week, date, dateIslamic, time, totalreg, rtotalreg, role,
+readmore: readMore
+}
+text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
 
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Rpg*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟🍁┊${usedPrefix}bank
-│🍂⃟🍁┊${usedPrefix}cookies
-│🍂⃟🍁┊${usedPrefix}crimen
-│🍂⃟🍁┊${usedPrefix}daily
-│🍂⃟🍁┊${usedPrefix}claim
-│🍂⃟🍁┊${usedPrefix}depositar
-│🍂⃟🍁┊${usedPrefix}lb
-│🍂⃟🍁┊${usedPrefix}levelup
-│🍂⃟🍁┊${usedPrefix}minar
-│🍂⃟🍁┊${usedPrefix}retirar
-│🍂⃟🍁┊${usedPrefix}rob2
-│🍂⃟🍁┊${usedPrefix}rob
-│🍂⃟🍁┊${usedPrefix}addprem 
-│🍂⃟🍁┊${usedPrefix}slut
-│🍂⃟🍁┊${usedPrefix}trabajar
-│🍂⃟🍁┊${usedPrefix}transfer
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
+let category = "video"
+const db = './src/database/db.json'
+const db_ = JSON.parse(fs.readFileSync(db))
+const random = Math.floor(Math.random() * db_.links[category].length)
+const rlink = db_.links[category][random]
+global.vid = rlink
+const response = await fetch(vid)
+const gif = await response.buffer()
 
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Registro*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟🚩┊${usedPrefix}perfil
-│🍂⃟🚩┊${usedPrefix}unreg
-│🍂⃟🚩┊${usedPrefix}reg
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
+const who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
 
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Exp*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟🍿┊${usedPrefix}daily
-│🍂⃟🍿┊${usedPrefix}Buy
-│🍂⃟🍿┊${usedPrefix}Buyall
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
+const pp = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://qu.ax/AdwJ.jpg')
 
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Stickers*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟⭐️┊${usedPrefix}qc
-│🍂⃟⭐️┊${usedPrefix}stiker
-│🍂⃟⭐️┊${usedPrefix}wm
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
+//await conn.reply(m.chat, '*Próximamente se remitirá el menú.*', fkontak, { contextInfo:{ forwardingScore: 2022, isForwarded: true, externalAdReply: {title: packname, body: dev, sourceUrl: redeshost, thumbnail: await (await fetch(pp)).buffer() }}})
 
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Animes*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟✨️┊${usedPrefix}animelink
-│🍂⃟✨️┊${usedPrefix}akira
-│🍂⃟✨️┊${usedPrefix}akiyama
-│🍂⃟✨️┊${usedPrefix}anna
-│🍂⃟✨️┊${usedPrefix}asuna
-│🍂⃟✨️┊${usedPrefix}ayuzawa
-│🍂⃟✨️┊${usedPrefix}boruto
-│🍂⃟✨️┊${usedPrefix}chiho
-│🍂⃟✨️┊${usedPrefix}chitoge
-│🍂⃟✨️┊${usedPrefix}deidara
-│🍂⃟✨️┊${usedPrefix}erza
-│🍂⃟✨️┊${usedPrefix}elaina
-│🍂⃟✨️┊${usedPrefix}eba
-│🍂⃟✨️┊${usedPrefix}emilia
-│🍂⃟✨️┊${usedPrefix}hestia
-│🍂⃟✨️┊${usedPrefix}hinata
-│🍂⃟✨️┊${usedPrefix}inori
-│🍂⃟✨️┊${usedPrefix}isuzu
-│🍂⃟✨️┊${usedPrefix}itachi
-│🍂⃟✨️┊${usedPrefix}itori
-│🍂⃟✨️┊${usedPrefix}kaga
-│🍂⃟✨️┊${usedPrefix}kagura
-│🍂⃟✨️┊${usedPrefix}kaori
-│🍂⃟✨️┊${usedPrefix}keneki
-│🍂⃟✨️┊${usedPrefix}kotori
-│🍂⃟✨️┊${usedPrefix}kurumi
-│🍂⃟✨️┊${usedPrefix}madara
-│🍂⃟✨️┊${usedPrefix}mikasa
-│🍂⃟✨️┊${usedPrefix}miku
-│🍂⃟✨️┊${usedPrefix}minato
-│🍂⃟✨️┊${usedPrefix}naruto
-│🍂⃟✨️┊${usedPrefix}nezuko
-│🍂⃟✨️┊${usedPrefix}sagiri
-│🍂⃟✨️┊${usedPrefix}sasuke
-│🍂⃟✨️┊${usedPrefix}sakura
-│🍂⃟✨️┊${usedPrefix}cosplay
-│🍂⃟✨️┊${usedPrefix}infoanime
-│🍂⃟✨️┊${usedPrefix}lolice
-│🍂⃟✨️┊${usedPrefix}waifu
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
+await m.react('⭐️') 
 
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Grupos*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟🌻┊${usedPrefix}add
-│🍂⃟🌻┊${usedPrefix}banchat 
-│🍂⃟🌻┊${usedPrefix}grupo abrir / cerrar
-│🍂⃟🌻┊${usedPrefix}delete
-│🍂⃟🌻┊${usedPrefix}demote
-│🍂⃟🌻┊${usedPrefix}encuesta 
-│🍂⃟🌻┊${usedPrefix}hidetag
-│🍂⃟🌻┊${usedPrefix}infogrupo
-│🍂⃟🌻┊${usedPrefix}invite 
-│🍂⃟🌻┊${usedPrefix}kick
-│🍂⃟🌻┊${usedPrefix}link
-│🍂⃟🌻┊${usedPrefix}listadv
-│🍂⃟🌻┊${usedPrefix}promote
-│🍂⃟🌻┊${usedPrefix}revoke
-│🍂⃟🌻┊${usedPrefix}tagall 
-│🍂⃟🌻┊${usedPrefix}invocar 
-│🍂⃟🌻┊${usedPrefix}unbanchat
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
+await conn.sendMessage(m.chat, { video: { url: vid }, caption: text.trim(), contextInfo: { mentionedJid: [m.sender], isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363198641161536@newsletter', newsletterName: '© Alba070503 - Channel 🍁', serverMessageId: -1, }, forwardingScore: 999, externalAdReply: { title: 'YotsubaBot-MD', body: dev, thumbnailUrl: icono, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false,
+}, }, gifPlayback: true, gifAttribution: 0 }, { quoted: fkontak })
 
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *On/Off*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟💧┊${usedPrefix}enable
-│🍂⃟💧┊${usedPrefix}disable
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
+//await conn.sendMessage(m.chat, {text: text, contextInfo: { forwardingScore: 999, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterName: '© ᥡᥲᥱm᥆rіᑲ᥆𝗍 - ᥴһᥲᥒᥒᥱᥣ 🌱', newsletterJid: "120363263466636910@newsletter", }, externalAdReply: { title: 'ᥡᥲᥱm᥆rі ᑲ᥆𝗍 ᰔᩚ', body: dev, thumbnailUrl: 'https://qu.ax/OlTj.jpg', sourceUrl: redeshost, mediaType: 1, renderLargerThumbnail: true }}}, {quoted: fkontak})
 
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Descargas*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟🍭┊${usedPrefix}fb
-│🍂⃟🍭┊${usedPrefix}gitclone 
-│🍂⃟🍭┊${usedPrefix}imagen 
-│🍂⃟🍭┊${usedPrefix}ig
-│🍂⃟🍭┊${usedPrefix}tw
-│🍂⃟🍭┊${usedPrefix}mediafire
-│🍂⃟🍭┊${usedPrefix}apkmod
-│🍂⃟🍭┊${usedPrefix}play
-│🍂⃟🍭┊${usedPrefix}play2
-│🍂⃟🍭┊${usedPrefix}play3
-│🍂⃟🍭┊${usedPrefix}play4
-│🍂⃟🍭┊${usedPrefix}spotify
-│🍂⃟🍭┊${usedPrefix}tiktok
-│🍂⃟🍭┊${usedPrefix}ytmp4 
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
-
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Herramientas*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟🌺┊${usedPrefix}toanime
-│🍂⃟🌺┊${usedPrefix}tts
-│🍂⃟🌺┊${usedPrefix}imagen
-│🍂⃟🌺┊${usedPrefix}spamwa 
-│🍂⃟🌺┊${usedPrefix}fake
-│🍂⃟🌺┊${usedPrefix}remini
-│🍂⃟🌺┊${usedPrefix}hd
-│🍂⃟🌺┊${usedPrefix}enhance
-│🍂⃟🌺┊${usedPrefix}ssweb
-│🍂⃟🌺┊${usedPrefix}trad
-│🍂⃟🌺┊${usedPrefix}nuevafotochannel
-│🍂⃟🌺┊${usedPrefix}nosilenciarcanal
-│🍂⃟🌺┊${usedPrefix}silenciarcanal
-│🍂⃟🌺┊${usedPrefix}noseguircanal
-│🍂⃟🌺┊${usedPrefix}seguircanal
-│🍂⃟🌺┊${usedPrefix}avisoschannel
-│🍂⃟🌺┊${usedPrefix}resiviravisos
-│🍂⃟🌺┊${usedPrefix}inspect
-│🍂⃟🌺┊${usedPrefix}eliminarfotochannel
-│🍂⃟🌺┊${usedPrefix}reactioneschannel
-│🍂⃟🌺┊${usedPrefix}reaccioneschannel
-│🍂⃟🌺┊${usedPrefix}nuevonombrecanal
-│🍂⃟🌺┊${usedPrefix}nuevadescchannel
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
-
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Información*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟🍟┊${usedPrefix}creador
-│🍂⃟🍟┊${usedPrefix}editautoresponder
-│🍂⃟🍟┊${usedPrefix}ds
-│🍂⃟🍟┊${usedPrefix}dsowner
-│🍂⃟🍟┊${usedPrefix}fixmsgespera
-│🍂⃟🍟┊${usedPrefix}status
-│🍂⃟🍟┊${usedPrefix}info
-│🍂⃟🍟┊${usedPrefix}ping
-│🍂⃟🍟┊${usedPrefix}sistema
-│🍂⃟🍟┊${usedPrefix}speed
-│🍂⃟🍟┊${usedPrefix}speedtest
-│🍂⃟🍟┊${usedPrefix}reportar
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
-
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Nsfw*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟🔥┊${usedPrefix}nsfwloli
-│🍂⃟🔥┊${usedPrefix}nsfwfoot
-│🍂⃟🔥┊${usedPrefix}nsfwass
-│🍂⃟🔥┊${usedPrefix}nsfwbdsm
-│🍂⃟🔥┊${usedPrefix}nsfwcum
-│🍂⃟🔥┊${usedPrefix}nsfwero
-│🍂⃟🔥┊${usedPrefix}nsfwfemdom
-│🍂⃟🔥┊${usedPrefix}nsfwfoot
-│🍂⃟🔥┊${usedPrefix}nsfwglass
-│🍂⃟🔥┊${usedPrefix}nsfworgy
-│🍂⃟🔥┊${usedPrefix}yuri
-│🍂⃟🔥┊${usedPrefix}yuri2
-│🍂⃟🔥┊${usedPrefix}yaoi
-│🍂⃟🔥┊${usedPrefix}yaoi2
-│🍂⃟🔥┊${usedPrefix}panties
-│🍂⃟🔥┊${usedPrefix}tetas
-│🍂⃟🔥┊${usedPrefix}booty
-│🍂⃟🔥┊${usedPrefix}ecchi
-│🍂⃟🔥┊${usedPrefix}furro
-│🍂⃟🔥┊${usedPrefix}hentai
-│🍂⃟🔥┊${usedPrefix}trapito
-│🍂⃟🔥┊${usedPrefix}imagenlesbians
-│🍂⃟🔥┊${usedPrefix}pene
-│🍂⃟🔥┊${usedPrefix}porno
-│🍂⃟🔥┊${usedPrefix}randomxxx
-│🍂⃟🔥┊${usedPrefix}pechos 
-│🍂⃟🔥┊${usedPrefix}rule34 
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
-
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Desarrolladores*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟👑┊${usedPrefix}enable
-│🍂⃟👑┊${usedPrefix}disable
-│🍂⃟👑┊${usedPrefix}addcookies 
-│🍂⃟👑┊${usedPrefix}addprem 
-│🍂⃟👑┊${usedPrefix}autoadmin
-│🍂⃟👑┊${usedPrefix}copia
-│🍂⃟👑┊${usedPrefix}banuser 
-│🍂⃟👑┊${usedPrefix}bc
-│🍂⃟👑┊${usedPrefix}bcgc
-│🍂⃟👑┊${usedPrefix}bcgc2
-│🍂⃟👑┊$
-│🍂⃟👑┊>
-│🍂⃟👑┊=>
-│🍂⃟👑┊${usedPrefix}cheat
-│🍂⃟👑┊${usedPrefix}cleartmp
-│🍂⃟👑┊${usedPrefix}delprem 
-│🍂⃟👑┊${usedPrefix}dsowner
-│🍂⃟👑┊${usedPrefix}fetch
-│🍂⃟👑┊${usedPrefix}get
-│🍂⃟👑┊${usedPrefix}ip <alamat ip>
-│🍂⃟👑┊${usedPrefix}join <link>
-│🍂⃟👑┊${usedPrefix}grupocrear <nombre>
-│🍂⃟👑┊${usedPrefix}nuevabiobot <teks>
-│🍂⃟👑┊${usedPrefix}nuevafotobot *<imagen>*
-│🍂⃟👑┊${usedPrefix}nuevonombrebot <teks>
-│🍂⃟👑┊${usedPrefix}resetpersonajes
-│🍂⃟👑┊${usedPrefix}restart
-│🍂⃟👑┊${usedPrefix}unbanuser
-│🍂⃟👑┊${usedPrefix}update
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
-
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Audios*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟🐢┊${usedPrefix}bass
-│🍂⃟🐢┊${usedPrefix}blown
-│🍂⃟🐢┊${usedPrefix}deep
-│🍂⃟🐢┊${usedPrefix}earrape
-│🍂⃟🐢┊${usedPrefix}fast
-│🍂⃟🐢┊${usedPrefix}fat
-│🍂⃟🐢┊${usedPrefix}nightcore
-│🍂⃟🐢┊${usedPrefix}reverse
-│🍂⃟🐢┊${usedPrefix}robot 
-│🍂⃟🐢┊${usedPrefix}slow
-│🍂⃟🐢┊${usedPrefix}smooth
-│🍂⃟🐢┊${usedPrefix}tupai
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
-
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Ai*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟🪐┊${usedPrefix}gemini
-│🍂⃟🪐┊${usedPrefix}chatgpt <texto>
-│🍂⃟🪐┊${usedPrefix}ia <texto>
-│🍂⃟🪐┊${usedPrefix}remini
-│🍂⃟🪐┊${usedPrefix}hd
-│🍂⃟🪐┊${usedPrefix}enhance
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
-
-╭── ︿︿︿︿︿ *⭒   ⭒   ⭒   ⭒   ⭒   ⭒*
-┊ ‹‹ *Categoria* :: *Convertidores*
-┊•*⁀➷ °⭒⭒⭒ *DevDiego*
-╰─── ︶︶︶︶ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩
-│🍂⃟💫┊${usedPrefix}togifaud
-│🍂⃟💫┊${usedPrefix}toimg
-│🍂⃟💫┊${usedPrefix}tourl
-│🍂⃟💫┊${usedPrefix}tovideo
-╰─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒
-
-> ${global.dev}`.trim()
-
-await conn.sendMessage(m.chat, { image: { url: img.getRandom() }, caption: menu, contextInfo: { mentionedJid: [m.sender], isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, newsletterName: channelRD.name, serverMessageId: -1, }, forwardingScore: 999, externalAdReply: { title: '𝙔𝙖𝙚𝙢𝙤𝙧𝙞𝘽𝙤𝙩-𝙈𝘿 🌻✨', body: dev, thumbnailUrl: perfil, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false,
-}, }, gifPlayback: true, gifAttribution: 0 }, { quoted: null })
-await m.react(emojis)    
-    
-} catch (e) {
-await m.reply(`✘ Ocurrió un error al enviar el menú\n\n${e}`)
-await m.react(error)
-}}
-
+  } catch (e) {
+    await m.react(error)
+    conn.reply(m.chat, '「✘」 *Ocurrió un error al enviar el menú*', m, fake, )
+    throw e
+  }
+}
 handler.help = ['allmenu']
 handler.tags = ['main']
-handler.command = ['menu', 'help', 'menú', 'allmenú', 'allmenu', 'menucompleto'] 
+handler.command = ['menuall', 'allmenú', 'allmenu', 'menucompleto'] 
 handler.register = true
+
 export default handler
 
 const more = String.fromCharCode(8206)
 const readMore = more.repeat(4001)
+
 function clockString(ms) {
-let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
-let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')}
+  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
+  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
+  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
+  return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
+}
+
+  var ase = new Date();
+  var hour = ase.getHours();
+switch(hour){
+  case 0: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🌙'; break;
+  case 1: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 💤'; break;
+  case 2: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🦉'; break;
+  case 3: hour = 'Bᴜᴇɴᴏs Dɪᴀs ✨'; break;
+  case 4: hour = 'Bᴜᴇɴᴏs Dɪᴀs 💫'; break;
+  case 5: hour = 'Bᴜᴇɴᴏs Dɪᴀs 🌅'; break;
+  case 6: hour = 'Bᴜᴇɴᴏs Dɪᴀs 🌄'; break;
+  case 7: hour = 'Bᴜᴇɴᴏs Dɪᴀs 🌅'; break;
+  case 8: hour = 'Bᴜᴇɴᴏs Dɪᴀs 💫'; break;
+  case 9: hour = 'Bᴜᴇɴᴏs Dɪᴀs ✨'; break;
+  case 10: hour = 'Bᴜᴇɴᴏs Dɪᴀs 🌞'; break;
+  case 11: hour = 'Bᴜᴇɴᴏs Dɪᴀs 🌨'; break;
+  case 12: hour = 'Bᴜᴇɴᴏs Dɪᴀs ❄'; break;
+  case 13: hour = 'Bᴜᴇɴᴏs Dɪᴀs 🌤'; break;
+  case 14: hour = 'Bᴜᴇɴᴀs Tᴀʀᴅᴇs 🌇'; break;
+  case 15: hour = 'Bᴜᴇɴᴀs Tᴀʀᴅᴇs 🥀'; break;
+  case 16: hour = 'Bᴜᴇɴᴀs Tᴀʀᴅᴇs 🌹'; break;
+  case 17: hour = 'Bᴜᴇɴᴀs Tᴀʀᴅᴇs 🌆'; break;
+  case 18: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🌙'; break;
+  case 19: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🌃'; break;
+  case 20: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🌌'; break;
+  case 21: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🌃'; break;
+  case 22: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🌙'; break;
+  case 23: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🌃'; break;
+}
+  var greeting = hour;
