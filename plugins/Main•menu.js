@@ -632,9 +632,9 @@ await m.react('🤖')
 console.log(`❗❗ Comuniquese con el creador${usedPrefix + command} ❗❗`)
 console.log(e)	
 }}
-handler.help = ['menu5', 'help1', '?']
+handler.help = ['menu', 'help']
 handler.tags = ['main']
-handler.command = /^(menu4|allmenu|herramientas|menú4|comandos|allm\?)$/i
+handler.command = ['menu', 'allmenu', 'help', 'comandos', 'menucompleto']
 handler.register = true
 handler.exp = 50
 handler.fail = null
