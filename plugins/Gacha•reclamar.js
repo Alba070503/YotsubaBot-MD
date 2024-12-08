@@ -26,18 +26,26 @@ const handler = async (m, { conn }) => {
         const sender = m.sender;
         const datos = obtenerDatos();
 
-        // Verificar si el usuario tiene un personaje reservado
-        const usuario = datos.usuarios[sender];
-        if (!usuario || !usuario.characters || usuario.characters.length === 0) {
+        // Verificar si el usuario existe en los datos
+        if (!datos.usuarios[sender]) {
             const message = '《✿》No tienes ningún personaje reservado. Usa *#rw* para generar uno.';
             await conn.sendMessage(m.chat, { text: message });
             return;
         }
 
-        // Reclamar el personaje
+        // Verificar si el usuario tiene personajes en la lista
+        const usuario = datos.usuarios[sender];
+        if (!usuario.characters || usuario.characters.length === 0) {
+            const message = '《✿》No tienes ningún personaje reservado. Usa *#rw* para generar uno.';
+            await conn.sendMessage(m.chat, { text: message });
+            return;
+        }
+
+        // Reclamar el último personaje
         const personajeReclamado = usuario.characters.pop();
         guardarDatos(datos);
 
+        // Construir el mensaje de respuesta
         const caption = `✿ ¡Has reclamado tu personaje! ✿\n\n• Nombre: ${personajeReclamado.name}\n• Valor: ${personajeReclamado.value} *YotsuCoins☘️*`;
 
         await conn.sendMessage(m.chat, { 
