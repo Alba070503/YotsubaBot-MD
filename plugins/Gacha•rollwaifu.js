@@ -1,11 +1,10 @@
 import fs from 'fs';
-import axios from 'axios'; // Asegúrate de instalar axios: npm install axios
-
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid'; // Asegúrate de que esto esté correcto
 
 const completadoImage = './src/completado.jpg';
-
-const dev = 'Desarrollado por YotsubaBot'; // Define "dev"
-const redes = 'https://github.com/Alba070503/YotsubaBot-MD'; // Define "redes"
+const dev = 'Desarrollado por YotsubaBot';
+const redes = 'https://github.com/Alba070503/YotsubaBot-MD';
 const jsonURL = 'https://raw.githubusercontent.com/Alba070503/YotsubaBot-MD/refs/heads/main/src/JSON/characters.json';
 
 const obtenerDatos = () => {
@@ -30,7 +29,7 @@ const guardarDatos = (data) => {
 const obtenerPersonajes = async () => {
     try {
         const response = await axios.get(jsonURL);
-        return response.data; // Retorna el JSON desde el enlace
+        return response.data;
     } catch (error) {
         console.error('✿ Error al obtener el JSON de personajes:', error);
         return [];
@@ -89,7 +88,7 @@ const handler = async (m, { conn }) => {
                 externalAdReply: {
                     showAdAttribution: true,
                     title: '¡Nuevo personaje!',
-                    body: dev, 
+                    body: dev,
                     thumbnailUrl: personajeAleatorio.url,
                     sourceUrl: redes,
                     previewType: 'PHOTO',
