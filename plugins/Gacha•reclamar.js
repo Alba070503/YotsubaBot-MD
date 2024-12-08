@@ -1,82 +1,60 @@
 import fs from 'fs';
 
-// Variables globales
-let cooldowns = {};
 const dataPath = './data.json';
 
-// Funciones auxiliares
 const obtenerDatos = () => {
-  if (fs.existsSync(dataPath)) {
-    return JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
-  }
-  return { usuarios: {}, personajesReservados: [] };
+    try {
+        return fs.existsSync(dataPath)
+            ? JSON.parse(fs.readFileSync(dataPath, 'utf-8'))
+            : { usuarios: {}, personajesReservados: [] };
+    } catch (error) {
+        console.error('✿ Error al leer data.json:', error);
+        return { usuarios: {}, personajesReservados: [] };
+    }
 };
 
 const guardarDatos = (data) => {
-  fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+    try {
+        fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+    } catch (error) {
+        console.error('✿ Error al escribir en data.json:', error);
+    }
 };
 
-// Función principal del comando
-const handler = async (message, { conn }) => {
-  const userId = message.sender;
-  const chatId = message.chat;
-  const mentionedUser = message.mentionedJid[0];
-  const datos = obtenerDatos();
+const handler = async (m, { conn }) => {
+    try {
+        const sender = m.sender;
+        const datos = obtenerDatos();
 
-  if (!mentionedUser) {
-    await conn.reply(chatId, '《✧》Debes mencionar a un usuario para reclamar su personaje.', message);
-    return;
-  }
+        // Verificar si el usuario tiene un personaje reservado
+        const usuario = datos.usuarios[sender];
+        if (!usuario || !usuario.characters || usuario.characters.length === 0) {
+            const message = '《✿》No tienes ningún personaje reservado. Usa *#rw* para generar uno.';
+            await conn.sendMessage(m.chat, { text: message });
+            return;
+        }
 
-  const personajeReservado = datos.personajesReservados.find(p => p.id === mentionedUser);
+        // Reclamar el personaje
+        const personajeReclamado = usuario.characters.pop();
+        guardarDatos(datos);
 
-  if (!personajeReservado) {
-    await conn.reply(chatId, '《✧》El personaje no está disponible para ser reclamado.', message);
-    return;
-  }
+        const caption = `✿ ¡Has reclamado tu personaje! ✿\n\n• Nombre: ${personajeReclamado.name}\n• Valor: ${personajeReclamado.value} *YotsuCoins☘️*`;
 
-  const currentTime = Date.now();
-  const cooldownTime = 10 * 60 * 1000; // 10 minutos
+        await conn.sendMessage(m.chat, { 
+            image: { url: personajeReclamado.url },
+            caption, 
+            mimetype: 'image/jpeg',
+        });
 
-  if (cooldowns[userId] && currentTime - cooldowns[userId] < cooldownTime) {
-    const remainingTime = cooldownTime - (currentTime - cooldowns[userId]);
-    const minutes = Math.floor(remainingTime / 60000);
-    const seconds = Math.floor((remainingTime % 60000) / 1000);
-    await conn.reply(chatId, `《✧》Debes esperar ${minutes} minutos y ${seconds} segundos antes de reclamar otro personaje.`, message);
-    return;
-  }
-
-  // Reclamar el personaje
-  if (!datos.usuarios[userId]) {
-    datos.usuarios[userId] = { characters: [], characterCount: 0 };
-  }
-
-  const usuarioActual = datos.usuarios[userId];
-  usuarioActual.characters.push({
-    name: personajeReservado.name,
-    url: personajeReservado.url,
-    value: personajeReservado.value,
-  });
-  usuarioActual.characterCount += 1;
-
-  // Actualizar la lista de personajes reservados
-  datos.personajesReservados = datos.personajesReservados.filter(p => p.id !== mentionedUser);
-
-  guardarDatos(datos);
-  cooldowns[userId] = currentTime;
-
-  await conn.reply(
-    chatId,
-    `《✧》¡Felicidades @${userId.split('@')[0]}! Has reclamado a *${personajeReservado.name}*.`,
-    message,
-    { mentions: [userId] }
-  );
+    } catch (error) {
+        console.error('《✿》Ocurrió un error:', error);
+        await conn.sendMessage(m.chat, { text: `《✿》Ocurrió un error al procesar tu solicitud. Intenta de nuevo más tarde.\n${error}` });
+    }
 };
 
-// Configuración del comando
-handler.command = ['c'];
 handler.help = ['reclamar'];
 handler.tags = ['gacha'];
-handler.group = false;
+handler.command = ['reclamar', 'claim'];
+handler.limit = false;
 
 export default handler;
