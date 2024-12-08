@@ -21,38 +21,48 @@ const guardarDatos = (data) => {
     }
 };
 
-const handler = async (m, { conn }) => {
+const handler = async (m, { conn, text, quoted }) => {
     try {
         const sender = m.sender;
         const datos = obtenerDatos();
 
-        // Verificar si el usuario existe en los datos
-        if (!datos.usuarios[sender]) {
-            const message = '《✿》No tienes ningún personaje reservado. Usa *#rw* para generar uno.';
+        // Verificar que el mensaje sea una respuesta válida
+        if (!quoted || !quoted.message || !quoted.message.imageMessage) {
+            const message = '《✿》Debes responder al mensaje del personaje que deseas reclamar.';
             await conn.sendMessage(m.chat, { text: message });
             return;
         }
 
-        // Verificar si el usuario tiene personajes en la lista
-        const usuario = datos.usuarios[sender];
-        if (!usuario.characters || usuario.characters.length === 0) {
-            const message = '《✿》No tienes ningún personaje reservado. Usa *#rw* para generar uno.';
+        // Extraer información del personaje del mensaje citado
+        const caption = quoted.message.imageMessage.caption || '';
+        const match = caption.match(/✰ Nombre:\n> » (.+)/);
+        if (!match) {
+            const message = '《✿》El mensaje citado no contiene información válida de un personaje.';
             await conn.sendMessage(m.chat, { text: message });
             return;
         }
 
-        // Reclamar el último personaje
-        const personajeReclamado = usuario.characters.pop();
+        const personajeNombre = match[1];
+
+        // Verificar si el personaje ya fue reclamado
+        const personajeReclamado = Object.entries(datos.usuarios).find(([, user]) =>
+            user.characters.some((char) => char.name === personajeNombre)
+        );
+
+        if (personajeReclamado) {
+            const message = `《✿》El personaje *${personajeNombre}* ya ha sido reclamado por @${personajeReclamado[0].split('@')[0]}.`;
+            await conn.sendMessage(m.chat, { text: message, mentions: [personajeReclamado[0]] });
+            return;
+        }
+
+        // Reclamar el personaje para el usuario actual
+        if (!datos.usuarios[sender]) datos.usuarios[sender] = { characters: [] };
+        datos.usuarios[sender].characters.push({ name: personajeNombre, date: new Date().toISOString() });
         guardarDatos(datos);
 
-        // Construir el mensaje de respuesta
-        const caption = `✿ ¡Has reclamado tu personaje! ✿\n\n• Nombre: ${personajeReclamado.name}\n• Valor: ${personajeReclamado.value} *YotsuCoins☘️*`;
-
-        await conn.sendMessage(m.chat, { 
-            image: { url: personajeReclamado.url },
-            caption, 
-            mimetype: 'image/jpeg',
-        });
+        // Confirmación
+        const message = `❤️‍🔥 *${personajeNombre}* ha sido reclamado por *@${sender.split('@')[0]}*.`;
+        await conn.sendMessage(m.chat, { text: message, mentions: [sender] });
 
     } catch (error) {
         console.error('《✿》Ocurrió un error:', error);
