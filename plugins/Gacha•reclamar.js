@@ -77,6 +77,6 @@ const handler = async (message, { conn }) => {
 handler.command = ['c'];
 handler.help = ['reclamar'];
 handler.tags = ['gacha'];
-handler.group = true;
+handler.group = false;
 
 export default handler;
