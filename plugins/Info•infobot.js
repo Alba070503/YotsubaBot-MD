@@ -12,7 +12,7 @@ let format = sizeFormatter({
 let handler = async (m, { conn }) => {
   try {
     // Descargar la imagen desde el enlace
-    let img = await (await fetch('https://qu.ax/pRyZg.png')).buffer();
+    let img = await (await fetch('https://telegra.ph/file/b7edf2026656718c1f0f7.jpg')).buffer();
 
     // Obtener información del sistema
     let uptime = clockString(process.uptime() * 1000);
