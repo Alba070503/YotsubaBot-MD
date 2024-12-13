@@ -12,7 +12,7 @@ let format = sizeFormatter({
 let handler = async (m, { conn }) => {
   try {
     // Descargar la imagen desde el enlace
-    let img = await (await fetch('https://telegra.ph/file/b7edf2026656718c1f0f7.jpg')).buffer();
+    let img = await (await fetch('https://qu.ax/pRyZg.png')).buffer();
 
     // Obtener información del sistema
     let uptime = clockString(process.uptime() * 1000);
@@ -22,18 +22,18 @@ let handler = async (m, { conn }) => {
     const used = process.memoryUsage();
 
     // Crear el mensaje de estado
-    let menu = `🍭 *I N F O - Y A E M O R I*
+    let menu = `🍀 *I N F O - Y O T S U B A*
     
 *_ESTADO_*
-🐢͜͡ޮ ⋄ Chats de grupo: *${groupsIn.length}*
-🌺͜͡ޮ ⋄ Grupos unidos: *${groupsIn.length}*
-🐢͜͡ޮ ⋄ Grupos abandonados: *0*
-🌺͜͡ޮ ⋄ Chats privados: *${chats.length - groupsIn.length}*
-🐢͜͡ޮ ⋄ Total Chats: *${chats.length}*
-🌺͜͡ޮ ⋄ Registrados: *${totalreg}*
-🐢͜͡ޮ ⋄ Tiempo Activo: *${uptime}*
+🍁 ⋄ Chats de grupo: *${groupsIn.length}*
+🌸 ⋄ Grupos unidos: *${groupsIn.length}*
+🍁 ⋄ Grupos abandonados: *0*
+🌸 ⋄ Chats privados: *${chats.length - groupsIn.length}*
+🍁 ⋄ Total Chats: *${chats.length}*
+🌸 ⋄ Registrados: *${totalreg}*
+🍁 ⋄ Tiempo Activo: *${uptime}*
 
-🚩 *NodeJS Uso de memoria*
+🌼 *NodeJS Uso de memoria*
 ${'```' + Object.keys(used).map((key) => `${key.padEnd(10, ' ')}: ${format(used[key])}`).join('\n') + '```'}
 `;
 
@@ -43,7 +43,7 @@ ${'```' + Object.keys(used).map((key) => `${key.padEnd(10, ' ')}: ${format(used[
       contextInfo: {
         mentionedJid: [m.sender],
         externalAdReply: {
-          title: '❑— ShizukaBot-MD —❑\nWʜᴀᴛꜱᴀᴘᴘ Bᴏᴛ - Mᴜʟᴛɪ Dᴇᴠɪᴄᴇ',
+          title: '❑— YotsubaBot-MD —❑\nWʜᴀᴛꜱᴀᴘᴘ Bᴏᴛ - Mᴜʟᴛɪ Dᴇᴠɪᴄᴇ',
           thumbnail: img, // Imagen descargada
           sourceUrl: 'https://whatsapp.com/channel/0029VaAN15BJP21BYCJ3tH04', // URL externa
           mediaType: 1,
