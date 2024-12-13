@@ -12,7 +12,7 @@ let format = sizeFormatter({
 let handler = async (m, { conn }) => {
   try {
     // Descargar la imagen desde el enlace
-    let img = await (await fetch('https://qu.ax/pRyZg.png')).buffer();
+    let img = await (await fetch('https://qu.ax/ilnry.jpg')).buffer();
 
     // Obtener información del sistema
     let uptime = clockString(process.uptime() * 1000);
