@@ -1,4 +1,4 @@
-import { jidNormalizedUser } from "@adiwajshing/baileys";
+/*import { jidNormalizedUser } from "@adiwajshing/baileys";
 import Jadibots from "../lib/jadibots.js";
 
 let handler = async (m, { usedPrefix }) => {
@@ -37,4 +37,4 @@ handler.help = ['jadibot'];
 handler.tags = ['Serbot'];
 handler.command = ['listjadibot', 'bots']
 
-export default handler;
+export default handler;*/
