@@ -40,7 +40,7 @@ ${'```' + Object.keys(used).map((key) => `${key.padEnd(10, ' ')}: ${format(used[
       contextInfo: {
         mentionedJid: [m.sender],
         externalAdReply: {
-          title: '❑— Momo AyaseBot-MD —❑\nWʜᴀᴛꜱᴀᴘᴘ Bᴏᴛ - Mᴜʟᴛɪ Dᴇᴠɪᴄᴇ',
+          title: '❑— YotsubaBot-MD —❑\nWʜᴀᴛꜱᴀᴘᴘ Bᴏᴛ - Mᴜʟᴛɪ Dᴇᴠɪᴄᴇ',
           thumbnailUrl: 'https://qu.ax/ilnry.jpg', // Imagen como URL
           sourceUrl: 'https://whatsapp.com/channel/0029VaAN15BJP21BYCJ3tH04', // URL externa
           mediaType: 1,
