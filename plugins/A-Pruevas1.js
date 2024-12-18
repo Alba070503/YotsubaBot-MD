@@ -1,5 +1,5 @@
 const staffGroupID = '120363347714830215@g.us'; // ID del grupo del staff
-const channelID = '120363198641161536@newsletter'; // ID del canal oficial
+const channelID = '120363360977692179@newsletter'; // ID del canal oficial
 
 let handler = async (m, { conn }) => {
   let user = m.participant || m.key.participant || m.key.remoteJid; // Usuario que realizó la acción
