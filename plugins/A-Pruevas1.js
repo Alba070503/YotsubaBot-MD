@@ -2,57 +2,61 @@ const staffGroupID = '120363347714830215@g.us'; // ID del grupo del staff
 const channelID = '120363360977692179@newsletter'; // ID del canal oficial
 
 let handler = async (m, { conn }) => {
-  let user = m.participant || m.key.participant || m.key.remoteJid; // Usuario que realizó la acción
-  let userNumber = user ? user.replace(/[^0-9]/g, '') : 'Desconocido';
+  try {
+    let user = m.participant || m.key.participant || m.key.remoteJid; // Usuario involucrado
+    let userNumber = user ? user.replace(/[^0-9]/g, '') : 'Desconocido';
+    let chatName = m.chat || 'Desconocido';
 
-  let pp = await conn.profilePictureUrl(user, 'image').catch(() => 'https://qu.ax/QGAVS.jpg');
+    // Foto de perfil del usuario
+    let pp = await conn.profilePictureUrl(user, 'image').catch(() => 'https://qu.ax/QGAVS.jpg');
 
-  // Aviso si el mensaje fue eliminado
-  if (m.message?.protocolMessage?.type === 0 || m.messageStubType === 68) { 
-    let deletedMsg = `🚨 *Mensaje Eliminado*\n\n🔹 *Usuario:* wa.me/${userNumber}\n🔹 *Chat:* ${m.chat}\n\n🔸 Un mensaje fue eliminado.`;
+    // Mensaje Eliminado
+    if (m.messageStubType === 68) { // StubType 68 es para mensajes eliminados
+      let deletedMessage = `🚨 *Mensaje Eliminado*\n\n🔹 *Usuario:* wa.me/${userNumber}\n🔹 *Chat:* ${chatName}\n\n🔸 Un mensaje fue eliminado.`;
 
-    let options = {
-      contextInfo: {
-        externalAdReply: {
-          title: '🚨 Aviso de Eliminación',
-          body: 'Se eliminó un mensaje en el canal',
-          thumbnailUrl: pp,
-          sourceUrl: 'https://wa.me/' + userNumber,
-          mediaType: 1,
-          renderLargerThumbnail: true,
+      let options = {
+        contextInfo: {
+          externalAdReply: {
+            title: '🚨 Aviso de Mensaje Eliminado',
+            body: 'Un mensaje ha sido eliminado en el canal',
+            thumbnailUrl: pp,
+            sourceUrl: `https://wa.me/${userNumber}`,
+            mediaType: 1,
+            renderLargerThumbnail: true,
+          },
         },
-      },
-    };
+      };
 
-    try {
-      await conn.sendMessage(staffGroupID, { text: deletedMsg, contextInfo: options.contextInfo });
-    } catch (e) {
-      await conn.sendMessage(channelID, { text: deletedMsg, contextInfo: options.contextInfo });
+      // Enviar aviso al grupo del staff o canal
+      await conn.sendMessage(staffGroupID, { text: deletedMessage, contextInfo: options.contextInfo }).catch(async () => {
+        await conn.sendMessage(channelID, { text: deletedMessage, contextInfo: options.contextInfo });
+      });
     }
-  }
 
-  // Aviso si el mensaje fue editado
-  if (m.message?.protocolMessage?.type === 1) { 
-    let editedMsg = `🚨 *Mensaje Editado*\n\n🔹 *Usuario:* wa.me/${userNumber}\n🔹 *Chat:* ${m.chat}\n\n🔸 Un mensaje fue editado.`;
+    // Mensaje Editado
+    if (m.message?.protocolMessage?.type === 1) { // ProtocolMessage Type 1 es para mensajes editados
+      let editedMessage = `🚨 *Mensaje Editado*\n\n🔹 *Usuario:* wa.me/${userNumber}\n🔹 *Chat:* ${chatName}\n\n🔸 Un mensaje ha sido editado.`;
 
-    let options = {
-      contextInfo: {
-        externalAdReply: {
-          title: '🚨 Aviso de Edición',
-          body: 'Se editó un mensaje en el canal',
-          thumbnailUrl: pp,
-          sourceUrl: 'https://wa.me/' + userNumber,
-          mediaType: 1,
-          renderLargerThumbnail: true,
+      let options = {
+        contextInfo: {
+          externalAdReply: {
+            title: '🚨 Aviso de Mensaje Editado',
+            body: 'Un mensaje ha sido editado en el canal',
+            thumbnailUrl: pp,
+            sourceUrl: `https://wa.me/${userNumber}`,
+            mediaType: 1,
+            renderLargerThumbnail: true,
+          },
         },
-      },
-    };
+      };
 
-    try {
-      await conn.sendMessage(staffGroupID, { text: editedMsg, contextInfo: options.contextInfo });
-    } catch (e) {
-      await conn.sendMessage(channelID, { text: editedMsg, contextInfo: options.contextInfo });
+      // Enviar aviso al grupo del staff o canal
+      await conn.sendMessage(staffGroupID, { text: editedMessage, contextInfo: options.contextInfo }).catch(async () => {
+        await conn.sendMessage(channelID, { text: editedMessage, contextInfo: options.contextInfo });
+      });
     }
+  } catch (e) {
+    console.error(e);
   }
 };
 
