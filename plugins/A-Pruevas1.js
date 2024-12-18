@@ -1,29 +1,15 @@
 let handler = m => m;
 
 handler.all = async function (m, { conn }) {
-  const staffGroupID = '120363347714830215@g.us'; // ID del grupo del staff
-  const channelID = '120363198641161536@newsletter'; // ID del canal de WhatsApp
+  const staffGroupID = '120363347714830215@g.us'; // Grupo del staff
+  const channelID = '120363198641161536@newsletter'; // Canal de respaldo
 
-  // Variables del evento
-  const user = m.participant || m.key.remoteJid;
-  const chat = m.key.remoteJid;
-  const userNumber = user.split('@')[0];
+  // Si es un mensaje eliminado
+  if (m.message && m.message.protocolMessage && m.message.protocolMessage.type === 0) {
+    let user = m.participant || m.key.participant || m.key.remoteJid;
+    let userNumber = user.replace(/[^0-9]/g, '');
 
-  // Detectar mensaje borrado
-  if (m.message && m.messageStubType === 68) { // 68 = Mensaje eliminado
-    const notification = `🚨 *Mensaje Eliminado* 🚨\n\n🔹 *Usuario:* wa.me/${userNumber}\n🔹 *Chat:* ${chat}\n\n⚠️ *Un usuario eliminó un mensaje.*`;
-
-    // Enviar al grupo del staff o al canal
-    try {
-      await conn.sendMessage(staffGroupID, { text: notification });
-    } catch (e) {
-      await conn.sendMessage(channelID, { text: notification });
-    }
-  }
-
-  // Detectar mensaje editado
-  if (m.message && m.messageStubType === 69) { // 69 = Mensaje editado
-    const notification = `📝 *Mensaje Editado* 📝\n\n🔹 *Usuario:* wa.me/${userNumber}\n🔹 *Chat:* ${chat}\n\n⚠️ *Un usuario editó un mensaje.*`;
+    let notification = `🚨 *Mensaje Eliminado* 🚨\n\n🔹 *Usuario:* wa.me/${userNumber}\n🔹 *Chat:* ${m.chat}\n\n⚠️ Un usuario eliminó un mensaje.`;
 
     // Enviar al grupo del staff o al canal
     try {
