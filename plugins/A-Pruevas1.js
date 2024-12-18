@@ -1,63 +1,78 @@
-const staffGroupID = '120363347714830215@g.us'; // ID del grupo del staff
-const channelID = '120363360977692179@newsletter'; // ID del canal oficial
+const owners = global.owner || []; // Lista de owners del bot
+const channelId = "120363360977692179@newsletter"; // ID del canal de WhatsApp
+const defaultThumbnail = 'https://qu.ax/QGAVS.jpg'; // Imagen predeterminada si no hay foto de perfil
 
 let handler = async (m, { conn }) => {
   try {
-    let user = m.participant || m.key.participant || m.key.remoteJid; // Usuario involucrado
-    let userNumber = user ? user.replace(/[^0-9]/g, '') : 'Desconocido';
-    let chatName = m.chat || 'Desconocido';
+    let user = m.participant || m.key.participant || m.key.remoteJid; // Usuario que realizó la acción
+    let userNumber = user ? user.replace(/[^0-9]/g, '') : 'Desconocido'; // Número del usuario
+    let chatName = m.chat || 'Desconocido'; // Nombre del chat o grupo
+    let pp = await conn.profilePictureUrl(user, 'image').catch(() => defaultThumbnail); // Foto de perfil del usuario
 
-    // Foto de perfil del usuario
-    let pp = await conn.profilePictureUrl(user, 'image').catch(() => 'https://qu.ax/QGAVS.jpg');
+    // Aviso de Mensaje Eliminado
+    if (m.messageStubType === 68) { // StubType para mensajes eliminados
+      let deletedMessage = `🚨 *Mensaje Eliminado*\n\n🔹 *Usuario:* wa.me/${userNumber}\n🔹 *Chat:* ${chatName}\n🔸 Un mensaje fue eliminado.`;
 
-    // Mensaje Eliminado
-    if (m.messageStubType === 68) { // StubType 68 es para mensajes eliminados
-      let deletedMessage = `🚨 *Mensaje Eliminado*\n\n🔹 *Usuario:* wa.me/${userNumber}\n🔹 *Chat:* ${chatName}\n\n🔸 Un mensaje fue eliminado.`;
-
-      let options = {
-        contextInfo: {
-          externalAdReply: {
-            title: '🚨 Aviso de Mensaje Eliminado',
-            body: 'Un mensaje ha sido eliminado en el canal',
-            thumbnailUrl: pp,
-            sourceUrl: `https://wa.me/${userNumber}`,
-            mediaType: 1,
-            renderLargerThumbnail: true,
-          },
-        },
-      };
-
-      // Enviar aviso al grupo del staff o canal
-      await conn.sendMessage(staffGroupID, { text: deletedMessage, contextInfo: options.contextInfo }).catch(async () => {
-        await conn.sendMessage(channelID, { text: deletedMessage, contextInfo: options.contextInfo });
-      });
+      await sendNotification(conn, channelId, owners, deletedMessage, pp, '🚨 Aviso de Mensaje Eliminado', 'Un mensaje ha sido eliminado');
     }
 
-    // Mensaje Editado
-    if (m.message?.protocolMessage?.type === 1) { // ProtocolMessage Type 1 es para mensajes editados
-      let editedMessage = `🚨 *Mensaje Editado*\n\n🔹 *Usuario:* wa.me/${userNumber}\n🔹 *Chat:* ${chatName}\n\n🔸 Un mensaje ha sido editado.`;
+    // Aviso de Mensaje Editado
+    if (m.message?.protocolMessage?.type === 1) { // ProtocolMessage para mensajes editados
+      let editedMessage = `🚨 *Mensaje Editado*\n\n🔹 *Usuario:* wa.me/${userNumber}\n🔹 *Chat:* ${chatName}\n🔸 Un mensaje ha sido editado.`;
 
-      let options = {
-        contextInfo: {
-          externalAdReply: {
-            title: '🚨 Aviso de Mensaje Editado',
-            body: 'Un mensaje ha sido editado en el canal',
-            thumbnailUrl: pp,
-            sourceUrl: `https://wa.me/${userNumber}`,
-            mediaType: 1,
-            renderLargerThumbnail: true,
-          },
-        },
-      };
-
-      // Enviar aviso al grupo del staff o canal
-      await conn.sendMessage(staffGroupID, { text: editedMessage, contextInfo: options.contextInfo }).catch(async () => {
-        await conn.sendMessage(channelID, { text: editedMessage, contextInfo: options.contextInfo });
-      });
+      await sendNotification(conn, channelId, owners, editedMessage, pp, '🚨 Aviso de Mensaje Editado', 'Un mensaje ha sido editado');
     }
   } catch (e) {
     console.error(e);
   }
 };
 
+// Función para enviar notificaciones
+async function sendNotification(conn, channelId, owners, message, thumbnail, title, body) {
+  try {
+    // Intentar enviar el mensaje al canal
+    let sentToChannel = false;
+    if (channelId) {
+      await conn.sendMessage(channelId, {
+        text: message,
+        contextInfo: {
+          externalAdReply: {
+            title: title,
+            body: body,
+            thumbnailUrl: thumbnail,
+            sourceUrl: null,
+            mediaType: 1,
+            renderLargerThumbnail: true,
+          },
+        },
+      });
+      sentToChannel = true;
+    }
+
+    // Si no se envió al canal, enviar a los owners
+    if (!sentToChannel) {
+      for (let owner of owners) {
+        await conn.sendMessage(owner + '@s.whatsapp.net', {
+          text: message,
+          contextInfo: {
+            externalAdReply: {
+              title: title,
+              body: body,
+              thumbnailUrl: thumbnail,
+              sourceUrl: null,
+              mediaType: 1,
+              renderLargerThumbnail: true,
+            },
+          },
+        });
+      }
+    }
+  } catch (e) {
+    console.error('Error al enviar notificación:', e);
+  }
+}
+
+// Exportar el handler para que funcione como plugin
+handler.command = []; // No es un comando directo
+handler.register = true; // Se ejecuta automáticamente
 export default handler;
