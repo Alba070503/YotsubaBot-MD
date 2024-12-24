@@ -42,28 +42,31 @@ let handler = async (m, { conn, args }) => {
     await conn.reply(m.chat, captvid, m, infoReply);
 
     // Realizar la solicitud al API de descarga
-    const apiRes = await fetch(`https://apis-starlights-team.koyeb.app/starlight/youtube-mp4?url=${url}`);
+    const apiRes = await fetch(`https://deliriussapi-oficial.vercel.app/download/ytmp4?url=${url}`);
     const json = await apiRes.json();
 
-    if (json.success) {
-      const { video } = json.result;
+    // Mostrar contenido de la respuesta para depuración
+    console.log("Respuesta de la API:", json);
+
+    if (json.success && json?.result?.url) {
+      const { url: videoUrl, quality, size } = json.result;
 
       await conn.sendMessage(
         m.chat,
         {
-          video: { url: video.url },
-          caption: `*Título:* ${title}\n*Resolución:* ${video.resolution}\n*Tamaño del archivo:* ${video.size}`,
+          video: { url: videoUrl },
+          caption: `*Título:* ${title}\n*Resolución:* ${quality}\n*Tamaño del archivo:* ${size}`,
           mimetype: "video/mp4",
           contextInfo: infoReply.contextInfo,
         },
         { quoted: m }
       );
     } else {
-      await m.reply("No se pudo descargar el video. Intenta nuevamente.");
+      await m.reply("No se pudo descargar el video. La API no devolvió los datos esperados.");
     }
   } catch (e) {
-    console.error(e);
-    await m.reply("Ocurrió un error al procesar tu solicitud. Intenta nuevamente.");
+    console.error("Error en el plugin:", e);
+    await m.reply("Ocurrió un error al procesar tu solicitud. Por favor, intenta nuevamente.");
   }
 };
 
