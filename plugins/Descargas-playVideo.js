@@ -26,7 +26,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     await conn.sendMessage(m.chat, { text: infoText }, { quoted: m });
 
     // Descargar el video usando la API
-    const apiUrl = `https://api-rin-tohsaka.vercel.app/download/ytmp4?url=${video.url}`;
+    const apiUrl = `https://deliriussapi-oficial.vercel.app/download/ytmp4v2?url=${video.url}`;
     const response = await axios.get(apiUrl);
 
     if (!response.data.result || !response.data.result.url) {
