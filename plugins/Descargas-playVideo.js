@@ -31,7 +31,7 @@ let handler = async (m, { conn, args }) => {
     const res = await fetch(apiUrl);
     const json = await res.json();
 
-    if (!json.status) {
+    if (!json.result || !json.result.url) {
       return m.reply("No se pudo descargar el video. Intenta nuevamente.");
     }
 
