@@ -42,13 +42,13 @@ let handler = async (m, { conn, args }) => {
     await conn.reply(m.chat, captvid, m, infoReply);
 
     // Realizar la solicitud al API de descarga
-    const apiRes = await fetch(`https://deliriussapi-oficial.vercel.app/download/ytmp4?url=${url}`);
+    const apiRes = await fetch(`https://exonity.tech/api/ytdlp2-faster?apikey=adminsepuh&url=${url}`);
     const json = await apiRes.json();
 
     // Mostrar contenido de la respuesta para depuración
     console.log("Respuesta de la API:", json);
 
-    if (json.success && json?.result?.url) {
+    if (json.status === "success" && json?.result?.url) {
       const { url: videoUrl, quality, size } = json.result;
 
       await conn.sendMessage(
