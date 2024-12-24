@@ -1,4 +1,4 @@
-
+import { youtubedl, youtubedlv2 } from '@bochilteam/scraper'
 import yts from "yt-search";
 
 let handler = async (m, { conn, args }) => {
