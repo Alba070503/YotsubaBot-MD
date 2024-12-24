@@ -28,21 +28,13 @@ let handler = async (m, { conn, args }) => {
 
     // Descargar el video usando la API
     const apiUrl = `https://api-rin-tohsaka.vercel.app/download/ytmp4?url=${video.url}`;
-    const res = await fetch(apiUrl);
-    const json = await res.json();
-
-    if (!json.result || !json.result.url) {
-      return m.reply("No se pudo descargar el video. Intenta nuevamente.");
-    }
-
-    const { result } = json;
-    const { url: videoUrl, quality, size } = result;
+    const res = await fetch(apiUrl);   
 
     // Enviar el video descargado
     await conn.sendMessage(
       m.chat,
       {
-        video: { url: videoUrl },
+        video: { url: res },
         caption: `✰ *TÍTULO:* ${video.title}\n✰ *CALIDAD:* ${quality}\n✰ *TAMAÑO:* ${size}`,
       },
       { quoted: m }
