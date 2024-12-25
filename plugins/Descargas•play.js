@@ -42,7 +42,7 @@ let handler = async (m, { conn, args }) => {
     await conn.reply(m.chat, captvid, m, infoReply);
 
     // Realizar la solicitud al API de descarga
-    const apiRes = await fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${url}`);
+    const apiRes = await fetch(`https://api-rin-tohsaka.vercel.app/download/ytmp3?url=${url}`);
     const json = await apiRes.json();
 
     if (json.status) {
