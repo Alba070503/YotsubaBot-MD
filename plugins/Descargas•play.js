@@ -7,23 +7,23 @@ import yts from "yt-search"
 
 let handler = async (m, { conn, args }) => {
   const text = args.join(" ") || m.quoted?.text || m.quoted?.caption || m.quoted?.description || ""
-  if (!text.trim()) return m.reply("Masukkan kata kunci pencarian")
+  if (!text.trim()) return m.reply("🌸 Hola buscar🌸 Hola tiene un error en la búsqueda si desea buscar busca\n\n#Play Michael Jackson-Billie Jean")
   await m.reply("Tunggu sebentar...")
 
   const res = await yts(text)
   const vid = res.videos[0]
-  if (!vid) return m.reply("Video xd tidak ditemukan. Silakan coba kata kunci lain")
+  if (!vid) return m.reply("🌸 Soy un poco lenta espera para un ratito ")
 
   const { title, thumbnail, timestamp, views, ago, url } = vid
-  const formattedViews = parseInt(views).toLocaleString("id-ID") + " tayangan"
-  const captvid = `*Judul:* ${title}\n*Durasi:* ${timestamp}\n*Views:* ${formattedViews}\n*Upload:* ${ago}\n*Link:* ${url}`
+  const formattedViews = parseInt(views).toLocaleString("id-ID") + " el link esta mal "
+  const captvid = `*Titulo:* ${title}\n*Duracion:* ${timestamp}\n*Views:* ${formattedViews}\n*Upload:* ${ago}\n*Link:* ${url}`
 
   const ytthumb = (await conn.getFile(thumbnail))?.data
 
   const infoReply = {
     contextInfo: {
       externalAdReply: {
-        body: "Sedang mengunduh hasil, harap tunggu...",
+        body: "YotsubaBot-MD 🌸",
         mediaType: 1,
         mediaUrl: url,
         previewType: 0,
@@ -50,7 +50,7 @@ let handler = async (m, { conn, args }) => {
       contextInfo: infoReply.contextInfo
     }, { quoted: m })
   } else {
-    await m.reply("Gagal mengunduh audio")
+    await m.reply("Tiene un error en el código ")
   }
 }
 
