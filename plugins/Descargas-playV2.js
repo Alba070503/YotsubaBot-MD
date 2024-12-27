@@ -47,8 +47,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
         image: { url: thumbnail },
         caption: infoMessage,
       },
-      { quoted: m },
-      rcanal
+      { quoted: m }
     );
 
     // Descargar el video en resolución 480p
