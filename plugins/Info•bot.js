@@ -8,12 +8,12 @@ if (/^bot$/i.test(m.text)) {
 conn.reply(m.chat, `🚩 ¡Hola! Soy Yotsuba Nakano, en que puedo ayudarte hoy?\n\n✰ Usa *!menu* para ver mis comandos.`, m)
 }
 
-if (/^que|ke|q|k|que?|ke?|k?|q?$/i.test(m.text)) {
-conn.reply(m.chat, `*So* 🧀`, m)
-}
-if (/^a$/i.test(m.text)) {
-conn.reply(m.chat, `*rroz* 🍚`, m)
-}
+//if (/^que|ke|q|k|que?|ke?|k?|q?$/i.test(m.text)) {
+//conn.reply(m.chat, `*So* 🧀`, m)
+//}
+//if (/^a$/i.test(m.text)) {
+//conn.reply(m.chat, `*rroz* 🍚`, m)
+//}
 if (/^sexo$/i.test(m.text)) {
 conn.reply(m.chat, `*polno* 😟🙈`, m)
 }
