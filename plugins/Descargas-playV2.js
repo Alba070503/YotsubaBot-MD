@@ -51,7 +51,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     );
 
     // Descargar el video en resolución 480p
-    let dl_url = `https://ytdownloader.nvlgroup.my.id/download?url=${queryOrUrl}&resolution=${quality}`;
+    let dl_url = `https://api.giftedtech.my.id/api/download/dlmp4?apikey=gifted&url=${queryOrUrl}&resolution=${quality}`;
     let vidFetch = await fetch(dl_url);
 
     if (!vidFetch.ok) {
