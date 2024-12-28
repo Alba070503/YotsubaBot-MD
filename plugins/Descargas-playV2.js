@@ -35,7 +35,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     }
 
     let { title, duration, thumbnail, views, url } = videoData;
-    let quality = '480'; // Resolución fija a 480p
+    let quality = '720'; // Resolución fija a 480p
     let formattedViews = parseInt(views).toLocaleString('en-US');
 
     let infoMessage = `✰ *Información del video:*\n\n- *Título:* ${title}\n- *Duración:* ${duration || '-'}\n*Powered @Alba070503*`;
@@ -51,7 +51,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     );
 
     // Descargar el video en resolución 480p
-    let dl_url = `https://api.giftedtech.my.id/api/download/dlmp4?apikey=gifted&url=${queryOrUrl}`;
+    let dl_url = `https://ytdownloader.nvlgroup.my.id/download?url=${queryOrUrl}&resolution=${quality}`;
     let vidFetch = await fetch(dl_url);
 
     if (!vidFetch.ok) {
