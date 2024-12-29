@@ -35,8 +35,8 @@
   },
   "license": "GPL-3.0-or-later",
 "dependencies": {
-"@adiwajshing/baileys": "npm:@whiskeysockets/baileys@latest",
-"@whiskeysockets/baileys": "github:ds6/bails",
+"@whiskeysockets/baileys": "github:OfcKing/Bailey",
+  "@whiskeysockets/baileys": "github:ds6/bails",
 "@adiwajshing/keyed-db": "^0.2.4",
 "@bochilteam/scraper": "^4.2.4",
 "@bochilteam/scraper-sosmed": "^1.0.5",
