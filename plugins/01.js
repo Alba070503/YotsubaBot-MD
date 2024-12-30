@@ -1,15 +1,15 @@
 import fetch from 'node-fetch'
 
 const handler = async (m, { conn }) => {
-  const taguser = '@' + m.sender.split('@')[0]; // Obtiene el usuario etiquetado
+  //const taguser = '@' + m.sender.split('@')[0]; 
 
   conn.sendMessage(m.chat, {
     image: { url: 'https://qu.ax/MFOVJ.jpg' },
-    caption: `You like me? ${taguser}`, // Mención visible del usuario
+    caption: `Alba es tu patrona?`, 
     footer: "Sock",
     buttons: [
       {
-        buttonId: ".gay",
+        buttonId: ".play hola remix",
         buttonText: {
           displayText: "Yes",
         },
@@ -25,10 +25,9 @@ const handler = async (m, { conn }) => {
     ],
     viewOnce: true,
     headerType: 4,
-    mentions: [m.sender], // Mención funcional
   }, { quoted: m });
 };
 
-handler.command = /^(test3)$/i; // Define el comando
+handler.command = /^(test3)$/i; 
 
 export default handler;
