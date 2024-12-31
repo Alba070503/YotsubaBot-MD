@@ -46,7 +46,7 @@ let handler = async (m, { conn, participants, groupMetadata }) => {
     await conn.sendMessage(m.chat, buttonMessage, { quoted: null });
 }
 
-handler.command = ['welcome', 'bienvenido'];
+handler.command = ['testwelcome'];
 handler.group = true;
 handler.admin = true;
 
