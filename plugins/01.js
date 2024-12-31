@@ -1,33 +1,53 @@
-import fetch from 'node-fetch'
+import fetch from 'node-fetch';
 
-const handler = async (m, { conn }) => {
-  //const taguser = '@' + m.sender.split('@')[0]; 
+let handler = async (m, { conn, participants, groupMetadata }) => {
+    let ppch = await conn.profilePictureUrl(m.sender, 'image').catch(_ => gataMenu);
+    let name = conn.getName(m.sender)
 
-  conn.sendMessage(m.chat, {
-    image: { url: 'https://qu.ax/MFOVJ.jpg' },
-    caption: `Alba es tu patrona?`, 
-    footer: "Sock",
-    buttons: [
-      {
-        buttonId: ".play hola remix",
-        buttonText: {
-          displayText: "Yes",
-        },
-        type: 1,
-      },
-      {
-        buttonId: ".play2 felices los 4",
-        buttonText: {
-          displayText: "No",
-        },
-        type: 1,
-      },
-    ],
-    viewOnce: true,
-    headerType: 4,
-  }, { quoted: m });
-};
+    let welcomeMessage = `*╭┈⊰* ${groupMetadata.subject} *⊰┈ ✦*\n`;
+    welcomeMessage += `*┊ 👋 ¡Hola ${name}!*\n`;
+    welcomeMessage += `*┊ 📜 No olvides revisar la descripción del grupo para más detalles.*\n`;
+    welcomeMessage += `*╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊰ ✦*\n\n`;
+    welcomeMessage += `${groupMetadata.desc?.toString() || '¡SIN DESCRIPCIÓN!\n> *Yotsuba Bot - MD* 🌻🐈'}`;
 
-handler.command = /^(test3)$/i; 
+    let buttons = [
+        { buttonId: ".ia dime frase de hola bebé", buttonText: { displayText: 'Hola. 🤍' }, type: 1 },
+        { buttonId: ".ia dime bienvenido al grupo", buttonText: { displayText: 'Welcome. ✨' }, type: 1 }
+    ];
+
+    let fakeContext = {
+        contextInfo: {
+            isForwarded: true,
+            externalAdReply: {
+                showAdAttribution: true,
+                title: name,
+                body: 'Bienvenido mi reiy/reina. ✨🫶',
+                mediaUrl: null,
+                description: null,
+                previewType: "PHOTO",
+                thumbnailUrl: ppch,
+                sourceUrl: 'https://senko-seven.vercel.app',
+                mediaType: 1,
+                renderLargerThumbnail: false
+            }
+        }
+    };
+
+    let buttonMessage = {
+        image: { url: ppch },
+        caption: welcomeMessage,
+        footer: wm,
+        buttons: buttons,
+        viewOnce: true,
+        headerType: 4,
+        ...fakeContext
+    };
+
+    await conn.sendMessage(m.chat, buttonMessage, { quoted: null });
+}
+
+handler.command = ['welcome', 'bienvenido'];
+handler.group = true;
+handler.admin = true;
 
 export default handler;
