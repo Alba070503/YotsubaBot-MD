@@ -11,8 +11,8 @@ let handler = async (m, { conn, participants, groupMetadata }) => {
     welcomeMessage += `${groupMetadata.desc?.toString() || '¡SIN DESCRIPCIÓN!\n> *Yotsuba Bot - MD* 🌻🐈'}`;
 
     let buttons = [
-        { buttonId: ".ia dime frase de hola bebé", buttonText: { displayText: 'Hola. 🤍' }, type: 1 },
-        { buttonId: ".ia dime bienvenido al grupo", buttonText: { displayText: 'Welcome. ✨' }, type: 1 }
+        { buttonId: ".hola", buttonText: { displayText: 'Hola. 🤍' }, type: 1 },
+        { buttonId: ".hello", buttonText: { displayText: 'Welcome. ✨' }, type: 1 }
     ];
 
     let fakeContext = {
