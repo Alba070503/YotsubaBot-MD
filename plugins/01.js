@@ -2,10 +2,11 @@ import fetch from 'node-fetch';
 
 let handler = async (m, { conn, participants, groupMetadata }) => {
     let ppch = await conn.profilePictureUrl(m.sender, 'image').catch(_ => gataMenu);
-    let name = conn.getName(m.sender)
+    let name = conn.getName(m.sender);
+    let senderId = m.sender.split('@')[0];
 
     let welcomeMessage = `*╭┈⊰* ${groupMetadata.subject} *⊰┈ ✦*\n`;
-    welcomeMessage += `*┊ 👋 ¡Hola ${name}!*\n`;
+    welcomeMessage += `*┊ 👋 ¡Hola @${senderId}!*\n`; // Mención
     welcomeMessage += `*┊ 📜 No olvides revisar la descripción del grupo para más detalles.*\n`;
     welcomeMessage += `*╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊰ ✦*\n\n`;
     welcomeMessage += `${groupMetadata.desc?.toString() || '¡SIN DESCRIPCIÓN!\n> *Yotsuba Bot - MD* 🌻🐈'}`;
@@ -15,23 +16,6 @@ let handler = async (m, { conn, participants, groupMetadata }) => {
         { buttonId: ".hello", buttonText: { displayText: 'Welcome. ✨' }, type: 1 }
     ];
 
-    let fakeContext = {
-        contextInfo: {
-            isForwarded: true,
-            externalAdReply: {
-                showAdAttribution: true,
-                title: name,
-                body: 'Bienvenido mi reiy/reina. ✨🫶',
-                mediaUrl: null,
-                description: null,
-                previewType: "PHOTO",
-                thumbnailUrl: ppch,
-                sourceUrl: 'https://senko-seven.vercel.app',
-                mediaType: 1,
-                renderLargerThumbnail: false
-            }
-        }
-    };
 
     let buttonMessage = {
         image: { url: ppch },
@@ -40,14 +24,13 @@ let handler = async (m, { conn, participants, groupMetadata }) => {
         buttons: buttons,
         viewOnce: true,
         headerType: 4,
-        ...fakeContext
+        mentions: [m.sender] 
     };
 
-    await conn.sendMessage(m.chat, buttonMessage, { quoted: null });
+    await conn.sendMessage(m.chat, buttonMessage, { quoted: null, mentions: [m.sender] });
 }
 
 handler.command = ['testwelcome'];
 handler.group = true;
-//handler.admin = true;
 
 export default handler;
