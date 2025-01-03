@@ -4,7 +4,7 @@
 import fs from 'fs';
 
 const directoryPath = './YotsubaJadiBot/';
-const sanSessionPath = './sessions/';
+const sanSessionPath = './YotsubaSession/';
 
 function cleanSubbotDirectories() {
   fs.readdir(directoryPath, (err, subbotDirs) => {
