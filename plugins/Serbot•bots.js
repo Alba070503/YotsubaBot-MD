@@ -38,6 +38,7 @@ async function handler(m, { conn: stars, usedPrefix }) {
         forwardingScore: 9,
         externalAdReply: {
           title: '❑— YotsubaBot-MD —❑',
+          body: `Sub-Bots conectados: ${subBotsCount || '0'}`,
           thumbnail: img,
           sourceUrl: 'https://whatsapp.com/channel/0029VaAN15BJP21BYCJ3tH04',
           mediaType: 1,
