@@ -21,7 +21,7 @@ async function handler(m, { conn: stars, usedPrefix }) {
 
   // Mensaje de respuesta
   let responseMessage = `
-╭━〔 𝗦𝗨𝗕-𝗕𝗢𝗧𝗦 𝗝𝗔𝗗𝗜𝗕𝗢𝗧 🌸 〕⬣
+╭━〔 𝗦𝗨𝗕-𝗕𝗢𝗧𝗦 🌸 〕⬣
 ┃ *Bot Principal:* 1
 ┃ *Bots Temporales:* ${subBotsCount || '0'}
 ┃ *Hora activo del Bot Principal:* ${hours} horas y ${minutes} minutos
