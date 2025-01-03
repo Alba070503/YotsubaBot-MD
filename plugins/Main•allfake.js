@@ -155,9 +155,9 @@ handler.all = async function (m) {
   }
 
   global.icono = [
-    'https://qu.ax/wtOta.jpg',
-    'https://qu.ax/NNXXP.jpg',
-    'https://qu.ax/eGhSJ.jpg'
+    'https://qu.ax/Urumd.jpg',
+    'https://qu.ax/Zkbep.jpg',
+    'https://qu.ax/WTRnx.jpg'
   ].sort(() => Math.random() - 0.5)[0]
 
   global.rcanal = { 
