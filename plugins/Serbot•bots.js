@@ -11,21 +11,30 @@ async function handler(m, { conn: stars, usedPrefix }) {
   });
 
   let users = [...uniqueUsers.values()];
+  let subBotsCount = users.length;
+  let botPrincipal = stars.user.jid;
 
-  let message = users.map((v, index) => `╭─⬣「 ${packname} 」⬣\n│⁖ฺ۟̇࣪·֗٬̤⃟🚩 *${index + 1}.-* @${v.user.jid.replace(/[^0-9]/g, '')}\n│❀ *Link:* https://wa.me/${v.user.jid.replace(/[^0-9]/g, '')}\n│❀ *Nombre:* ${v.user.name || '𝚂𝚄𝙱-𝙱𝙾𝚃'}\n╰─⬣`).join('\n\n');
+  // Calcular tiempo activo del bot principal
+  let uptime = process.uptime(); // Tiempo activo en segundos
+  let hours = Math.floor(uptime / 3600);
+  let minutes = Math.floor((uptime % 3600) / 60);
 
-  let replyMessage = message.length === 0 ? '' : message;
-  global.totalUsers = users.length;
+  // Mensaje de respuesta
+  let responseMessage = `
+╭━〔 𝗦𝗨𝗕-𝗕𝗢𝗧𝗦 𝗝𝗔𝗗𝗜𝗕𝗢𝗧 🌸 〕⬣
+┃ *Bot Principal:* 1
+┃ *Bots Temporales:* ${subBotsCount || '0'}
+┃ *Hora activo del Bot Principal:* ${hours} horas y ${minutes} minutos
+╰━━━━━━━━━━━━⬣
+`.trim();
 
-  let responseMessage = `╭━〔 𝗦𝗨𝗕-𝗕𝗢𝗧𝗦 𝗝𝗔𝗗𝗜𝗕𝗢𝗧 🌸 〕⬣\n┃ *𝚃𝙾𝚃𝙰𝙻 𝙳𝙴 𝚂𝚄𝙱𝙱𝙾𝚃𝚂* : ${totalUsers || '0'}\n╰━━━━━━━━━━━━⬣\n\n${replyMessage.trim()}`.trim();
-
-  // Obtención de la imagen y envío del mensaje con externalAdReply
+  // Enviar mensaje con externalAdReply
   try {
     let img = await (await fetch('https://qu.ax/Zkbep.jpg')).buffer();
     await stars.sendMessage(m.chat, {
       text: responseMessage,
       contextInfo: {
-        mentionedJid: stars.parseMention(responseMessage),
+        mentionedJid: [m.sender],
         forwardingScore: 9,
         externalAdReply: {
           title: '❑— YotsubaBot-MD —❑',
