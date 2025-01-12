@@ -12,7 +12,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
                 return conn.reply(m.chat, `「 ✰ 」DESCARGA NO VALIDA.\n\n> SI DESEA REALIZAR UNA *DESCARGA* DE LA PLATAFORMA DE *YOUTUBE* UTILIZANDO UN *ENLACE* DE DESCARGA, DEBE UTILIZAR LOS SIGUIENTES COMANDOS A CONTINUACION DEPENDIENDO DE LO QUE QUIERA DESCARGAR\n\n❀ */YTMP3* = AUDIO\n❀ */YTMP4* = VIDEO`, m);
             }
 
-            let bodyv1 = `「 ✰ 」 *RESULTADOS ENCONTRADOS:*\n> BUSQUEDA: ${text}\n\n❀ *TITULO:* > ${search.videos[0].title}\n\`\`\`----------\`\`\`\n❀ *VISTAS:*\n> ${search.videos[0].views}\n\`\`\`----------\`\`\`\n❀ *DURACION:*\n> ${search.videos[0].duration}\n\`\`\`----------\`\`\`\n❀ *SUBIDO:*\n> ${search.videos[0].ago}\n\`\`\`----------\`\`\`\n❀ *URL:*\n> ${search.videos[0].url}\n\`\`\`----------\`\`\`\n\`ENVIANDO SUS RESULTADOS...\``;
+            let bodyv1 = `「 ✰ 」 *RESULTADOS ENCONTRADOS:❀ *TITULO:* > ${search.videos[0].title}\n\`\`\`----------\`\`\`\n❀ *VISTAS:*\n> ${search.videos[0].views}\n\`\`\`----------\`\`\`\n❀ *DURACION:*\n> ${search.videos[0].duration}\n\`\`\`----------\`\`\`\n❀ *SUBIDO:*\n> ${search.videos[0].ago}\n\`\`\`----------\`\`\`\n❀ *URL:*\n> ${search.videos[0].url}\n\`\`\`----------\`\`\`\n\`ENVIANDO SUS RESULTADOS...\``;
  conn.sendMessage(m.chat, { image: { url: search.videos[0].thumbnail }, caption: bodyv1 }, { quoted: m });
 
 const api = await axios.get(`https://api-rin-tohsaka.vercel.app/download/ytmp3?url=${search.videos[0].url}`)
