@@ -18,7 +18,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 const api = await axios.get(`https://api-rin-tohsaka.vercel.app/download/ytmp3?url=${search.videos[0].url}`)
 const response = await api.data.data.download;
             
-      await conn.sendMessage(m.chat, { document: { url: response }, mimetype: 'audio/mpeg', fileName: `${search.videos[0].title}.mp3` }, { quoted: m });
+      await conn.sendMessage(m.chat, { audio: { url: response }, mimetype: 'audio/mpeg', fileName: `${search.videos[0].title}.mp3` }, { quoted: m });
         } catch (e) {
             conn.reply(m.chat, `「 ✰ 」OCURRIO UN FALLO AL PROCESAR SU SOLICITUD\n\n> ${e}`, m);
         }
