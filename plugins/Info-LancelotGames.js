@@ -37,7 +37,7 @@ LEMA DE LANCELOTGames: Todos para uno y uno para todos.
         mentionedJid: [m.sender],
         externalAdReply: {
           title: 'LancelotGames 🌍',
-          thumbnailUrl: 'https://qu.ax/TjbYv.jpg', // Imagen como URL
+          thumbnailUrl: 'https://qu.ax/EUkHs.jpg', // Imagen como URL
           sourceUrl: 'https://discord.gg/lancelotgames', // URL externa
           mediaType: 1,
           renderLargerThumbnail: true,
