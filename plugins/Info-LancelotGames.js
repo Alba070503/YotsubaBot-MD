@@ -45,7 +45,7 @@ LANCELOTGames lleva más de una década siendo el lugar donde jugadores de toda 
       contextInfo: {
         externalAdReply: {
           title: '❑— LANCELOTCRAFT —❑\nLa comunidad épica de LATINOAMÉRICA',
-          thumbnailUrl: 'https://qu.ax/EUkHs.jpg', // Cambia este enlace por tu imagen
+          thumbnailUrl: 'https://files.catbox.moe/ym1tdm.png', // Cambia este enlace por tu imagen
           sourceUrl: 'https://discord.gg/lancelotgames', // URL externa
           mediaType: 1,
           renderLargerThumbnail: true,
