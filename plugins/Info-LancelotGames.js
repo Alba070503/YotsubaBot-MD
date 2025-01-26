@@ -31,24 +31,19 @@ LEMA DE LANCELOTGames: Todos para uno y uno para todos.
   `;
 
   
-  await conn.sendMessage(
-    m.chat, 
-    {
+  await conn.sendMessage(m.chat, {
       text: menu,
       contextInfo: {
         mentionedJid: [m.sender],
-        forwardingScore: 9,
         externalAdReply: {
-          title: 'LANCELOTGames❤️',
-          thumbnail: 'https://qu.ax/TjbYv.jpg',
-          sourceUrl: 'https://discord.gg/lancelotgames',
+          title: 'LancelotGames 🌍',
+          thumbnailUrl: 'https://qu.ax/TjbYv.jpg', // Imagen como URL
+          sourceUrl: 'https://discord.gg/lancelotgames', // URL externa
           mediaType: 1,
-          renderLargerThumbnail: true
-        }
-      }
-    },
-    { quoted: m }
-  );
+          renderLargerThumbnail: true,
+        },
+      },
+    });
 
   await delay(1000); // Pequeño retraso para evitar bloqueos
 };
