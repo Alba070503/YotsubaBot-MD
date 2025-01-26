@@ -1,7 +1,9 @@
-import { delay } from '@whiskeysockets/baileys'
+import fetch from 'node-fetch';
 
-const plugin = async (m, { conn }) => {
-  const menu = `
+let handler = async (m, { conn }) => {
+  try {
+    // Crear el mensaje principal
+    let menu = `
 🎉 ¡LANCELOTGames: 16 años haciendo historia! 🎉
 ⚔️ Zombie Escape y Minecraft, juntos en la comunidad más épica de LATINOAMÉRICA. ⚔️
 🌟 LANCELOTCRAFT – Aventuras épicas en Minecraft 🌟
@@ -28,28 +30,34 @@ LANCELOTGames lleva más de una década siendo el lugar donde jugadores de toda 
 🔔 ¡Únete a la leyenda y sé parte de LANCELOTGames!
 LEMA DE LANCELOTGames: Todos para uno y uno para todos.
 🌍 LANCELOTGames: Diversión, comunidad y leyendas desde hace 16 años. 🌍
-  `;
+`;
 
-  
-  await conn.sendMessage(m.chat, {
+    // Enviar el mensaje enriquecido con externalAdReply
+    await conn.sendMessage(m.chat, {
       text: menu,
       contextInfo: {
         mentionedJid: [m.sender],
         externalAdReply: {
-          title: 'LancelotGames 🌍',
-          thumbnailUrl: 'https://qu.ax/EUkHs.jpg', // Imagen como URL
-          sourceUrl: 'https://discord.gg/lancelotgames', // URL externa
+          title: 'LancelotGames🌍',
+          thumbnailUrl: 'https://qu.ax/EUkHs.jpg', // Reemplaza con tu imagen
+          sourceUrl: 'https://discord.gg/lancelotgames',
           mediaType: 1,
           renderLargerThumbnail: true,
         },
       },
     });
 
-  await delay(1000); // Pequeño retraso para evitar bloqueos
+    // Reaccionar al mensaje original
+    if (m.react) await m.react('🎉');
+
+  } catch (e) {
+    console.error(e);
+    m.reply('❌ Ocurrió un error al procesar el comando.');
+  }
 };
 
-plugin.command = ['lancelot']; // Cambia el comando si lo deseas
-plugin.tags = ['info']; // Categoría del comando
-plugin.help = ['lancelotinfo']; // Ayuda o descripción corta
+handler.help = ['lancelot'];
+handler.tags = ['info'];
+handler.command = ['lancelotinfo'];
 
-export default plugin;
+export default handler;
