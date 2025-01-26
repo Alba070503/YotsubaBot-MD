@@ -30,8 +30,7 @@ LEMA DE LANCELOTGames: Todos para uno y uno para todos.
 🌍 LANCELOTGames: Diversión, comunidad y leyendas desde hace 16 años. 🌍
   `;
 
-  const img = 'https://qu.ax/TjbYv.jpg'; // Cambia por el enlace de tu imagen
-
+  
   await conn.sendMessage(
     m.chat, 
     {
@@ -41,7 +40,7 @@ LEMA DE LANCELOTGames: Todos para uno y uno para todos.
         forwardingScore: 9,
         externalAdReply: {
           title: 'LANCELOTGames❤️',
-          thumbnail: { url: img },
+          thumbnail: 'https://qu.ax/TjbYv.jpg',
           sourceUrl: 'https://discord.gg/lancelotgames',
           mediaType: 1,
           renderLargerThumbnail: true
