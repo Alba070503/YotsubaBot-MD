@@ -31,6 +31,10 @@ let tags = {
 const defaultMenu = {
   before: `© Menu completo de YotsubaBot-MD 🍀
 
+  *Unete A nuestro Servidor de Minecraft LANCELOTCRAFT*
+  https://discord.gg/lancelotgames
+  *LANCELOTGames Te espera ❤️*
+
 *•/• Info usuario •/•*
 
 🌸 Cliente » \`\`\`%name\`\`\`
