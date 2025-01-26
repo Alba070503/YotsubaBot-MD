@@ -1,4 +1,4 @@
-import { delay } from '@adiwajshing/baileys'
+import { delay } from '@whiskeysockets/baileys'
 
 const plugin = async (m, { conn }) => {
   const menu = `
