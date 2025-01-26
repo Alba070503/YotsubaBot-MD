@@ -1,10 +1,7 @@
-import fetch from 'node-fetch';
 
-let handler = async (m, { conn }) => {
-  try {
-    // Crear el mensaje principal
-    let menu = `
-🎉 ¡LANCELOTGames: 16 años haciendo historia! 🎉
+let handler = async (m, { conn, usedPrefix, command, text }) => {
+
+let txt = `🎉 ¡LANCELOTGames: 16 años haciendo historia! 🎉
 ⚔️ Zombie Escape y Minecraft, juntos en la comunidad más épica de LATINOAMÉRICA. ⚔️
 🌟 LANCELOTCRAFT – Aventuras épicas en Minecraft 🌟
 Descubre un servidor lleno de posibilidades donde podrás:
