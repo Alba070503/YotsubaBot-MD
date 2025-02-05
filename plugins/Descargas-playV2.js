@@ -15,7 +15,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
             let bodyv1 = `「 ✰ 」 *RESULTADOS ENCONTRADOS:❀ *TITULO:* > ${search.videos[0].title}\n\`\`\`----------\`\`\`\n❀ *VISTAS:*\n> ${search.videos[0].views}\n\`\`\`----------\`\`\`\n❀ *DURACION:*\n> ${search.videos[0].duration}\n\`\`\`----------\`\`\`\n❀ *SUBIDO:*\n> ${search.videos[0].ago}\n\`\`\`----------\`\`\`\n❀ *URL:*\n> ${search.videos[0].url}\n\`\`\`----------\`\`\`\n\`ENVIANDO SUS RESULTADOS...\``;
  conn.sendMessage(m.chat, { image: { url: search.videos[0].thumbnail }, caption: bodyv1 }, { quoted: m });
 
-const api = await axios.get(`https://api-rin-tohsaka.vercel.app/download/ytmp3?url=${search.videos[0].url}`)
+const api = await axios.get(`https://mahiru-shiina.vercel.app/download/ytmp3?url=${search.videos[0].url}`)
 const response = await api.data.data.download;
             
       await conn.sendMessage(m.chat, { audio: { url: response }, mimetype: 'audio/mpeg', fileName: `${search.videos[0].title}.mp3` }, { quoted: m });
@@ -36,7 +36,7 @@ const response = await api.data.data.download;
             let bodyv2 = `「 ✰ 」 *RESULTADOS ENCONTRADOS:*\n> BUSQUEDA: ${text}\n\n❀ *TITULO:* > ${search.videos[0].title}\n\`\`\`----------\`\`\`\n❀ *VISTAS:*\n> ${search.videos[0].views}\n\`\`\`----------\`\`\`\n❀ *DURACION:*\n> ${search.videos[0].duration}\n\`\`\`----------\`\`\`\n❀ *SUBIDO:*\n> ${search.videos[0].ago}\n\`\`\`----------\`\`\`\n❀ *URL:*\n> ${search.videos[0].url}\n\`\`\`----------\`\`\`\n\`ENVIANDO SUS RESULTADOS...\``;
             conn.sendMessage(m.chat, { image: { url: search.videos[0].thumbnail }, caption: bodyv2 }, { quoted: m });
 
-const api = await axios.get(`https://api-rin-tohsaka.vercel.app/download/ytmp4?url=${search.videos[0].url}`)
+const api = await axios.get(`https://mahiru-shiina.vercel.app/download/ytmp4?url=${search.videos[0].url}`)
 const response = await api.data.data.download;
             
             await conn.sendMessage(m.chat, { document: { url: response }, mimetype: 'video/mp4', fileName: `${search.videos[0].title}.mp4` }, { quoted: m });
@@ -52,6 +52,6 @@ export default handler;
 
 /*
 • Código Original: Rin Tohsaka - Bot (Case)
-• Adaptación: Masha
+• Adaptación: @Alba070503
 • Mejora y Funcionalidad: GabrielVz
 */
