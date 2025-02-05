@@ -39,7 +39,7 @@ const response = await api.data.data.download;
 const api = await axios.get(`https://mahiru-shiina.vercel.app/download/ytmp4?url=${search.videos[0].url}`)
 const response = await api.data.data.download;
             
-            await conn.sendMessage(m.chat, { document: { url: response }, mimetype: 'video/mp4', fileName: `${search.videos[0].title}.mp4` }, { quoted: m });
+            await conn.sendMessage(m.chat, { video: { url: response }, mimetype: 'video/mp4', fileName: `${search.videos[0].title}.mp4` }, { quoted: m });
         } catch (e) {
             conn.reply(m.chat, `「 ✰ 」OCURRIO UN FALLO AL PROCESAR SU SOLICITUD\n\n> ${e}`, m);
         }
