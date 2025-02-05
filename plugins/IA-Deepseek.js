@@ -1,10 +1,9 @@
 import axios from 'axios';
 
 let handler = async (m, { conn, text }) => {
-  if (!text) return conn.reply(m.chat, '❀ Ingresa un texto para hablar con DeepSeek', m);
+  if (!text) return m.reply('❀ Ingresa un texto para hablar con DeepSeek');
 
   try {
-    // Configurar la API de OpenRouter
     let response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
@@ -20,28 +19,7 @@ let handler = async (m, { conn, text }) => {
     );
 
     let replyText = response.data.choices[0].message.content;
-
-    // Mensaje enriquecido con imagen y link
-    await conn.sendMessage(m.chat, {
-      text: `🧠 *DeepSeek AI*  
-      
-🔹 *Usuario:* @${m.sender.split('@')[0]}  
-💬 *Mensaje:* ${text}  
-🖥️ *Respuesta:*  
-${replyText}  
-
-✨ *Creado por @Alba070503*`,
-      contextInfo: {
-        mentionedJid: [m.sender],
-        externalAdReply: {
-          title: '❑— DeepSeek AI —❑',
-          thumbnailUrl: 'https://qu.ax/ilnry.jpg', // Imagen representativa
-          sourceUrl: 'https://openrouter.ai/', // Link de referencia
-          mediaType: 1,
-          renderLargerThumbnail: true,
-        },
-      },
-    });
+    m.reply(`🧠 *DeepSeek AI*\n\n🖥️ *Respuesta:* ${replyText}\n\n✨ *Creado por @Alba070503*`);
 
   } catch (error) {
     console.error(error);
