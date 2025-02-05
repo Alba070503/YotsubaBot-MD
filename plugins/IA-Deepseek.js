@@ -12,8 +12,10 @@ let handler = async (m, { conn, text }) => {
       },
       {
         headers: {
-          'Authorization': 'Bearer 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',
+          'Authorization': 'Bearer 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',
           'Content-Type': 'application/json',
+          'HTTP-Referer': 'https://lancelotgames.com', // Puedes cambiarlo a tu sitio
+          'X-Title': 'LancelotGamesBot',
         },
       }
     );
@@ -23,7 +25,7 @@ let handler = async (m, { conn, text }) => {
 
   } catch (error) {
     console.error(error);
-    m.reply('❌ Ocurrió un error al procesar la solicitud.');
+    m.reply(`❌ Error: ${error.response?.data?.error?.message || 'No se pudo obtener respuesta'}`);
   }
 };
 
