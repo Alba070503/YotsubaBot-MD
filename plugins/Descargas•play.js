@@ -1,154 +1,161 @@
-import fg from 'api-dylux'
-import yts from 'yt-search'
-import fetch from 'node-fetch' 
+import fetch from "node-fetch";
+import yts from 'yt-search';
+import axios from "axios";
 
-let handler = async (m, { conn, args, usedPrefix, text, command }) => {
-    if (!text) return conn.reply(m.chat, `*🚩 Ingresa un título o enlace de un video o música de YouTube.*`, m)
+const formatAudio = ['mp3', 'm4a', 'webm', 'acc', 'flac', 'opus', 'ogg', 'wav'];
+const formatVideo = ['360', '480', '720', '1080', '1440', '4k'];
+
+const ddownr = {
+  download: async (url, format) => {
+    if (!formatAudio.includes(format) && !formatVideo.includes(format)) {
+      throw new Error('Formato no soportado, verifica la lista de formatos disponibles.');
+    }
+
+    const config = {
+      method: 'GET',
+      url: `https://p.oceansaver.in/ajax/download.php?format=${format}&url=${encodeURIComponent(url)}&api=dfcb6d76f2f6a9894gjkege8a4ab232222`,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/91.0.4472.124 Safari/537.36'
+      }
+    };
 
     try {
-        let vid;
+      const response = await axios.request(config);
 
-        // Verificar si el texto ingresado es un enlace de YouTube
-        if (text.match(/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi)) {
-            await m.react('🕓')
-            let res = await yts({ videoId: text.split('v=')[1] || text.split('/')[3] }) // Obtén el video directamente
-            vid = res
-        } else {
-            await m.react('🕓')
-            let res = await yts(text)
-            vid = res.videos[0] // Obtén el primer video de la búsqueda
-        }
+      if (response.data && response.data.success) {
+        const { id, title, info } = response.data;
+        const { image } = info;
+        const downloadUrl = await ddownr.cekProgress(id);
 
-        if (!vid) return conn.reply(m.chat, `*☓ No se encontraron resultados para tu búsqueda.*`, m)
-
-        if (command === "play" || command === "play2") {
-            const infoTexto = `乂  Y O U T U B E   M U S I C\n
-            ✩ *Título ∙* ${vid.title}\n
-            ✩ *Duración ∙* ${vid.timestamp}\n
-            ✩ *Visitas ∙* ${vid.views}\n
-            ✩ *Autor ∙* ${vid.author.name}\n
-            ✩ *Publicado ∙* ${vid.ago}\n
-            ✩ *Url ∙* ${'https://youtu.be/' + vid.videoId}\n`.trim()
-
-            await conn.sendButton(m.chat, infoTexto, wm, vid.thumbnail, [
-                ['Audio 📀', `${usedPrefix}mp3 ${vid.url}`],
-                ['Video 🎥', `${usedPrefix}mp4 ${vid.url}`],
-                ['AudioDoc 📀', `${usedPrefix}mp3doc ${vid.url}`],
-                ['VideoDoc 🎥', `${usedPrefix}mp4doc ${vid.url}`]
-            ], null, [['Canal', `https://whatsapp.com/channel/0029VaAN15BJP21BYCJ3tH04`]], m)
-        } else {
-            let q = command.includes('mp4') ? '360p' : '128kbps'
-            let dl_url, size, title
-            
-            if (command === 'mp3' || command === 'mp3doc') {
-                let yt = await fg.yta(vid.url, q)
-                dl_url = yt.dl_url
-                size = yt.size.split('MB')[0]
-                title = yt.title
-            } else if (command === 'mp4' || command === 'mp4doc') {
-                let yt = await fg.ytv(vid.url, q)
-                dl_url = yt.dl_url
-                size = yt.size.split('MB')[0]
-                title = yt.title
-            }
-
-            const limit = 100
-            if (size >= limit) {
-                return conn.reply(m.chat, `El archivo pesa más de ${limit} MB, se canceló la descarga.`, m).then(_ => m.react('✖️'))
-            }
-
-            if (command === 'mp3') {
-                await conn.sendMessage(m.chat, { 
-                    audio: { url: dl_url }, 
-                    mimetype: "audio/mpeg", 
-                    fileName: `${title}.mp3`, 
-                    quoted: m, 
-                    contextInfo: {
-                        'forwardingScore': 200,
-                        'isForwarded': true,
-                        externalAdReply:{
-                            showAdAttribution: false,
-                            title: `${title}`,
-                            body: `${vid.author.name}`,
-                            mediaType: 2, 
-                            sourceUrl: `${vid.url}`,
-                            thumbnail: await (await fetch(vid.thumbnail)).buffer()
-                        }
-                    }
-                }, { quoted: m })
-            } else if (command === 'mp4') {
-                await conn.sendMessage(m.chat, { 
-                    video: { url: dl_url }, 
-                    caption: `${title}\n⇆ㅤㅤ◁ㅤㅤ❚❚ㅤㅤ▷ㅤㅤ↻\n00:15 ━━━━●────── ${vid.timestamp}`, 
-                    mimetype: 'video/mp4', 
-                    fileName: `${title}.mp4`, 
-                    quoted: m, 
-                    contextInfo: {
-                        'forwardingScore': 200,
-                        'isForwarded': true,
-                        externalAdReply:{
-                            showAdAttribution: false,
-                            title: `${title}`,
-                            body: `${vid.author.name}`,
-                            mediaType: 2, 
-                            sourceUrl: `${vid.url}`,
-                            thumbnail: await (await fetch(vid.thumbnail)).buffer()
-                        }
-                    }
-                }, { quoted: m })
-            } else if (command === 'mp3doc') {
-                await conn.sendMessage(m.chat, { 
-                    document: { url: dl_url }, 
-                    mimetype: "audio/mpeg", 
-                    fileName: `${title}.mp3`, 
-                    quoted: m, 
-                    contextInfo: {
-                        'forwardingScore': 200,
-                        'isForwarded': true,
-                        externalAdReply:{
-                            showAdAttribution: false,
-                            title: `${title}`,
-                            body: `${vid.author.name}`,
-                            mediaType: 2, 
-                            sourceUrl: `${vid.url}`,
-                            thumbnail: await (await fetch(vid.thumbnail)).buffer()
-                        }
-                    }
-                }, { quoted: m })
-            } else if (command === 'mp4doc') {
-                await conn.sendMessage(m.chat, { 
-                    document: { url: dl_url }, 
-                    caption: `${title}\n⇆ㅤㅤ◁ㅤㅤ❚❚ㅤㅤ▷ㅤㅤ↻\n00:15 ━━━━●────── ${vid.timestamp}`, 
-                    mimetype: 'video/mp4', 
-                    fileName: `${title}.mp4`, 
-                    quoted: m, 
-                    contextInfo: {
-                        'forwardingScore': 200,
-                        'isForwarded': true,
-                        externalAdReply:{
-                            showAdAttribution: false,
-                            title: `${title}`,
-                            body: `${vid.author.name}`,
-                            mediaType: 2, 
-                            sourceUrl: `${vid.url}`,
-                            thumbnail: await (await fetch(vid.thumbnail)).buffer()
-                        }
-                    }
-                }, { quoted: m })
-            }
-
-            await m.react('✅')
-        }
+        return {
+          id: id,
+          image: image,
+          title: title,
+          downloadUrl: downloadUrl
+        };
+      } else {
+        throw new Error('Fallo al obtener los detalles del video.');
+      }
     } catch (error) {
-        console.error(error)
-        await conn.reply(m.chat, `*☓ Ocurrió un error inesperado.*`, m).then(_ => m.react('✖️'))
+      console.error('Error:', error);
+      throw error;
     }
+  },
+  cekProgress: async (id) => {
+    const config = {
+      method: 'GET',
+      url: `https://p.oceansaver.in/ajax/progress.php?id=${id}`,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/91.0.4472.124 Safari/537.36'
+      }
+    };
+
+    try {
+      while (true) {
+        const response = await axios.request(config);
+
+        if (response.data && response.data.success && response.data.progress === 1000) {
+          return response.data.download_url;
+        }
+        await new Promise(resolve => setTimeout(resolve, 5000));
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+};
+
+const handler = async (m, { conn, text, usedPrefix, command }) => {
+  try {
+    if (!text.trim()) {
+      return conn.reply(m.chat, `${emoji} ingresa el nombre de la música a descargar.`, m);
+    }
+
+    const search = await yts(text);
+    if (!search.all || search.all.length === 0) {
+      return m.reply('No se encontraron resultados para tu búsqueda.');
+    }
+
+    const videoInfo = search.all[0];
+    const { title, thumbnail, timestamp, views, ago, url } = videoInfo;
+    const vistas = formatViews(views);
+    const infoMessage = `🎬 Título: *${title}*\n*°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*\n> 🕒 Duración: *${timestamp}*\n*°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*\n> 👀 Vistas: *${vistas}*\n*°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*\n> 🔖 Canal: *${videoInfo.author.name || 'Desconocido'}*\n*°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*\n> 📆 Publicado: *${ago}*\n*°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*\n> 🔗 Enlace: ${url}`;
+    const thumb = (await conn.getFile(thumbnail))?.data;
+
+    const JT = {
+      contextInfo: {
+        externalAdReply: {
+          title: packname,
+          body: dev,
+          mediaType: 1,
+          previewType: 0,
+          mediaUrl: url,
+          sourceUrl: url,
+          thumbnail: thumb,
+          renderLargerThumbnail: true,
+        },
+      },
+    };
+
+    await conn.reply(m.chat, infoMessage, m, JT);
+
+    if (command === 'play' || command === 'yta' || command === 'ytmp3') {
+        const api = await ddownr.download(url, 'mp3');
+        const result = api.downloadUrl;
+        await conn.sendMessage(m.chat, { audio: { url: result }, mimetype: "audio/mpeg" }, { quoted: m });
+
+    } else if (command === 'play2' || command === 'ytv' || command === 'ytmp4') {
+      let sources = [
+        `https://api.siputzx.my.id/api/d/ytmp4?url=${url}`,
+        `https://api.zenkey.my.id/api/download/ytmp4?apikey=zenkey&url=${url}`,
+        `https://axeel.my.id/api/download/video?url=${encodeURIComponent(url)}`,
+        `https://delirius-apiofc.vercel.app/download/ytmp4?url=${url}`
+      ];
+
+      let success = false;
+      for (let source of sources) {
+        try {
+          const res = await fetch(source);
+          const { data, result, downloads } = await res.json();
+          let downloadUrl = data?.dl || result?.download?.url || downloads?.url || data?.download?.url;
+
+          if (downloadUrl) {
+            success = true;
+            await conn.sendMessage(m.chat, {
+              video: { url: downloadUrl },
+              fileName: `${title}.mp4`,
+              mimetype: 'video/mp4',
+              caption: `${emoji} Aqui tienes ฅ^•ﻌ•^ฅ.`,
+              thumbnail: thumb
+            }, { quoted: m });
+            break;
+          }
+        } catch (e) {
+          console.error(`Error con la fuente ${source}:`, e.message);
+        }
+      }
+
+      if (!success) {
+        return m.reply(`${emoji2} *No se pudo descargar el video:* No se encontró un enlace de descarga válido.`);
+      }
+    } else {
+      throw "Comando no reconocido.";
+    }
+  } catch (error) {
+    return m.reply(`${msm}︎ Ocurrió un error: ${error.message}`);
+  }
+};
+
+handler.command = handler.help = ['play', 'play2', 'ytmp3', 'yta', 'ytmp4', 'ytv'];
+handler.tags = ['downloader'];
+
+export default handler;
+
+function formatViews(views) {
+  if (views >= 1000) {
+    return (views / 1000).toFixed(1) + 'k (' + views.toLocaleString() + ')';
+  } else {
+    return views.toString();
+  }
 }
-
-handler.help = ["play"].map(v => v + " <formato> <búsqueda o enlace>")
-handler.tags = ["downloader"]
-handler.command = ['play', 'play2', 'mp3', 'mp4', 'mp3doc', 'mp4doc']
-handler.register = true 
-handler.star = 1
-
-export default handler
