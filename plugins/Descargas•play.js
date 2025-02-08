@@ -121,7 +121,12 @@ Tu mamada se está enviando, espérate un rato w`;
     }, { quoted: fkontak });
     } else if (command === 'ytv' || command === 'ytmp4') {
     m.react('🍆')
-      let api = await fetch(`https://api.giftedtech.my.id/api/download/dlmp4?apikey=gifted&url=${videoInfo.url}`);
+      let api = await fetch(
+        `https://api.siputzx.my.id/api/d/ytmp4?url=${videoInfo.url}`,
+        `https://api.zenkey.my.id/api/download/ytmp4?apikey=zenkey&url=${videoInfo.url}`,
+        `https://axeel.my.id/api/download/video?url=${encodeURIComponent(videoInfo.url)}`,
+        `https://delirius-apiofc.vercel.app/download/ytmp4?url=${videoInfo.url}`
+        `https://api.giftedtech.my.id/api/download/dlmp4?apikey=gifted&url=${videoInfo.url}`);
       let video = await api.json();
       result = video.result.download_url;
     await conn.sendMessage(m.chat, {
