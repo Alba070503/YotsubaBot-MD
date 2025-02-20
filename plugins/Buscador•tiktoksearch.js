@@ -22,7 +22,7 @@ body: dev,
 previewType: 0, thumbnail: icons,
 sourceUrl: channel }}})
 let results = []
-let { data: response } = await axios.get('https://delirius-apiofc.vercel.app/search/tiktoksearch?query=' + text)
+let { data: response } = await axios.get('https://apis-starlights-team.koyeb.app/starlight/tiktoksearch?text=' + text)
 let searchResults = response.data
 shuffleArray(searchResults)
 let selectedResults = searchResults.splice(0, 7)
