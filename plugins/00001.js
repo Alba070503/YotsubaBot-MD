@@ -14,7 +14,8 @@ const configuration = new Configuration({apiKey: apikey,
 const openai = new OpenAIApi(configuration);
 
 const handler = async (m, {conn, text, usedPrefix, command}) => {
-let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
+let who = global.db.data.chats[m.chat];
+    if (!m.mentionedJid.includes(conn.user.jid)) return;
 let pp = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://telegra.ph/file/9d38415096b6c46bf03f8.jpg')
 if (!text) return m.reply(`*Hola cómo esta 😊, El que te puedo ayudar?*, ingrese una petición o orden para usar la función de chagpt\n*Ejemplo:*\n${usedPrefix + command} Recomienda un top 10 de películas de acción`) 
 //let syst = `Actuaras como un Bot de WhatsApp el cual fue creado por elrebelde, tu seras LoliBot.`
