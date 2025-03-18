@@ -5,7 +5,7 @@ const savetube = {
   api: {
     base: "https://media.savetube.me/api",
     cdn: "/random-cdn",
-    info: "/v2/info", 
+    info: "/v2/info",
     download: "/download"
   },
   headers: {
@@ -30,11 +30,11 @@ const savetube = {
         const iv = data.slice(0, 16);
         const content = data.slice(16);
         const key = savetube.crypto.hexToBuffer(secretKey);
-        
+
         const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
         let decrypted = decipher.update(content);
         decrypted = Buffer.concat([decrypted, decipher.final()]);
-        
+
         return JSON.parse(decrypted.toString());
       } catch (error) {
         throw new Error(`${error.message}`);
@@ -147,26 +147,31 @@ const handler = async (m, { conn, args }) => {
   if (args.length < 1) return m.reply("*Formato:* `.play <url>` para descargar.\n\n*Ejemplo:* `.play https://youtu.be/dQw4w9WgXcQ`");
 
   let url = args[0];
-  let format = args[1] || '480';
 
   if (!savetube.isUrl(url)) return m.reply("⚠️ *URL inválida.*");
 
   try {
-    let res = await savetube.download(url, format === 'mp3' ? 'mp3' : '480');
+    let res = await savetube.download(url, '480'); 
     if (!res.status) return m.reply(`❌ *Error:* ${res.error}`);
 
-    let { title, download, type, thumbnail } = res.result;
+    let resAudio = await savetube.download(url, 'mp3'); 
 
-    let caption = `🎶 *Título:* ${title}\n📹 *Tipo:* ${type.toUpperCase()}\n🔗 *Link:* [Descargar aquí](${download})\n\n📌 *Selecciona una opción:*`;
+    let { title, thumbnail } = res.result;
+    let { download: downloadAudio } = resAudio.result;
+    let { download: downloadVideo } = res.result;
+
+    let caption = `🎶 *Título:* ${title}\n\n📌 *Selecciona una opción:*`;
+
+    let buttons = [
+      { buttonId: `.playaudio ${downloadAudio}`, buttonText: { displayText: "🎵 Audio" }, type: 1 },
+      { buttonId: `.playvideo ${downloadVideo}`, buttonText: { displayText: "📹 Video" }, type: 1 }
+    ];
 
     await conn.sendMessage(m.chat, { 
       image: { url: thumbnail }, 
       caption,
       footer: "Descarga rápida con SaveTube",
-      buttons: [
-        { buttonId: `.playaudio ${url}`, buttonText: { displayText: "🎵 Audio" }, type: 1 },
-        { buttonId: `.playvideo ${url}`, buttonText: { displayText: "📹 Video" }, type: 1 }
-      ],
+      buttons,
       headerType: 4
     }, { quoted: m });
   } catch (e) {
