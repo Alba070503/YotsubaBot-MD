@@ -1,6 +1,9 @@
 import axios from 'axios';
 import crypto from 'crypto';
 
+const apiSearch = "https://www.googleapis.com/youtube/v3/search";
+const apiKey = "TU_CLAVE_DE_API"; // Reemplaza con tu clave de API de YouTube
+
 const savetube = {
   api: {
     base: "https://media.savetube.me/api",
@@ -18,10 +21,7 @@ const savetube = {
   formats: ['144', '240', '360', '480', '720', '1080', 'mp3'],
 
   crypto: {
-    hexToBuffer: (hexString) => {
-      const matches = hexString.match(/.{1,2}/g);
-      return Buffer.from(matches.join(''), 'hex');
-    },
+    hexToBuffer: (hexString) => Buffer.from(hexString.match(/.{1,2}/g).join(''), 'hex'),
 
     decrypt: async (enc) => {
       try {
@@ -42,7 +42,7 @@ const savetube = {
     }
   },
 
-  isUrl: str => { 
+  isUrl: (str) => { 
     try { 
       new URL(str); 
       return true; 
@@ -51,19 +51,37 @@ const savetube = {
     } 
   },
 
-  youtube: url => {
-    if (!url) return null;
-    const a = [
+  youtube: (url) => {
+    const regex = [
       /youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/,
       /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
       /youtube\.com\/v\/([a-zA-Z0-9_-]{11})/,
       /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/,
       /youtu\.be\/([a-zA-Z0-9_-]{11})/
     ];
-    for (let b of a) {
-      if (b.test(url)) return url.match(b)[1];
+    for (let r of regex) {
+      if (r.test(url)) return url.match(r)[1];
     }
     return null;
+  },
+
+  searchYouTube: async (query) => {
+    try {
+      const { data } = await axios.get(apiSearch, {
+        params: {
+          key: apiKey,
+          q: query,
+          part: 'snippet',
+          maxResults: 1,
+          type: 'video'
+        }
+      });
+
+      if (data.items.length === 0) return null;
+      return `https://www.youtube.com/watch?v=${data.items[0].id.videoId}`;
+    } catch (error) {
+      return null;
+    }
   },
 
   request: async (endpoint, data = {}, method = 'post') => {
@@ -75,28 +93,16 @@ const savetube = {
         params: method === 'get' ? data : undefined,
         headers: savetube.headers
       });
-      return {
-        status: true,
-        code: 200,
-        data: response
-      };
+      return { status: true, code: 200, data: response };
     } catch (error) {
-      return {
-        status: false,
-        code: error.response?.status || 500,
-        error: error.message
-      };
+      return { status: false, code: error.response?.status || 500, error: error.message };
     }
   },
 
   getCDN: async () => {
     const response = await savetube.request(savetube.api.cdn, {}, 'get');
     if (!response.status) return response;
-    return {
-      status: true,
-      code: 200,
-      data: response.data.cdn
-    };
+    return { status: true, code: 200, data: response.data.cdn };
   },
 
   download: async (link, format) => {
@@ -143,44 +149,52 @@ const savetube = {
   }
 };
 
-const handler = async (m, { conn, args }) => {
-  if (args.length < 1) return m.reply("*Formato:* `.play <url>` para descargar.\n\n*Ejemplo:* `.play https://youtu.be/dQw4w9WgXcQ`");
+const handler = async (m, { conn, args, command }) => {
+  if (args.length < 1) return m.reply("⚠️ *Debes ingresar un nombre o URL de YouTube.*");
 
-  let url = args[0];
+  let query = args.join(" ");
+  let url = savetube.isUrl(query) ? query : await savetube.searchYouTube(query);
 
-  if (!savetube.isUrl(url)) return m.reply("⚠️ *URL inválida.*");
+  if (!url) return m.reply("❌ *No se encontró ningún resultado.*");
+
+  let format = command === 'play' ? 'mp3' : '480';
 
   try {
-    let res = await savetube.download(url, '480'); 
+    let res = await savetube.download(url, format);
     if (!res.status) return m.reply(`❌ *Error:* ${res.error}`);
 
-    let resAudio = await savetube.download(url, 'mp3'); 
+    let { title, download, type, thumbnail } = res.result;
 
-    let { title, thumbnail } = res.result;
-    let { download: downloadAudio } = resAudio.result;
-    let { download: downloadVideo } = res.result;
+    let caption = `🎵 *Título:* ${title}\n📌 *Formato:* ${type === 'audio' ? 'MP3' : '480p'}`;
 
-    let caption = `🎶 *Título:* ${title}\n\n📌 *Selecciona una opción:*`;
+    if (type === 'audio') {
+      await conn.sendMessage(m.chat, { 
+        image: { url: thumbnail },
+        caption,
+        footer: "Descarga rápida con SaveTube",
+        contextInfo: { externalAdReply: { title, body: "Descargar", thumbnailUrl: thumbnail, sourceUrl: url } }
+      }, { quoted: m });
 
-    let buttons = [
-      { buttonId: `.playaudio ${downloadAudio}`, buttonText: { displayText: "🎵 Audio" }, type: 1 },
-      { buttonId: `.playvideo ${downloadVideo}`, buttonText: { displayText: "📹 Video" }, type: 1 }
-    ];
+      await conn.sendMessage(m.chat, { 
+        audio: { url: download }, 
+        mimetype: 'audio/mpeg', 
+        fileName: `${title}.mp3` 
+      }, { quoted: m });
 
-    await conn.sendMessage(m.chat, { 
-      image: { url: thumbnail }, 
-      caption,
-      footer: "Descarga rápida con SaveTube",
-      buttons,
-      headerType: 4
-    }, { quoted: m });
+    } else {
+      await conn.sendMessage(m.chat, { 
+        video: { url: download },
+        caption,
+        footer: "Descarga rápida con SaveTube"
+      }, { quoted: m });
+    }
   } catch (e) {
     m.reply("❌ *Error al procesar la descarga.*");
   }
 };
 
-handler.command = ['play'];
+handler.command = ['play', 'play2'];
 handler.tags = ['downloader'];
-handler.help = ['play'];
+handler.help = ['play', 'play2'];
 
 export default handler;
