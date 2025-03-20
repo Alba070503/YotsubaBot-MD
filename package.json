@@ -1,5 +1,5 @@
 {
-"name": "YukiBot-MD",
+"name": "YotsubaBot-MD",
 "version": "2.2.0",
 "description": "Super WhatsApp Bot Multi Device",
 "main": "index.js",
@@ -18,16 +18,16 @@
 "eslint": "eslint .",
 "eslintfix": "eslint --fix ."
 },
-"homepage": "https://github.com/The-King-Destroy/Yuki_Suou-Bot",
+"homepage": "https://github.com/Alba070503/YotsubaBot-MD",
 "author": {
-"name": "The-King-Destroy"
+"name": "Alba070503"
 },
 "repository": {
 "type": "git",
-"url": "git+https://github.com/The-King-Destroy/Yuki_Suou-Bot.git"
+"url": "git+https://github.com/YotsubaBot/YotsubaBot-MD.git"
 },
 "bugs": {
-"url": "https://github.com/The-King-Destroy/Yuki_Suou-Bot/issues"
+"url": "https://github.com/Alba070503/YotsubaBot-MD/issues"
 },
 "license": "GPL-3.0-or-later",
 "dependencies": {
@@ -35,6 +35,8 @@
 "@adiwajshing/keyed-db": "^0.2.4",
 "@bochilteam/scraper": "^4.2.4",
 "@bochilteam/scraper-sosmed": "^1.0.5",
+"@ibaraki-douji/pixivts": "^2.4.1",
+"@SumiFX/Scraper": "github:SumiFX/SumiFX-Scraper",
 "@xct007/frieren-scraper": "^0.0.2",
 "@ibaraki-douji/pixivts": "^2.4.1",
 "awesome-phonenumber": "^3.4.0",
