@@ -61,6 +61,21 @@ global.etiqueta = 'ღ @Alba070503 ღ'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
+global.imagen1 = fs.readFileSync('./src/img/Menu.jpg')
+global.imagen2 = fs.readFileSync('./src/img/Menu2.jpg')
+global.imagen3 = fs.readFileSync('./src/img/Menu3.jpg')
+global.welcome = fs.readFileSync('./src/img/welcome.jpg')
+global.adios = fs.readFileSync('./src/img/adios.jpg')
+global.catalogo = fs.readFileSync('./src/img/catalogo.jpg')
+global.miniurl = fs.readFileSync('./src/img/miniurl.jpg')
+global.avatar = fs.readFileSync('./src/img/avatar_contact.jpg')
+
+//*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+
+
+
+//*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+
 global.moneda = '¥enes'
 global.welcom1 = '❀ Edita Con El Comando setwelcome ❀'
 global.welcom2 = '❀ Edita Con El Comando setbye ❀'
@@ -79,10 +94,24 @@ global.cn ='https://whatsapp.com/channel/0029VaAN15BJP21BYCJ3tH04';
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.catalogo = fs.readFileSync('./src/catalogo.jpg');
-global.estilo = { key: {  fromMe: false, participant: `0@s.whatsapp.net`, ...(false ? { remoteJid: "5219992095479-1625305606@g.us" } : {}) }, message: { orderMessage: { itemCount : -999999, status: 1, surface : 1, message: packname, orderTitle: 'Bang', thumbnail: catalogo, sellerJid: '0@s.whatsapp.net'}}}
 global.ch = {
 ch1: '120363198641161536@newsletter',
+ch2: '120363160031023229@newsletter',
+ch3: '120363263466636910@newsletter',
+ch4: '120363370415738881@newsletter',
+}
+
+//*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+
+
+global.catalogo = fs.readFileSync('./src/catalogo.jpg');
+global.estilo = { key: {  fromMe: false, participant: `0@s.whatsapp.net`, ...(false ? { remoteJid: "5219992095479-1625305606@g.us" } : {}) }, message: { orderMessage: { itemCount : -999999, status: 1, surface : 1, message: '❀ sᥙ́⍴ᥱr ᥕһᥲ𝗍sᥲ⍴⍴ ᑲ᥆𝗍 ☄︎', orderTitle: 'Bang', thumbnail: catalogo, sellerJid: '0@s.whatsapp.net'}}}
+global.esti = { key: {participant: `0@s.whatsapp.net`, ...(false ? { remoteJid: "6289643739077-1613049930@g.us" } : {})},message: {"videoMessage": { "title": `YotsubaBot-MD✰`, "h": `Hmm`,'seconds': '99999', 'gifPlayback': 'true', 'caption': `❀ Super Bot WhatsApp︎`, 'jpegThumbnail': catalogo }}}
+global.ch = {
+ch1: '120363198641161536@newsletter',
+ch2: '120363160031023229@newsletter',
+ch3: '120363263466636910@newsletter',
+ch4: '120363370415738881@newsletter',
 }
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
